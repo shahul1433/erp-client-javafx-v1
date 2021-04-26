@@ -5,14 +5,20 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 /**
  * JavaFX App
  */
 public class App extends Application {
 
+    private static Logger logger = LogManager.getLogger(App.class);
+
     @Override
     public void start(Stage stage) {
+        loadLog4jConfiguration();
         var javaVersion = SystemInfo.javaVersion();
         var javafxVersion = SystemInfo.javafxVersion();
 
@@ -23,7 +29,11 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
+        logger.error("This is an error");
         launch();
     }
 
+    private void loadLog4jConfiguration() {
+        PropertyConfigurator.configure("src/main/resources/log4j.properties");
+    }
 }
