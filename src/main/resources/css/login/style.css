@@ -1,0 +1,21 @@
+#username, #password {
+	-fx-alignment: center;
+    -fx-font-weight: bold;
+	-fx-font-size: 14px;
+}
+
+#usernameLb, #passwordLb{
+	-fx-font-size: 18px;
+	-fx-font-weight: bold;
+}
+
+#banner {
+	-fx-font-size: 40px;
+	-fx-font-weight: bold;
+	-fx-text-fill: blue;
+}
+
+#container {
+	-fx-border-color: gray;
+  	-fx-border-width: 1;
+}

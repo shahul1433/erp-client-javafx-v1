@@ -1,9 +1,14 @@
 package erp.client.javafx;
 
+import erp.client.javafx.component.event.PopupEvent;
+import erp.client.javafx.component.event.PopupEventHandler;
+import erp.client.javafx.login.LoginPane;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -16,20 +21,35 @@ public class App extends Application {
 
     private static Logger logger = LogManager.getLogger(App.class);
 
+    LoginPane loginPane;
+    Scene loginScene;
+    Stage stage;
+
+    private void initComponents() {
+        loginPane = new LoginPane();
+        loginScene = new Scene(loginPane);
+        stage.addEventHandler(PopupEvent.SHOW_POPUP, new PopupEventHandler(stage));
+    }
+
     @Override
     public void start(Stage stage) {
+        this.stage = stage;
         loadLog4jConfiguration();
-        var javaVersion = SystemInfo.javaVersion();
-        var javafxVersion = SystemInfo.javafxVersion();
+        initComponents();
 
-        var label = new Label("Hello, JavaFX " + javafxVersion + ", running on Java " + javaVersion + ".");
-        var scene = new Scene(new StackPane(label), 640, 480);
-        stage.setScene(scene);
+        stage.setScene(loginScene);
+        stage.setTitle("ERP-Client-V1.0");
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/image/dolphin.png")));
+        stage.setMaximized(true);
         stage.show();
     }
 
     public static void main(String[] args) {
-        logger.error("This is an error");
+        logger.info("***** Loading FontAwsome fonts *****");
+        Font.loadFont(App.class.getResourceAsStream("/font/fa-solid-900.ttf"), 12);
+        Font.loadFont(App.class.getResourceAsStream("/font/fa-regular-400.ttf"), 12);
+        Font.loadFont(App.class.getResourceAsStream("/font/fa-brands-400.ttf"), 12);
+        logger.info("Starting App...");
         launch();
     }
 
