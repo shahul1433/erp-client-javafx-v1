@@ -4,7 +4,6 @@
     <groupId>erp.client.javafx</groupId>
     <artifactId>erp-client-javafx-v1</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>11</maven.compiler.source>
@@ -81,9 +80,9 @@
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
-                <version>0.0.4</version>
+                <version>0.0.1</version>
                 <configuration>
-                    <mainClass>erp.client.javafx.App</mainClass>
+                    <mainClass>erp.client.javafx.GUIStarter</mainClass>
                 </configuration>
             </plugin>
             <plugin>

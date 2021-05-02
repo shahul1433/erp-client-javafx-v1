@@ -1,17 +1,20 @@
 package erp.client.javafx.login;
 
-import erp.client.javafx.component.event.PopupEvent;
+import erp.client.javafx.component.textfield.CTextField;
 import erp.client.javafx.exception.FormValidationException;
+import erp.client.javafx.home.HomeWindow;
 import erp.client.javafx.icon.FontAwsomeManager;
 import erp.client.javafx.layout.AbstractGridPane;
+import erp.client.javafx.utility.GuiUtility;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.effect.Reflection;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 
 public class LoginPane extends AbstractGridPane {
 
@@ -23,8 +26,11 @@ public class LoginPane extends AbstractGridPane {
     PasswordField password;
     Button login;
 
+    LoginService loginService;
+
     public LoginPane() {
         super();
+        this.loginService = new LoginService(this);
         this.setAlignment(Pos.CENTER);
         this.setHgap(10);
         this.setVgap(10);
@@ -33,7 +39,7 @@ public class LoginPane extends AbstractGridPane {
 
     @Override
     public void init() {
-        this.getStylesheets().add(getClass().getResource("/css/login/style.css").toExternalForm());
+        this.getStylesheets().add(LoginPane.class.getResource("/css/login/style.css").toExternalForm());
         banner = new Label("Login");
         banner.setId("banner");
 
@@ -83,9 +89,9 @@ public class LoginPane extends AbstractGridPane {
     public void registerListeners() {
         login.setOnAction(e ->{
             try {
-                throw new FormValidationException("Test exception");
-            } catch (Exception f) {
-                handleException(f);
+                loginService.login();
+            } catch (FormValidationException ex) {
+                handleException(ex);
             }
         });
     }

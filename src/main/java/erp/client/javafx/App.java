@@ -5,9 +5,7 @@ import erp.client.javafx.component.event.PopupEventHandler;
 import erp.client.javafx.login.LoginPane;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import org.apache.log4j.LogManager;
@@ -28,7 +26,7 @@ public class App extends Application {
     private void initComponents() {
         loginPane = new LoginPane();
         loginScene = new Scene(loginPane);
-        stage.addEventHandler(PopupEvent.SHOW_POPUP, new PopupEventHandler(stage));
+        stage.addEventHandler(PopupEvent.ANY, new PopupEventHandler(stage)); //This will show popup of message
     }
 
     @Override
@@ -54,6 +52,6 @@ public class App extends Application {
     }
 
     private void loadLog4jConfiguration() {
-        PropertyConfigurator.configure("src/main/resources/log4j.properties");
+        PropertyConfigurator.configure(getClass().getResourceAsStream("/log4j.properties"));
     }
 }

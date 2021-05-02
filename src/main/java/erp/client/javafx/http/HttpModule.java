@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 
+import javafx.scene.control.Alert;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -141,11 +142,11 @@ public class HttpModule {
 			response = client.execute(get);
 			
 			if(response == null) {
-				throw new FormValidationException("Something went wrong while connecting to the server");
+				throw new FormValidationException(Alert.AlertType.ERROR, "Something went wrong while connecting to the server");
 			}
 			
 			if(response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
-				throw new FormValidationException("Invalid credentials");
+				throw new FormValidationException(Alert.AlertType.ERROR, "Invalid credentials");
 			}
 			
 			AuthenticationResponse tokenResponse = JacksonService.jsonToObject(new TypeReference<AuthenticationResponse>() {}, JacksonService.getResponse(response));
@@ -155,7 +156,7 @@ public class HttpModule {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new FormValidationException(e.getMessage());
+			throw new FormValidationException(Alert.AlertType.ERROR, e.getMessage());
 		} finally {
 			if(response != null) {
 				response.close();
@@ -172,7 +173,7 @@ public class HttpModule {
 		if (statusCode < 200 || statusCode > 299) {
 			// Handle error based on code
 			if (statusCode == HttpStatus.SC_FORBIDDEN) { // 403 - Forbidden
-				throw new FormValidationException(getResponse(response));
+				throw new FormValidationException(Alert.AlertType.ERROR,getResponse(response));
 			} else if(statusCode == HttpStatus.SC_NOT_ACCEPTABLE) { // 406 - Not Acceptable - JWT Token Expired.
 				refreshTokenAttributes.setCurrentAttempt(refreshTokenAttributes.getCurrentAttempt() + 1);
 				refreshTokenAttributes.setTokenRefreshed(refreshToken());
@@ -180,13 +181,13 @@ public class HttpModule {
 				List<String> responseList = objectMapper.readValue(getResponse(response),new TypeReference<List<String>>() {});
 				StringBuilder sb = new StringBuilder();
 				responseList.forEach(e -> sb.append(e).append("\n"));
-				throw new FormValidationException(sb.toString());
+				throw new FormValidationException(Alert.AlertType.ERROR, sb.toString());
 			} else if (statusCode == HttpStatus.SC_NOT_FOUND) { // 404 - Not Found
-				throw new FormValidationException(getResponse(response));
+				throw new FormValidationException(Alert.AlertType.ERROR, getResponse(response));
 			} else if (statusCode == HttpStatus.SC_CONFLICT) { // 409 - Conflict
-				throw new FormValidationException(getResponse(response));
+				throw new FormValidationException(Alert.AlertType.ERROR, getResponse(response));
 			} else {
-				throw new FormValidationException("Unknown status code : " + statusCode
+				throw new FormValidationException(Alert.AlertType.ERROR, "Unknown status code : " + statusCode
 						+ "\n Sorry currently there is no handler to handle this response \n Please contact administration for furthur support.");
 			}
 		}

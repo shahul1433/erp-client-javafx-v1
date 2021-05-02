@@ -3,6 +3,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import javafx.scene.control.Alert;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -32,7 +33,7 @@ public class JacksonService {
 			String error = "Jackson parse error : "+e.getMessage()+" , Cause: "+e.getCause();
 			logger.error(error);
 			e.printStackTrace();
-			throw new FormValidationException(error);
+			throw new FormValidationException(Alert.AlertType.ERROR, error);
 		}
 		return data;
 	}
