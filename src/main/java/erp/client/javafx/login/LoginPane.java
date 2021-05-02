@@ -13,7 +13,9 @@ import javafx.scene.control.*;
 import javafx.scene.effect.Reflection;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 
 public class LoginPane extends AbstractGridPane {
@@ -25,6 +27,7 @@ public class LoginPane extends AbstractGridPane {
     TextField username;
     PasswordField password;
     Button login;
+    ProgressBar progressBar;
 
     LoginService loginService;
 
@@ -64,6 +67,9 @@ public class LoginPane extends AbstractGridPane {
         login = new Button("\uf2f6");
         login.setFont(FontAwsomeManager.getSolidFontPlain(16));
         login.setTooltip(new Tooltip("Login"));
+
+        progressBar = new ProgressBar();
+        progressBar.setVisible(false);
     }
 
     @Override
@@ -83,6 +89,8 @@ public class LoginPane extends AbstractGridPane {
         box.setAlignment(Pos.BOTTOM_RIGHT);
         box.getChildren().add(login);
         this.add(box, 1, 5);
+        GridPane.setHgrow(progressBar, Priority.ALWAYS);
+        this.add(progressBar, 0, 6, 2, 2);
     }
 
     @Override

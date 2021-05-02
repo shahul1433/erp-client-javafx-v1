@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Path;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -20,7 +21,8 @@ public class ConfigurationManager {
 		BufferedInputStream inputStream = null;
 		File configurationFile = null;
 		try {
-			configurationFile = new File("config/configurations.yml");
+			String path = Path.of("").toAbsolutePath() + File.separator + "config" + File.separator + "configurations.yml";
+			configurationFile = new File(path);
 			inputStream = new BufferedInputStream(new FileInputStream(configurationFile));
 		} catch (FileNotFoundException e) {
 			logger.info("Configuration file not found hence creating new file");
