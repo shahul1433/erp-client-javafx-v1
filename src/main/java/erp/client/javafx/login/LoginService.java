@@ -62,8 +62,8 @@ public class LoginService {
                 primaryStage.setMaximized(true);
             }
         });
-        view.progressBar.visibleProperty().bind(task.runningProperty());
-        view.progressBar.progressProperty().bind(task.progressProperty());
+        view.progressIndicator.visibleProperty().bind(task.runningProperty());
+        view.progressIndicator.progressProperty().bind(task.progressProperty());
         new Thread(task).start();
     }
 

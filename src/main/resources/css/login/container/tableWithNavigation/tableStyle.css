@@ -1,0 +1,10 @@
+#topbar, #bottombar {
+	-fx-base : #333333;
+	-fx-background-color: #333333;
+}
+
+#buttonpanel{
+	-fx-base : #333333;
+	-fx-background-color: #333333;
+}
+

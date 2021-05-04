@@ -3,6 +3,7 @@ package erp.client.javafx.home;
 import erp.client.javafx.layout.AbstractBorderPane;
 import erp.client.javafx.login.LoginPane;
 import erp.client.javafx.session.AppSession;
+import erp.client.javafx.user.UserManagementDialog;
 import erp.client.javafx.utility.GuiUtility;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
@@ -84,7 +85,7 @@ public class HomeWindow extends AbstractBorderPane {
 			Platform.runLater(new Runnable() {
 				@Override
 				public void run() {
-//					new UserManagementDialog();
+					new UserManagementDialog();
 				}
 			});
 		});

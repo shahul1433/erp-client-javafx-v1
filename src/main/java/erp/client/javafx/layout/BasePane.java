@@ -9,7 +9,7 @@ public interface BasePane {
     public void registerListeners();
     public boolean checkSecurity();
 
-    public default void showMessage(Alert.AlertType alertType, String message) {
-        PopupUtility.showMessage(alertType, message);
-    }
+//    public default void showMessage(Alert.AlertType alertType, String message) {
+//        PopupUtility.showMessage(alertType, message);
+//    }
 }
