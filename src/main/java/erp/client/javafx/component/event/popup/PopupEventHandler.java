@@ -1,5 +1,6 @@
-package erp.client.javafx.component.event;
+package erp.client.javafx.component.event.popup;
 
+import erp.client.javafx.component.event.popup.PopupEvent;
 import erp.client.javafx.exception.FormValidationException;
 import erp.client.javafx.utility.PopupUtility;
 import javafx.event.EventHandler;

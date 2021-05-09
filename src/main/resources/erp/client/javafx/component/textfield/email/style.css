@@ -1,0 +1,5 @@
+.validation-error {
+    -fx-background-color: red;
+    -fx-text-fill: white;
+}
+ 

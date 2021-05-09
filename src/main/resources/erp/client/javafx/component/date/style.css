@@ -1,0 +1,18 @@
+
+.bordered-titled-title {
+  -fx-text-fill: gray;
+  -fx-translate-y: -16;
+  -fx-font-size : 10px;
+  -fx-font-style : italic;
+}
+
+.bordered-titled-border {
+  -fx-content-display: top;
+  -fx-border-insets: 20 5 5 5;
+  -fx-border-color: gray;
+  -fx-border-width: 1;
+}
+
+.bordered-titled-content {
+  -fx-padding: 10 10 10 10;
+}

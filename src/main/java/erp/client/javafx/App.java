@@ -1,7 +1,7 @@
 package erp.client.javafx;
 
-import erp.client.javafx.component.event.PopupEvent;
-import erp.client.javafx.component.event.PopupEventHandler;
+import erp.client.javafx.component.event.popup.PopupEvent;
+import erp.client.javafx.component.event.popup.PopupEventHandler;
 import erp.client.javafx.login.LoginPane;
 import javafx.application.Application;
 import javafx.scene.Scene;

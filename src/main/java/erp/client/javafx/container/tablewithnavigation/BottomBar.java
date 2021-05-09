@@ -22,6 +22,8 @@ public class BottomBar extends AbstractBorderPane {
 
     @Override
     public void init() {
+        this.getStylesheets().add(getClass().getResource("tableStyle.css").toExternalForm());
+        this.setId("bottombar");
         previous = new Button("\uf04a");
         previous.setFont(FontAwsomeManager.getSolidFontPlain(14));
 
@@ -83,5 +85,9 @@ public class BottomBar extends AbstractBorderPane {
 
     public StatusBar getStatusBar() {
         return statusBar;
+    }
+
+    public Text getInfo() {
+        return info;
     }
 }

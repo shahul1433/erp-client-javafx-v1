@@ -31,7 +31,7 @@ public class StatusBar extends GridPane{
 		init();
 		
 		setStatus(StatusBarStatus.READY);
-		setStyle("-fx-border-color: black");
+//		setStyle("-fx-border-color: black");
 	}
 	
 	public ProgressBar getProgressBar() {
@@ -47,6 +47,7 @@ public class StatusBar extends GridPane{
 		progressBar.setVisible(false);
 		
 		label = new Text(StatusBarStatus.READY.getStatus());
+		label.setFill(Color.WHITE);
 		
 		designStatusBar();
 	}
@@ -55,7 +56,9 @@ public class StatusBar extends GridPane{
 		GridPane.setConstraints(rectangle, 0, 0);
 		GridPane.setConstraints(progressBar, 1, 0);
 		GridPane.setConstraints(label, 2, 0);
-		
+
+		GridPane.setMargin(label, new Insets(0,10,0,0));
+
 		getChildren().addAll(rectangle, progressBar, label);
 	}
 	

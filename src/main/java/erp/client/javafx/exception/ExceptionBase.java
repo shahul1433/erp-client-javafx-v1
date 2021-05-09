@@ -1,6 +1,6 @@
 package erp.client.javafx.exception;
 
-import erp.client.javafx.component.event.PopupEvent;
+import erp.client.javafx.component.event.popup.PopupEvent;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import org.apache.http.conn.HttpHostConnectException;

@@ -16,6 +16,8 @@ public class TopBar extends AbstractBorderPane {
 
     @Override
     public void init() {
+        this.getStylesheets().add(TopBar.class.getResource("tableStyle.css").toExternalForm());
+        this.setId("topbar");
         filter = new Button("\uf0b0");
         filter.setFont(FontAwsomeManager.getSolidFontPlain(14));
         filter.setTooltip(new Tooltip("Filter"));

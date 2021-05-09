@@ -37,7 +37,7 @@ public class CTextArea extends TextArea implements FormField{
 		this.label = new Label(isMandatoryField ? name + " *" : name);
 		sizeBar = new ProgressBar(0);
 		sizeBar.setPrefWidth(Double.MAX_VALUE);
-		sizeBar.getStylesheets().add(getClass().getResource("/css/login/component/textfield/progressBar.css").toExternalForm());
+		sizeBar.getStylesheets().add(getClass().getResource("progressBar.css").toExternalForm());
 		textAreaWithProgressBar = new VBox(0);
 		textAreaWithProgressBar.getChildren().addAll(this, sizeBar);
 		

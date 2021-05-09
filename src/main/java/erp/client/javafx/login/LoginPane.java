@@ -1,6 +1,6 @@
 package erp.client.javafx.login;
 
-import erp.client.javafx.component.event.PopupEvent;
+import erp.client.javafx.component.event.popup.PopupEvent;
 import erp.client.javafx.exception.FormValidationException;
 import erp.client.javafx.icon.FontAwsomeManager;
 import erp.client.javafx.layout.AbstractGridPane;
@@ -38,7 +38,7 @@ public class LoginPane extends AbstractGridPane {
 
     @Override
     public void init() {
-//        this.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+        this.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
         banner = new Label("Login");
         banner.setId("banner");
 

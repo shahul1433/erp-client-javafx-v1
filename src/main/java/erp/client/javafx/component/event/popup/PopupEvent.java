@@ -1,4 +1,4 @@
-package erp.client.javafx.component.event;
+package erp.client.javafx.component.event.popup;
 
 import javafx.event.Event;
 import javafx.event.EventType;

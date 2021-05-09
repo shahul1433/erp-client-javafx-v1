@@ -34,7 +34,7 @@ public class HomeWindow extends AbstractBorderPane {
 	@Override
 	public void init() {
 		
-		this.getStylesheets().add(getClass().getResource("/css/login/home/home.css").toExternalForm());
+		this.getStylesheets().add(getClass().getResource("home.css").toExternalForm());
 		
 		this.loggedUserName = new SimpleStringProperty();
 		menuBarLeft = new MenuBar();
