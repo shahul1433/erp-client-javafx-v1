@@ -87,8 +87,10 @@ public class AddEditViewUserService {
                     view.rolesPane.availableRoles.addUserRole(new UserRole(role));
                 }
                 view.getStatusBar().setStatus(StatusBarStatus.READY);
+                view.populateFields();
             }
         });
         service.start();
     }
+
 }

@@ -21,7 +21,7 @@ import java.io.InputStream;
 public abstract class AbstractDialog extends BorderPane{
 
     protected Stage stage;
-    protected Pane contentPane, buttonPane;
+//    protected Pane contentPane, buttonPane;
     protected Stage parentStage;
     protected StageMode stageMode;
     protected StatusBar statusBar;
@@ -66,13 +66,13 @@ public abstract class AbstractDialog extends BorderPane{
         return stage;
     }
 
-    public Pane getContentPane() {
-        return contentPane;
-    }
+//    public Pane getContentPane() {
+//        return contentPane;
+//    }
 
-    public Pane getButtonPane() {
-        return buttonPane;
-    }
+//    public Pane getButtonPane() {
+//        return buttonPane;
+//    }
 
     public Stage getParentStage() {
         return parentStage;

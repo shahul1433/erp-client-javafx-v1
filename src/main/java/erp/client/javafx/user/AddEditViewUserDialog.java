@@ -103,6 +103,16 @@ public class AddEditViewUserDialog extends AbstractDialog {
         });
     }
 
+    public void populateFields() {
+        if(stageMode == StageMode.EDIT || stageMode == StageMode.VIEW) {
+            if(user != null) {
+                stage.setTitle(stage.getTitle() + " - " + user.getName());
+                detailsPane.populateFields();
+                rolesPane.populateFields();
+            }
+        }
+    }
+
     private void clearFields() {
         detailsPane.name.clearField();
         detailsPane.userType.clearField();
@@ -161,7 +171,7 @@ public class AddEditViewUserDialog extends AbstractDialog {
             case EDIT:
                 getStage().setTitle("Edit User");
                 add.setText("Update");
-                clear.setDisable(false);
+                clear.setDisable(true);
                 break;
             case VIEW:
                 getStage().setTitle("View User");
@@ -171,6 +181,8 @@ public class AddEditViewUserDialog extends AbstractDialog {
                 detailsPane.email.setEditable(false);
                 detailsPane.phone.setFieldEditable(false);
                 detailsPane.username.setEditable(false);
+                add.setVisible(false);
+                clear.setVisible(false);
                 break;
             default:
                 break;
@@ -248,6 +260,18 @@ public class AddEditViewUserDialog extends AbstractDialog {
                 selectedRoles.getItems().removeAll(selectedItems);
                 selectedRoles.getSelectionModel().clearSelection();
             });
+        }
+
+        private void populateFields() {
+            if(stageMode == StageMode.EDIT || stageMode == StageMode.VIEW) {
+                if(user != null) {
+                    selectedRoles.setRoles(user.getRoles());
+                    if((availableRoles.getRoles().size() > 0 ) && (selectedRoles.getRoles().size() > 0)) {
+                        availableRoles.getItems().removeAll(selectedRoles.getItems());
+                    }
+                    availableRoles.refresh();
+                }
+            }
         }
 
         @Override
@@ -332,9 +356,49 @@ public class AddEditViewUserDialog extends AbstractDialog {
             }
         }
 
+        private void populateFields() {
+            if(stageMode == StageMode.EDIT || stageMode == StageMode.VIEW){
+                if(user != null) {
+                    name.setText(user.getName());
+                    userType.setSelectedUserType(user.getUserType());
+                    designation.setText(user.getDesignation());
+                    email.setText(user.getEmail());
+                    phone.setPhoneNo(user.getPhone());
+                    username.setText(user.getUsername());
+                }
+            }
+        }
+
         @Override
         public void registerListeners() {
-
+            name.setOnAction(e -> {
+                if(name.validateField())
+                    userType.requestFocus();
+            });
+            designation.setOnAction(e -> {
+                if(designation.validateField())
+                    email.requestFocus();
+            });
+            email.setOnAction(e -> {
+                if(email.validateField())
+                    phone.requestFocus();
+            });
+            phone.setOnAction(e -> {
+                if(phone.validateField())
+                    username.requestFocus();
+            });
+            username.setOnAction(e -> {
+                if(username.validateField())
+                    password.requestFocus();
+            });
+            password.setOnAction(e -> {
+                if(password.validateField())
+                    confirmPassword.requestFocus();
+            });
+            confirmPassword.setOnAction(e -> {
+                if(confirmPassword.validateField())
+                    add.requestFocus();
+            });
         }
 
         @Override

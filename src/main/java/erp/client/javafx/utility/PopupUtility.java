@@ -21,18 +21,11 @@ public class PopupUtility {
 	}
 	
 	public static Alert showMessage(Stage parent,AlertType alertType, String msg) {
-		if (parent == null){
-			showMessage(alertType, msg);
-			return null;
-		}
 		Alert alert = new Alert(alertType);
 		alert.initModality(Modality.APPLICATION_MODAL);
 		alert.initOwner(parent);
 		alert.getDialogPane().setContentText(msg);
 		alert.getDialogPane().setHeaderText(null);
-//		alert.showAndWait()
-//		.filter(response -> response == ButtonType.OK)
-//		.ifPresent(response -> System.out.println("The alert was approved"));
 		return alert;
 	}
 	

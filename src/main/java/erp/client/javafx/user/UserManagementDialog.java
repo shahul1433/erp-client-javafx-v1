@@ -8,13 +8,11 @@ import erp.client.javafx.exception.FormValidationException;
 import erp.client.javafx.http.SortMap;
 import erp.client.javafx.icon.FontAwsomeManager;
 import erp.client.javafx.utility.GuiUtility;
+import erp.client.javafx.utility.PopupUtility;
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
@@ -99,10 +97,18 @@ public class UserManagementDialog extends AbstractTableWithNavigationDialog<User
     @Override
     public void registerListeners() {
         super.registerListeners();
+
         this.centerPane.getTable().getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) ->{
             int size = this.centerPane.getTable().getSelectionModel().getSelectedItems().size();
             userManagementTopBar.edit.setDisable(size != 1);
             userManagementTopBar.remove.setDisable(size == 0);
+        });
+
+        this.centerPane.getTable().setOnMouseClicked(e -> {
+            if(e.getClickCount() >= 2) {
+                User user = this.centerPane.getTable().getSelectionModel().getSelectedItem();
+                new AddEditViewUserDialog(getStage(), StageMode.VIEW, user.getUser());
+            }
         });
     }
 
@@ -150,6 +156,19 @@ public class UserManagementDialog extends AbstractTableWithNavigationDialog<User
 
             this.add.setOnAction(e -> {
                 new AddEditViewUserDialog(getStage(), StageMode.ADD, null);
+            });
+
+            this.edit.setOnAction(e -> {
+                User user = getCenterPane().getTable().getSelectionModel().getSelectedItem();
+                new AddEditViewUserDialog(getStage(), StageMode.EDIT, user.getUser());
+            });
+
+            this.remove.setOnAction(e -> {
+                int size = getCenterPane().getTable().getSelectionModel().getSelectedIndices().size();
+                Alert alert = PopupUtility.showMessage(stage,Alert.AlertType.CONFIRMATION, "Are you sure to delete selected "+ (size > 1 ? "users" : "user") + "?");
+                alert.showAndWait()
+                        .filter(response -> response == ButtonType.OK)
+                        .ifPresent(response -> userManagementService.removeUser());
             });
         }
 
