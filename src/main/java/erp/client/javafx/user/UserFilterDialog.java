@@ -5,7 +5,6 @@ import erp.client.javafx.component.filter.combobox.UserTypeCombobox;
 import erp.client.javafx.component.filter.textfield.TextFieldSearch;
 import erp.client.javafx.container.tablewithnavigation.AbstractFilterDialog;
 import erp.client.javafx.entity.TUser;
-import erp.client.javafx.entity.UserType;
 import javafx.geometry.Insets;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -20,8 +19,6 @@ public class UserFilterDialog extends AbstractFilterDialog<UserFilter> {
 
     public UserFilterDialog(UserManagementDialog parent) {
         super(parent);
-        this.stage.show();
-        this.stage.hide();
     }
 
     @Override
@@ -35,9 +32,7 @@ public class UserFilterDialog extends AbstractFilterDialog<UserFilter> {
         ColumnConstraints userTypeConstraint = new ColumnConstraints(100, 150, Double.MAX_VALUE);
         userTypeConstraint.setHgrow(Priority.ALWAYS);
 
-        pane.getColumnConstraints().add(0, emptyColumn);
-        pane.getColumnConstraints().add(1, emptyColumn);
-        pane.getColumnConstraints().add(2, userTypeConstraint);
+        pane.getColumnConstraints().addAll(emptyColumn, emptyColumn, userTypeConstraint);
 
         int col = 0, row = 0;
 
@@ -97,7 +92,7 @@ public class UserFilterDialog extends AbstractFilterDialog<UserFilter> {
         user.setEmail(this.email.getSearchString());
         user.setPhone(this.phone.getSearchString());
         user.setUsername(this.username.getSearchString());
-        user.setUserType(UserType.ALL);
+        user.setUserType(this.userTypeCombobox.getSelectedUserType());
 
         UserFilter filter = new UserFilter(user, this.addedDate.getDateSearchable(), this.modifiedDate.getDateSearchable(), 0, 0, null);
         return filter;
@@ -126,8 +121,8 @@ public class UserFilterDialog extends AbstractFilterDialog<UserFilter> {
                     );
         }catch (Exception e) {
             handleException(e);
+            return false;
         }
-        return false;
     }
 
 }

@@ -162,7 +162,7 @@ public abstract class AbstractTableWithNavigationDialog<T> extends AbstractBorde
         return filterDialog;
     }
 
-    public void setStatusBar(StatusBarStatus status) {
+    public void setStatusBarStatus(StatusBarStatus status) {
         this.bottomBar.getStatusBar().setStatus(status);
     }
 

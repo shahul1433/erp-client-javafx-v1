@@ -9,10 +9,15 @@ import erp.client.javafx.config.ConfigurationManager;
 import erp.client.javafx.config.Constants;
 import erp.client.javafx.entity.GstStateCodeList;
 import erp.client.javafx.entity.TGstStateCode;
+import erp.client.javafx.exception.FormValidationException;
 import erp.client.javafx.http.HttpModule;
 import erp.client.javafx.http.ResponseEntity;
 import erp.client.javafx.utility.PopupUtility;
+import javafx.concurrent.Service;
 import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
+import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -23,6 +28,7 @@ public class GSTStateCodeCombobox extends ComboBox<TGstStateCode> implements For
 	private Label label;
 	private String name;
 	private boolean isMandatoryField;
+	private GetAllGstStateCodeService service;
 	
 	public GSTStateCodeCombobox(String name, boolean isMandatoryField) {
 		this.label = new Label(isMandatoryField ? name + " *" : name);
@@ -31,9 +37,16 @@ public class GSTStateCodeCombobox extends ComboBox<TGstStateCode> implements For
 		
 		this.setCellFactory(sf -> createGstStateCodeCell());
 		this.setButtonCell(createGstStateCodeCell());
-		
-		GetAllGstStateCodeTask task = new GetAllGstStateCodeTask();
-		new Thread(task).start();
+
+		service = new GetAllGstStateCodeService();
+		service.setOnFailed(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent workerStateEvent) {
+				PopupUtility.showMessage(Alert.AlertType.ERROR, workerStateEvent.getSource().getException().getMessage());
+			}
+		});
+		service.setOnSucceeded(new GstStateCodeSucceedHandler());
+		service.start();
 	}
 	
 	private ListCell<TGstStateCode> createGstStateCodeCell() {
@@ -54,7 +67,14 @@ public class GSTStateCodeCombobox extends ComboBox<TGstStateCode> implements For
 	}
 	
 	public void setSelectedGstStateCode(TGstStateCode gstStateCode) {
-		getSelectionModel().select(gstStateCode);
+		service.restart();
+		service.setOnSucceeded(new GstStateCodeSucceedHandler(){
+			@Override
+			public void handle(WorkerStateEvent workerStateEvent) {
+				super.handle(workerStateEvent);
+				getSelectionModel().select(gstStateCode);
+			}
+		});
 	}
 	
 	public Label getLabel() {
@@ -73,31 +93,46 @@ public class GSTStateCodeCombobox extends ComboBox<TGstStateCode> implements For
 		return true;
 	}
 
-	class GetAllGstStateCodeTask extends Task<Void> {
+	@Override
+	public void clearField() {
+		setSelectedGstStateCode(null);
+	}
+
+	class GstStateCodeSucceedHandler implements EventHandler<WorkerStateEvent> {
 
 		@Override
-		protected Void call() throws Exception {
-
-			String getAllGstStateCodeListUrl = ConfigurationManager.getConfiguration().getServer().getServerUrl() + Constants.GST.GET_ALL_STATE_CODE_URL;
-			ResponseEntity<GstStateCodeList> responseEntity = HttpModule.getRequest(getAllGstStateCodeListUrl, new TypeReference<GstStateCodeList>() {});
-			if(responseEntity == null)
-				return null;
-			
-			responseEntity.getEntity().getGstStateList().forEach(gst -> {getItems().add(gst);});
+		public void handle(WorkerStateEvent workerStateEvent) {
+			GstStateCodeList gstStateCodeList = service.getValue();
+			gstStateCodeList.getGstStateList().forEach(gst -> {getItems().add(gst);});
 			getItems().sort(new Comparator<TGstStateCode>() {
 				@Override
 				public int compare(TGstStateCode o1, TGstStateCode o2) {
 					return o1.getCode().compareTo(o2.getCode());
 				}
 			});
-			
-			return null;
 		}
-		
 	}
 
-	@Override
-	public void clearField() {
-		setSelectedGstStateCode(null);
+	class GetAllGstStateCodeService extends Service<GstStateCodeList> {
+
+		@Override
+		protected Task<GstStateCodeList> createTask() {
+			return new GetAllGstStateCodeTask();
+		}
+
+		class GetAllGstStateCodeTask extends Task<GstStateCodeList> {
+
+			@Override
+			protected GstStateCodeList call() throws Exception {
+
+				String getAllGstStateCodeListUrl = ConfigurationManager.getConfiguration().getServer().getServerUrl() + Constants.GST.GET_ALL_STATE_CODE_URL;
+				ResponseEntity<GstStateCodeList> responseEntity = HttpModule.getRequest(getAllGstStateCodeListUrl, new TypeReference<GstStateCodeList>() {});
+				if(responseEntity == null){
+					throw new FormValidationException(Alert.AlertType.ERROR, "Something went wrong while getting GST State code list\nPlease find log for more info");
+				}
+				return responseEntity.getEntity();
+			}
+
+		}
 	}
 }

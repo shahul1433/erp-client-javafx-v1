@@ -112,6 +112,8 @@ public abstract class AbstractFilterDialog<T> extends AbstractBorderPane {
 
     public void showFilter() {
         stage.show();
+        stage.hide();
+        stage.show();
         adjustFilterHeight();
     }
 

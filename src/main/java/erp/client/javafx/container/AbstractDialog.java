@@ -3,9 +3,11 @@ package erp.client.javafx.container;
 import erp.client.javafx.component.event.popup.PopupEvent;
 import erp.client.javafx.component.event.popup.PopupEventHandler;
 import erp.client.javafx.container.status.StatusBar;
+import erp.client.javafx.container.status.StatusBarStatus;
 import erp.client.javafx.utility.PopupUtility;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -13,6 +15,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.InputStream;
 
 /**
@@ -21,7 +24,6 @@ import java.io.InputStream;
 public abstract class AbstractDialog extends BorderPane{
 
     protected Stage stage;
-//    protected Pane contentPane, buttonPane;
     protected Stage parentStage;
     protected StageMode stageMode;
     protected StatusBar statusBar;
@@ -35,7 +37,9 @@ public abstract class AbstractDialog extends BorderPane{
         init();
         adjustViewByStageMode();
 
-        this.setCenter(designContentGUI());
+        ScrollPane pane = new ScrollPane(designContentGUI());
+        pane.setFitToWidth(true);
+        this.setCenter(pane);
         VBox vBox = new VBox(5);
         vBox.setStyle("-fx-background-color: #333333;");
         vBox.getChildren().addAll(designButtonGUI(), statusBar);
@@ -51,6 +55,23 @@ public abstract class AbstractDialog extends BorderPane{
             PopupUtility.showMessage(Alert.AlertType.ERROR, "Sorry, you don't have permission to access this module");
         }else{
             this.stage.show();
+            adjustDialogResolution();
+        }
+    }
+
+    protected void adjustDialogResolution() {
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        double screenHeight = screenSize.getHeight();
+        double screenWidth = screenSize.getWidth();
+
+        double dialogHeight = stage.getHeight();
+        double dialogWidth = stage.getWidth();
+
+        if(dialogHeight > screenHeight) {
+            stage.setHeight(0.9 * screenHeight);
+        }
+        if(dialogWidth > screenWidth) {
+            stage.setWidth(screenWidth);
         }
     }
 
@@ -66,14 +87,6 @@ public abstract class AbstractDialog extends BorderPane{
         return stage;
     }
 
-//    public Pane getContentPane() {
-//        return contentPane;
-//    }
-
-//    public Pane getButtonPane() {
-//        return buttonPane;
-//    }
-
     public Stage getParentStage() {
         return parentStage;
     }
@@ -84,5 +97,9 @@ public abstract class AbstractDialog extends BorderPane{
 
     public StatusBar getStatusBar() {
         return statusBar;
+    }
+
+    public void setStatusBarStatus(StatusBarStatus status) {
+        getStatusBar().setStatus(status);
     }
 }

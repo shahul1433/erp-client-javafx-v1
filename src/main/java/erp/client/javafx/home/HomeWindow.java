@@ -1,5 +1,6 @@
 package erp.client.javafx.home;
 
+import erp.client.javafx.dealer.DealerManagementDialog;
 import erp.client.javafx.layout.AbstractBorderPane;
 import erp.client.javafx.login.LoginPane;
 import erp.client.javafx.session.AppSession;
@@ -94,7 +95,7 @@ public class HomeWindow extends AbstractBorderPane {
 			Platform.runLater(new Runnable() {
 				@Override
 				public void run() {
-//					new DealerManagementDialog();
+					new DealerManagementDialog();
 				}
 			});
 		});

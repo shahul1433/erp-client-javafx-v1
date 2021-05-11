@@ -1,4 +1,4 @@
-package erp.client.javafx.user;
+package erp.client.javafx.dealer;
 
 import erp.client.javafx.common.AddEditRemoveTopBar;
 import erp.client.javafx.component.enums.UserRole;
@@ -20,18 +20,18 @@ import javafx.stage.Modality;
 
 import java.util.ArrayList;
 
-public class UserManagementDialog extends AbstractTableWithNavigationDialog<User> {
+public class DealerManagementDialog extends AbstractTableWithNavigationDialog<Dealer> {
 
-    private UserManagementService userManagementService = new UserManagementService(this);
-    private UserManagementTopBar userManagementTopBar;
+    private DealerManagementService dealerManagementService = new DealerManagementService(this);
+    private DealerManagementTopBar dealerManagementTopBar;
 
-    public UserManagementDialog() {
+    public DealerManagementDialog() {
         super();
-        if(checkSecurity()){
+        if(checkSecurity()) {
             Scene scene = new Scene(this, GuiUtility.maximumSize().getWidth(), GuiUtility.maximumSize().getHeight());
             getStage().setScene(scene);
             getStage().getIcons().add(new Image(getClass().getResourceAsStream("/image/User.png")));
-            getStage().setTitle("User Management");
+            getStage().setTitle("Dealer Management");
             getStage().initModality(Modality.APPLICATION_MODAL);
             getStage().show();
 
@@ -42,20 +42,20 @@ public class UserManagementDialog extends AbstractTableWithNavigationDialog<User
     @Override
     public void init() {
         super.init();
-        this.userManagementTopBar = new UserManagementTopBar();
-        setTopBar(userManagementTopBar);
+        dealerManagementTopBar = new DealerManagementTopBar();
+        setTopBar(dealerManagementTopBar);
     }
 
     @Override
     public void refresh() {
-        userManagementService.getAllUsers(null);
+        dealerManagementService.getAllDealers(null);
     }
 
     @Override
-    protected void createTableColumns(ArrayList<TableColumnDataWrapper<User, ?>> tableColumns) {
-        TableColumn<User, Void> index = new TableColumn<>("#");
+    protected void createTableColumns(ArrayList<TableColumnDataWrapper<Dealer, ?>> tableColumns) {
+        TableColumn<Dealer, Void> index = new TableColumn<>("#");
         index.setCellFactory(col -> {
-            TableCell<User, Void> cell = new TableCell<>();
+            TableCell<Dealer, Void> cell = new TableCell<>();
             cell.textProperty().bind(Bindings.createStringBinding(() -> {
                 if (cell.isEmpty()) {
                     return null ;
@@ -68,11 +68,14 @@ public class UserManagementDialog extends AbstractTableWithNavigationDialog<User
         getCenterPane().getTable().getColumns().add(index);
 
         tableColumns.add(new TableColumnDataWrapper<>("Name", "name"));
-        tableColumns.add(new TableColumnDataWrapper<>("Type", "userType"));
-        tableColumns.add(new TableColumnDataWrapper<>("Designation", "designation"));
+        tableColumns.add(new TableColumnDataWrapper<>("Shop", "shop"));
         tableColumns.add(new TableColumnDataWrapper<>("Email", "email"));
         tableColumns.add(new TableColumnDataWrapper<>("Phone", "phone"));
-        tableColumns.add(new TableColumnDataWrapper<>("Username", "username"));
+        tableColumns.add(new TableColumnDataWrapper<>("GSTIN", "gstin"));
+        tableColumns.add(new TableColumnDataWrapper<>("GST State Code", "gstStateCode"));
+        TableColumnDataWrapper<Dealer, Object> balanceColumn = new TableColumnDataWrapper<>("Balance", "balance");
+        balanceColumn.setStyle("-fx-alignment: CENTER-RIGHT;");
+        tableColumns.add(balanceColumn);
         tableColumns.add(new TableColumnDataWrapper<>("Added On", "addedDate"));
         tableColumns.add(new TableColumnDataWrapper<>("Modified On", "modifiedDate"));
 
@@ -80,57 +83,54 @@ public class UserManagementDialog extends AbstractTableWithNavigationDialog<User
     }
 
     @Override
-    protected void sortCall(SortMap sortMap) {
-        userManagementService.getAllUsers(sortMap);
-    }
-
-    @Override
-    protected void setFilterDialog() {
-        this.filterDialog = new UserFilterDialog(this);
-    }
-
-    @Override
-    public boolean checkSecurity() {
-        return AppSession.hasRole(UserRole.USER_MANAGEMENT);
-    }
-
-    @Override
     public void registerListeners() {
         super.registerListeners();
 
-        this.centerPane.getTable().getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) ->{
-            int size = this.centerPane.getTable().getSelectionModel().getSelectedItems().size();
-            userManagementTopBar.getEdit().setDisable(size != 1);
-            userManagementTopBar.getRemove().setDisable(size == 0);
+        this.getCenterPane().getTable().getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+            int size = this.getCenterPane().getTable().getSelectionModel().getSelectedItems().size();
+            dealerManagementTopBar.getEdit().setDisable(size != 1);
+            dealerManagementTopBar.getRemove().setDisable(size == 0);
         });
 
-        this.centerPane.getTable().setOnMouseClicked(e -> {
-            if(e.getClickCount() >= 2) {
-                User user = this.centerPane.getTable().getSelectionModel().getSelectedItem();
-                new AddEditViewUserDialog(getStage(), StageMode.VIEW, user.getUser());
+        this.getCenterPane().getTable().setOnMouseClicked(e -> {
+            if (e.getClickCount() >= 2) {
+
             }
         });
     }
 
-    class UserManagementTopBar extends AddEditRemoveTopBar {
+    @Override
+    protected void sortCall(SortMap sortMap) {
+        dealerManagementService.getAllDealers(sortMap);
+    }
+
+    @Override
+    protected void setFilterDialog() {
+        this.filterDialog = new DealerFilterDialog(this);
+    }
+
+    @Override
+    public boolean checkSecurity() {
+        return AppSession.hasRole(UserRole.DEALER);
+    }
+
+    class DealerManagementTopBar extends AddEditRemoveTopBar {
 
         @Override
         protected void setOnAction() {
-            getAdd().setOnAction(e -> {
-                new AddEditViewUserDialog(getStage(), StageMode.ADD, null);
-            });
+            getAdd().setOnAction(e -> new AddEditDealerDialog(getStage(), StageMode.ADD, null));
 
             getEdit().setOnAction(e -> {
-                User user = getCenterPane().getTable().getSelectionModel().getSelectedItem();
-                new AddEditViewUserDialog(getStage(), StageMode.EDIT, user.getUser());
+                Dealer selectedItem = getCenterPane().getTable().getSelectionModel().getSelectedItem();
+                new AddEditDealerDialog(getStage(), StageMode.EDIT, selectedItem.getDealer());
             });
 
             getRemove().setOnAction(e -> {
                 int size = getCenterPane().getTable().getSelectionModel().getSelectedIndices().size();
-                Alert alert = PopupUtility.showMessage(stage,Alert.AlertType.CONFIRMATION, "Are you sure to delete selected "+ (size > 1 ? "users" : "user") + "?");
+                Alert alert = PopupUtility.showMessage(getStage(), Alert.AlertType.CONFIRMATION, "Are you sure to delete selected " + (size > 1 ? "Dealers" : "Dealer") + " ?");
                 alert.showAndWait()
-                        .filter(response -> response == ButtonType.OK)
-                        .ifPresent(response -> userManagementService.removeUser());
+                    .filter(res -> res == ButtonType.OK)
+                        .ifPresent(res -> dealerManagementService.removeDealer());
             });
         }
     }

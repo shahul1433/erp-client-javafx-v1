@@ -13,6 +13,7 @@ import erp.client.javafx.entity.UserType;
 import erp.client.javafx.icon.FontAwsomeManager;
 import erp.client.javafx.layout.AbstractGridPane;
 import erp.client.javafx.layout.AbstractHBoxPane;
+import erp.client.javafx.session.AppSession;
 import erp.client.javafx.utility.PopupUtility;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -154,7 +155,7 @@ public class AddEditViewUserDialog extends AbstractDialog {
 
     @Override
     protected boolean checkSecurity() {
-        return true;
+        return AppSession.hasRole(erp.client.javafx.component.enums.UserRole.USER_MANAGEMENT);
     }
 
     @Override
@@ -223,6 +224,7 @@ public class AddEditViewUserDialog extends AbstractDialog {
 
             this.setSpacing(10);
             this.setPadding(new Insets(10));
+            this.setAlignment(Pos.CENTER);
             this.getChildren().addAll(availableRoles, buttonPanel, selectedRoles);
         }
 
@@ -322,6 +324,8 @@ public class AddEditViewUserDialog extends AbstractDialog {
 
             ColumnConstraints empty = new ColumnConstraints();
             ColumnConstraints stretched = new ColumnConstraints(100, 200, Double.MAX_VALUE);
+            stretched.setHgrow(Priority.ALWAYS);
+
             this.getColumnConstraints().addAll(empty, stretched);
 
             int col = 0, row = 0;
