@@ -1,0 +1,8 @@
+#clear-button {
+    -fx-cursor: hand;
+    -fx-text-fill: grey;
+}
+
+#clear-button:hover {
+    -fx-text-fill: black;
+}

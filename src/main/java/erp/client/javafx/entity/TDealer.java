@@ -1,6 +1,8 @@
 package erp.client.javafx.entity;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Objects;
 
 public class TDealer {
 
@@ -16,15 +18,13 @@ public class TDealer {
 	private LocalDateTime addedDate;
 	private LocalDateTime modifiedDate;
 	private Boolean archive;
+	private List<TLedger> ledgers;
 	
 	public TDealer() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public TDealer(String name, String shop, String address, String email, String phone, String gstin,
-			TGstStateCode gstStateCode, Double balance, LocalDateTime addedDate, LocalDateTime modifiedDate,
-			Boolean archive) {
-		super();
+	public TDealer(String name, String shop, String address, String email, String phone, String gstin, TGstStateCode gstStateCode, Double balance, LocalDateTime addedDate, LocalDateTime modifiedDate, Boolean archive, List<TLedger> ledgers) {
 		this.name = name;
 		this.shop = shop;
 		this.address = address;
@@ -36,6 +36,7 @@ public class TDealer {
 		this.addedDate = addedDate;
 		this.modifiedDate = modifiedDate;
 		this.archive = archive;
+		this.ledgers = ledgers;
 	}
 
 	public Long getId() {
@@ -134,90 +135,43 @@ public class TDealer {
 		this.archive = archive;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((address == null) ? 0 : address.hashCode());
-		result = prime * result + ((archive == null) ? 0 : archive.hashCode());
-		result = prime * result + ((balance == null) ? 0 : balance.hashCode());
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + ((gstStateCode == null) ? 0 : gstStateCode.hashCode());
-		result = prime * result + ((gstin == null) ? 0 : gstin.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((phone == null) ? 0 : phone.hashCode());
-		result = prime * result + ((shop == null) ? 0 : shop.hashCode());
-		return result;
+	public List<TLedger> getLedgers() {
+		return ledgers;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		TDealer other = (TDealer) obj;
-		if (address == null) {
-			if (other.address != null)
-				return false;
-		} else if (!address.equals(other.address))
-			return false;
-		if (archive == null) {
-			if (other.archive != null)
-				return false;
-		} else if (!archive.equals(other.archive))
-			return false;
-		if (balance == null) {
-			if (other.balance != null)
-				return false;
-		} else if (!balance.equals(other.balance))
-			return false;
-		if (email == null) {
-			if (other.email != null)
-				return false;
-		} else if (!email.equals(other.email))
-			return false;
-		if (gstStateCode == null) {
-			if (other.gstStateCode != null)
-				return false;
-		} else if (!gstStateCode.equals(other.gstStateCode))
-			return false;
-		if (gstin == null) {
-			if (other.gstin != null)
-				return false;
-		} else if (!gstin.equals(other.gstin))
-			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		if (phone == null) {
-			if (other.phone != null)
-				return false;
-		} else if (!phone.equals(other.phone))
-			return false;
-		if (shop == null) {
-			if (other.shop != null)
-				return false;
-		} else if (!shop.equals(other.shop))
-			return false;
-		return true;
+	public void setLedgers(List<TLedger> ledgers) {
+		this.ledgers = ledgers;
 	}
 
 	@Override
 	public String toString() {
-		return "TDealer [id=" + id + ", name=" + name + ", shop=" + shop + ", address=" + address + ", email=" + email
-				+ ", phone=" + phone + ", gstin=" + gstin + ", gstStateCode=" + gstStateCode + ", balance=" + balance
-				+ ", addedDate=" + addedDate + ", modifiedDate=" + modifiedDate + ", archive=" + archive + "]";
+		return "TDealer{" +
+				"id=" + id +
+				", name='" + name + '\'' +
+				", shop='" + shop + '\'' +
+				", address='" + address + '\'' +
+				", email='" + email + '\'' +
+				", phone='" + phone + '\'' +
+				", gstin='" + gstin + '\'' +
+				", gstStateCode=" + gstStateCode +
+				", balance=" + balance +
+				", addedDate=" + addedDate +
+				", modifiedDate=" + modifiedDate +
+				", archive=" + archive +
+				", ledgers=" + ledgers +
+				'}';
 	}
-	
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		TDealer dealer = (TDealer) o;
+		return Objects.equals(id, dealer.id) && Objects.equals(name, dealer.name) && Objects.equals(shop, dealer.shop) && Objects.equals(address, dealer.address) && Objects.equals(email, dealer.email) && Objects.equals(phone, dealer.phone) && Objects.equals(gstin, dealer.gstin) && Objects.equals(gstStateCode, dealer.gstStateCode) && Objects.equals(balance, dealer.balance) && Objects.equals(addedDate, dealer.addedDate) && Objects.equals(modifiedDate, dealer.modifiedDate) && Objects.equals(archive, dealer.archive) && Objects.equals(ledgers, dealer.ledgers);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, name, shop, address, email, phone, gstin, gstStateCode, balance, addedDate, modifiedDate, archive, ledgers);
+	}
 }

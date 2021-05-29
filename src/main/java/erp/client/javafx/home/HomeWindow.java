@@ -4,6 +4,8 @@ import erp.client.javafx.dealer.DealerManagementDialog;
 import erp.client.javafx.layout.AbstractBorderPane;
 import erp.client.javafx.login.LoginPane;
 import erp.client.javafx.session.AppSession;
+import erp.client.javafx.stock.stockin.StockInManagementDialog;
+import erp.client.javafx.stock.transaction.StockTransactionManagementDialog;
 import erp.client.javafx.user.UserManagementDialog;
 import erp.client.javafx.utility.GuiUtility;
 import javafx.application.Platform;
@@ -104,7 +106,7 @@ public class HomeWindow extends AbstractBorderPane {
 			Platform.runLater(new Runnable() {
 				@Override
 				public void run() {
-//					new StockInManagementDialog();
+					new StockInManagementDialog();
 				}
 			});
 		});
@@ -122,7 +124,7 @@ public class HomeWindow extends AbstractBorderPane {
 			Platform.runLater(new Runnable() {
 				@Override
 				public void run() {
-//					new StockTransactionsManagementDialog();
+					new StockTransactionManagementDialog();
 				}
 			});
 		});

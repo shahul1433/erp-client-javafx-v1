@@ -91,7 +91,7 @@ public class AddEditDealerDialog extends AbstractDialog {
         pane.add(gstStateCodeCombobox, col--, row++);
 
         pane.add(address.getLabel(), col++, row);
-        pane.add(address, col--, row++);
+        pane.add(address.getTextAreaWithProgressBar(), col--, row++);
 
         return pane;
     }
