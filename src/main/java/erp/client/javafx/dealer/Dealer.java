@@ -162,16 +162,16 @@ public class Dealer {
 						setText(rupeesFormat.format(value));
 						if(value < 0) {
 							getStyleClass().add("debit-balance");
-							getStylesheets().remove("credit-balance");
-							getStylesheets().remove("zero-balance");
+							getStyleClass().removeAll("credit-balance");
+							getStyleClass().removeAll("zero-balance");
 						}else if(value > 0) {
 							getStyleClass().add("credit-balance");
-							getStylesheets().remove("debit-balance");
-							getStylesheets().remove("zero-balance");
+							getStyleClass().removeAll("debit-balance");
+							getStyleClass().removeAll("zero-balance");
 						}else {
 							getStyleClass().add("zero-balance");
-							getStylesheets().remove("debit-balance");
-							getStylesheets().remove("credit-balance");
+							getStyleClass().removeAll("debit-balance");
+							getStyleClass().removeAll("credit-balance");
 						}
 					} else
 						setText(null);
