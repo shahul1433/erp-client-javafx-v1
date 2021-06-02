@@ -20,6 +20,7 @@ public class CenterPane<T> extends AbstractBorderPane {
         table.setTableMenuButtonVisible(true);
 //        createTableColumns(tableColumns);
         table.setId("table");
+        table.setStyle("-fx-selection-bar: #99ebff; -fx-selection-bar-non-focused: #ccf5ff;");
         table.setPadding(new Insets(5));
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);

@@ -4,19 +4,31 @@ import javax.swing.SortOrder;
 
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
 
 public class TableColumnDataWrapper<S, T> extends TableColumn<S, T>{
 
 	private String dbAttributeName;
 	private String displayName;
 	private SortOrder sortOrder;
-	
+
 	public TableColumnDataWrapper(String displayName, String dbAttributeName) {
 		super(displayName);
 		this.dbAttributeName = dbAttributeName;
 		this.displayName = displayName;
 		this.setCellValueFactory(new PropertyValueFactory<>(dbAttributeName));
 		this.sortOrder = SortOrder.ASCENDING;
+	}
+
+	public TableColumnDataWrapper(String displayName, String dbAttributeName, Callback cellFactory) {
+		super(displayName);
+		this.dbAttributeName = dbAttributeName;
+		this.displayName = displayName;
+		this.setCellValueFactory(new PropertyValueFactory<>(dbAttributeName));
+		this.sortOrder = SortOrder.ASCENDING;
+		if(cellFactory != null){
+			this.setCellFactory(cellFactory);
+		}
 	}
 
 	public String getDbAttributeName() {

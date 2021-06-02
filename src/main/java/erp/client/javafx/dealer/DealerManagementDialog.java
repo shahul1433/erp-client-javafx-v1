@@ -5,11 +5,13 @@ import erp.client.javafx.component.enums.UserRole;
 import erp.client.javafx.container.StageMode;
 import erp.client.javafx.container.tablewithnavigation.AbstractTableWithNavigationDialog;
 import erp.client.javafx.container.tablewithnavigation.TableColumnDataWrapper;
+import erp.client.javafx.entity.TGstStateCode;
 import erp.client.javafx.http.SortMap;
 import erp.client.javafx.session.AppSession;
 import erp.client.javafx.utility.GuiUtility;
 import erp.client.javafx.utility.PopupUtility;
 import javafx.beans.binding.Bindings;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -17,7 +19,9 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.image.Image;
 import javafx.stage.Modality;
+import javafx.util.Callback;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class DealerManagementDialog extends AbstractTableWithNavigationDialog<Dealer> {
@@ -29,8 +33,9 @@ public class DealerManagementDialog extends AbstractTableWithNavigationDialog<De
         super();
         if(checkSecurity()) {
             Scene scene = new Scene(this, GuiUtility.maximumSize().getWidth(), GuiUtility.maximumSize().getHeight());
+            scene.getStylesheets().add(DealerManagementDialog.class.getResource("style.css").toExternalForm());
             getStage().setScene(scene);
-            getStage().getIcons().add(new Image(getClass().getResourceAsStream("/image/User.png")));
+            getStage().getIcons().add(new Image(DealerManagementDialog.class.getResourceAsStream("/image/User.png")));
             getStage().setTitle("Dealer Management");
             getStage().initModality(Modality.APPLICATION_MODAL);
             getStage().show();
@@ -67,17 +72,25 @@ public class DealerManagementDialog extends AbstractTableWithNavigationDialog<De
         });
         getCenterPane().getTable().getColumns().add(index);
 
-        tableColumns.add(new TableColumnDataWrapper<>("Name", "name"));
-        tableColumns.add(new TableColumnDataWrapper<>("Shop", "shop"));
-        tableColumns.add(new TableColumnDataWrapper<>("Email", "email"));
-        tableColumns.add(new TableColumnDataWrapper<>("Phone", "phone"));
-        tableColumns.add(new TableColumnDataWrapper<>("GSTIN", "gstin"));
-        tableColumns.add(new TableColumnDataWrapper<>("GST State Code", "gstStateCode"));
-        TableColumnDataWrapper<Dealer, Object> balanceColumn = new TableColumnDataWrapper<>("Balance", "balance");
-        balanceColumn.setStyle("-fx-alignment: CENTER-RIGHT;");
+        TableColumnDataWrapper<Dealer, String> nameColumn = new TableColumnDataWrapper<>("Name", "name");
+        TableColumnDataWrapper<Dealer, String> shopColumn = new TableColumnDataWrapper<>("Shop", "shop");
+        TableColumnDataWrapper<Dealer, String> emailColumn = new TableColumnDataWrapper<>("Email", "email");
+        TableColumnDataWrapper<Dealer, String> phoneColumn = new TableColumnDataWrapper<>("Phone", "phone");
+        TableColumnDataWrapper<Dealer, String> gstinColumn = new TableColumnDataWrapper<>("GSTIN", "gstin");
+        TableColumnDataWrapper<Dealer, TGstStateCode> gstStateCodeColumn = new TableColumnDataWrapper<Dealer, TGstStateCode>("GST State Code", "gstStateCode", new Dealer.GstStateCodeCellFactory());
+        TableColumnDataWrapper<Dealer, Double> balanceColumn = new TableColumnDataWrapper<Dealer, Double>("Balance", "balance", new Dealer.BalanceCellFactory());
+        TableColumnDataWrapper<Dealer, LocalDateTime> addedDateColumn = new TableColumnDataWrapper<>("Added On", "addedDate", new Dealer.DateCellFactory());
+        TableColumnDataWrapper<Dealer, LocalDateTime> modifiedDateColumn = new TableColumnDataWrapper<>("Modified On", "modifiedDate", new Dealer.DateCellFactory());
+
+        tableColumns.add(nameColumn);
+        tableColumns.add(shopColumn);
+        tableColumns.add(emailColumn);
+        tableColumns.add(phoneColumn);
+        tableColumns.add(gstinColumn);
+        tableColumns.add(gstStateCodeColumn);
         tableColumns.add(balanceColumn);
-        tableColumns.add(new TableColumnDataWrapper<>("Added On", "addedDate"));
-        tableColumns.add(new TableColumnDataWrapper<>("Modified On", "modifiedDate"));
+        tableColumns.add(addedDateColumn);
+        tableColumns.add(modifiedDateColumn);
 
         getCenterPane().getTable().getColumns().addAll(tableColumns);
     }

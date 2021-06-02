@@ -1,13 +1,19 @@
 package erp.client.javafx.dealer;
 
+import erp.client.javafx.entity.TDealer;
+import erp.client.javafx.entity.TGstStateCode;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.util.Callback;
+
 import java.text.NumberFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
-
-import erp.client.javafx.entity.TDealer;
-import erp.client.javafx.entity.TGstStateCode;
-import javafx.beans.property.SimpleStringProperty;
 
 public class Dealer {
 
@@ -16,14 +22,14 @@ public class Dealer {
 	private final SimpleStringProperty email;
 	private final SimpleStringProperty phone;
 	private final SimpleStringProperty gstin;
-	private final SimpleStringProperty gstStateCode;
-	private final SimpleStringProperty balance;
-	private final SimpleStringProperty addedDate;
-	private final SimpleStringProperty modifiedDate;
+	private final ObjectProperty<TGstStateCode> gstStateCode;
+	private final SimpleDoubleProperty balance;
+	private final ObjectProperty<LocalDateTime> addedDate;
+	private final ObjectProperty<LocalDateTime> modifiedDate;
 	
 	private TDealer dealer;
 	
-	private NumberFormat rupeesFormat = NumberFormat.getCurrencyInstance(new Locale("en", "IN"));
+	private static NumberFormat rupeesFormat = NumberFormat.getCurrencyInstance(new Locale("en", "IN"));
 	
 	public Dealer(TDealer dealer) {
 		this.dealer = dealer;
@@ -32,10 +38,10 @@ public class Dealer {
 		this.email = new SimpleStringProperty(dealer.getEmail());
 		this.phone = new SimpleStringProperty(dealer.getPhone());
 		this.gstin = new SimpleStringProperty(dealer.getGstin());
-		this.gstStateCode = new SimpleStringProperty(dealer.getGstStateCode() != null ? dealer.getGstStateCode().getCode() + " - " + dealer.getGstStateCode().getState() : "");
-		this.balance = new SimpleStringProperty(rupeesFormat.format(dealer.getBalance()));
-		this.addedDate = new SimpleStringProperty(dealer.getAddedDate() != null ? dealer.getAddedDate().format(DateTimeFormatter.ofPattern("dd-MMM-yyyy")) : "");
-		this.modifiedDate = new SimpleStringProperty(dealer.getModifiedDate() != null ? dealer.getModifiedDate().format(DateTimeFormatter.ofPattern("dd-MMM-yyyy")) : "");
+		this.gstStateCode = new SimpleObjectProperty<>(dealer.getGstStateCode());
+		this.balance = new SimpleDoubleProperty(dealer.getBalance());
+		this.addedDate = new SimpleObjectProperty<>(dealer.getAddedDate());
+		this.modifiedDate = new SimpleObjectProperty<>(dealer.getModifiedDate());
 	}
 
 	public TDealer getDealer() {
@@ -86,41 +92,108 @@ public class Dealer {
 		this.gstin.set(gstin);
 	}
 
-	public String getGstStateCode() {
+	public TGstStateCode getGstStateCode() {
 		return gstStateCode.get();
 	}
 	
 	public void setGstStateCode(TGstStateCode gstStateCode) {
-		this.gstStateCode.set(gstStateCode != null ? gstStateCode.getCode() + " - " + gstStateCode.getState() : "");
+		this.gstStateCode.set(gstStateCode);
 	}
 
-	public String getBalance() {
+	public double getBalance() {
 		return balance.get();
 	}
 	
 	public void setBalance(Double balance) {
-		this.balance.set(rupeesFormat.format(balance));
+		this.balance.set(balance);
 	}
 
-	public String getAddedDate() {
+	public LocalDateTime getAddedDate() {
 		return addedDate.get();
 	}
 	
 	public void setAddedDate(LocalDateTime addedDate) {
-		this.addedDate.set(addedDate != null ? addedDate.format(DateTimeFormatter.ofPattern("dd-MMM-yyyy")) : "");
+		this.addedDate.set(addedDate);
 	}
 
-	public String getModifiedDate() {
+	public LocalDateTime getModifiedDate() {
 		return modifiedDate.get();
 	}
 	
 	public void setModifiedDate(LocalDateTime modifiedDate) {
-		this.modifiedDate.set(modifiedDate != null ? modifiedDate.format(DateTimeFormatter.ofPattern("dd-MMM-yyyy")) : "");
+		this.modifiedDate.set(modifiedDate);
 	}
 
 	@Override
 	public String toString() {
 		return "Dealer [name=" + name + "]";
 	}
-	
+
+	static class DateCellFactory implements  Callback<TableColumn<Dealer, LocalDateTime>, TableCell<Dealer, LocalDateTime>> {
+
+		@Override
+		public TableCell<Dealer, LocalDateTime> call(TableColumn<Dealer, LocalDateTime> dealerLocalDateTimeTableColumn) {
+			return new TableCell<>(){
+				@Override
+				protected void updateItem(LocalDateTime localDateTime, boolean b) {
+					super.updateItem(localDateTime, b);
+					setStyle("-fx-alignment: center");
+					if(localDateTime != null) {
+						setText(localDateTime.format(DateTimeFormatter.ofPattern("dd-MMM-yyyy")));
+					} else
+						setText(null);
+				}
+			};
+		}
+	}
+
+	static class BalanceCellFactory implements  Callback<TableColumn<Dealer, Double>, TableCell<Dealer, Double>> {
+
+		@Override
+		public TableCell<Dealer, Double> call(TableColumn<Dealer, Double> dealerDoubleTableColumn) {
+			return new TableCell<>() {
+
+				@Override
+				protected void updateItem(Double value, boolean b) {
+					getStylesheets().add(Dealer.class.getResource("style.css").toExternalForm());
+					super.updateItem(value, b);
+					setStyle("-fx-alignment: center-right");
+					if(value != null) {
+						setText(rupeesFormat.format(value));
+						if(value < 0) {
+							getStyleClass().add("debit-balance");
+							getStylesheets().remove("credit-balance");
+							getStylesheets().remove("zero-balance");
+						}else if(value > 0) {
+							getStyleClass().add("credit-balance");
+							getStylesheets().remove("debit-balance");
+							getStylesheets().remove("zero-balance");
+						}else {
+							getStyleClass().add("zero-balance");
+							getStylesheets().remove("debit-balance");
+							getStylesheets().remove("credit-balance");
+						}
+					} else
+						setText(null);
+				}
+			};
+		}
+	}
+
+	static class GstStateCodeCellFactory implements Callback<TableColumn<Dealer, TGstStateCode>, TableCell<Dealer, TGstStateCode>> {
+
+		@Override
+		public TableCell<Dealer, TGstStateCode> call(TableColumn<Dealer, TGstStateCode> dealerTGstStateCodeTableColumn) {
+			return new TableCell<>() {
+				@Override
+				protected void updateItem(TGstStateCode tGstStateCode, boolean b) {
+					super.updateItem(tGstStateCode, b);
+					if(tGstStateCode != null)
+						setText(tGstStateCode.getCode() + " - " + tGstStateCode.getState());
+					else
+						setText(null);
+				}
+			};
+		}
+	}
 }

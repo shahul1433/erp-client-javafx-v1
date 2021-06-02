@@ -43,7 +43,7 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-        logger.info("***** Loading FontAwsome fonts *****");
+        logger.info("***** Loading FontAwesome fonts *****");
         Font.loadFont(App.class.getResourceAsStream("/font/fa-solid-900.ttf"), 12);
         Font.loadFont(App.class.getResourceAsStream("/font/fa-regular-400.ttf"), 12);
         Font.loadFont(App.class.getResourceAsStream("/font/fa-brands-400.ttf"), 12);

@@ -9,6 +9,7 @@ import erp.client.javafx.exception.WorkerStateEventStatusBarExceptionHandler;
 import erp.client.javafx.http.Page;
 import erp.client.javafx.http.ResponseEntity;
 import erp.client.javafx.http.SortMap;
+import erp.client.javafx.session.AppSession;
 import erp.client.javafx.user.thread.GetAllUserService;
 import erp.client.javafx.user.thread.RemoveUserService;
 import erp.client.javafx.utility.PopupUtility;
@@ -18,6 +19,8 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+
+import java.util.Optional;
 
 public class UserManagementService {
 
@@ -31,6 +34,11 @@ public class UserManagementService {
     public void removeUser() {
         EntityIDList entityIDList = new EntityIDList();
         ObservableList<User> selectedItems = view.getCenterPane().getTable().getSelectionModel().getSelectedItems();
+        Optional<User> loggedUser = selectedItems.stream().filter(u -> u.getUser().getId().equals(AppSession.getLoggedUser().getId())).findFirst();
+        if(loggedUser.isPresent()) {
+            PopupUtility.showMessage(Alert.AlertType.WARNING, "Sorry, user can't delete own account - " +AppSession.getLoggedUser().getName());
+            return;
+        }
         selectedItems.forEach(user -> entityIDList.addId(user.getUser().getId()));
 
         var service = new RemoveUserService(entityIDList);
