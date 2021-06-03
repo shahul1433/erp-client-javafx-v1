@@ -14,6 +14,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import java.awt.*;
 import java.io.InputStream;
@@ -23,12 +25,16 @@ import java.io.InputStream;
  */
 public abstract class AbstractDialog extends BorderPane{
 
+    private static final Logger logger = LogManager.getLogger(AbstractDialog.class);
+
     protected Stage stage;
     protected Stage parentStage;
     protected StageMode stageMode;
     protected StatusBar statusBar;
+    protected Arguments args;
 
-    public AbstractDialog(Stage parentStage, StageMode stageMode) {
+    public AbstractDialog(Stage parentStage, StageMode stageMode, Arguments args) {
+        this.args = args;
         this.parentStage = parentStage;
         this.stageMode = stageMode;
         this.stage = new Stage();
@@ -39,6 +45,7 @@ public abstract class AbstractDialog extends BorderPane{
 
         ScrollPane pane = new ScrollPane(designContentGUI());
         pane.setFitToWidth(true);
+        pane.setFitToHeight(true);
         this.setCenter(pane);
         VBox vBox = new VBox(5);
         vBox.setStyle("-fx-background-color: #333333;");
@@ -101,5 +108,17 @@ public abstract class AbstractDialog extends BorderPane{
 
     public void setStatusBarStatus(StatusBarStatus status) {
         getStatusBar().setStatus(status);
+    }
+
+    public Arguments getArgs() {
+        return args;
+    }
+
+    public <T> T getArgument(String key, Class<T> objectType) {
+        if(args == null) {
+            logger.error("Arguments object is Null");
+            return null;
+        }
+        return args.getArgument(key, objectType);
     }
 }

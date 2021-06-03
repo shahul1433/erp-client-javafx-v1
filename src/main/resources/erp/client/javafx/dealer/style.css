@@ -12,3 +12,36 @@
     -fx-text-background-color: navy;
     -fx-font-weight: bold;
 }
+
+#dealer-info-panel {
+    -fx-background-color: linear-gradient(to top right, #80e5ff, #ccffcc);
+    -fx-background-radius: 10px 10px 10px 10px;
+    -fx-border-color: #00ccff;
+    -fx-border-radius : 10px 10px 10px 10px;
+    -fx-border-width : 2px;
+    -fx-effect : dropshadow(three-pass-box, grey, 10, 0.5, 0, 0);
+}
+
+#dealer-info-panel .label {
+    -fx-font-weight: bold;
+}
+
+#dealer-info-panel .text-field,.text-area{
+    -fx-font-weight: bold;
+    -fx-text-fill: navy;
+    -fx-background-color: transparent;
+    -fx-border-color: #538cc6;
+    -fx-border-radius: 5px;
+}
+
+#dealer-info-panel .text-area .scroll-pane {
+    -fx-background-color: transparent;
+}
+
+#dealer-info-panel .text-area .scroll-pane .viewport{
+    -fx-background-color: transparent;
+}
+
+#dealer-info-panel .text-area .scroll-pane .content{
+    -fx-background-color: transparent;
+}

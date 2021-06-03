@@ -8,6 +8,7 @@ import erp.client.javafx.component.textfield.email.EmailField;
 import erp.client.javafx.component.textfield.phone.Country;
 import erp.client.javafx.component.textfield.phone.PhoneField;
 import erp.client.javafx.container.AbstractDialog;
+import erp.client.javafx.container.Arguments;
 import erp.client.javafx.container.StageMode;
 import erp.client.javafx.entity.TDealer;
 import erp.client.javafx.session.AppSession;
@@ -18,6 +19,7 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.io.InputStream;
+import java.util.HashMap;
 
 public class AddEditDealerDialog extends AbstractDialog {
 
@@ -32,14 +34,14 @@ public class AddEditDealerDialog extends AbstractDialog {
     private TDealer dealer;
     private AddEditDealerService addEditDealerService;
 
-    public AddEditDealerDialog(Stage parentStage, StageMode stageMode, TDealer dealer) {
-        super(parentStage, stageMode);
-        this.dealer = dealer;
+    public AddEditDealerDialog(Stage parentStage, StageMode stageMode, Arguments args) {
+        super(parentStage, stageMode, args);
         populateFields();
     }
 
     @Override
     protected void init() {
+        this.dealer = getArgument("dealer", TDealer.class);
         this.addEditDealerService = new AddEditDealerService(this);
         name = new CTextField("Name", true, 100);
         shop = new CTextField("Shop", false, 100);

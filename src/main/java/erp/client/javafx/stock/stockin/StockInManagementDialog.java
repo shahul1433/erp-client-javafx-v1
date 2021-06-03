@@ -2,6 +2,7 @@ package erp.client.javafx.stock.stockin;
 
 import erp.client.javafx.component.enums.ProductScale;
 import erp.client.javafx.component.enums.UserRole;
+import erp.client.javafx.container.Arguments;
 import erp.client.javafx.container.StageMode;
 import erp.client.javafx.container.tablewithnavigation.AbstractTableWithNavigationDialog;
 import erp.client.javafx.container.tablewithnavigation.TableColumnDataWrapper;
@@ -178,8 +179,9 @@ public class StockInManagementDialog extends AbstractTableWithNavigationDialog<S
         @Override
         public void registerListeners() {
             super.registerListeners();
-
-            addStock.setOnAction(e -> new AddStockDialog(getStage(), StageMode.ADD, new TStockIn()));
+            Arguments args = new Arguments();
+            args.setArgument("stockIn", new TStockIn());
+            addStock.setOnAction(e -> new AddStockDialog(getStage(), StageMode.ADD, args));
         }
     }
 }

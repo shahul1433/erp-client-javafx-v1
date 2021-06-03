@@ -2,6 +2,7 @@ package erp.client.javafx.dealer;
 
 import erp.client.javafx.common.AddEditRemoveTopBar;
 import erp.client.javafx.component.enums.UserRole;
+import erp.client.javafx.container.Arguments;
 import erp.client.javafx.container.StageMode;
 import erp.client.javafx.container.tablewithnavigation.AbstractTableWithNavigationDialog;
 import erp.client.javafx.container.tablewithnavigation.TableColumnDataWrapper;
@@ -11,7 +12,6 @@ import erp.client.javafx.session.AppSession;
 import erp.client.javafx.utility.GuiUtility;
 import erp.client.javafx.utility.PopupUtility;
 import javafx.beans.binding.Bindings;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -19,10 +19,10 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.image.Image;
 import javafx.stage.Modality;
-import javafx.util.Callback;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class DealerManagementDialog extends AbstractTableWithNavigationDialog<Dealer> {
 
@@ -107,7 +107,9 @@ public class DealerManagementDialog extends AbstractTableWithNavigationDialog<De
 
         this.getCenterPane().getTable().setOnMouseClicked(e -> {
             if (e.getClickCount() >= 2) {
-
+                Arguments args = new Arguments();
+                args.setArgument("dealer",getCenterPane().getTable().getSelectionModel().getSelectedItem().getDealer());
+                new DealerDetailsDialog(this.stage, StageMode.EDIT, args);
             }
         });
     }
@@ -135,7 +137,9 @@ public class DealerManagementDialog extends AbstractTableWithNavigationDialog<De
 
             getEdit().setOnAction(e -> {
                 Dealer selectedItem = getCenterPane().getTable().getSelectionModel().getSelectedItem();
-                new AddEditDealerDialog(getStage(), StageMode.EDIT, selectedItem.getDealer());
+                Arguments args = new Arguments();
+                args.setArgument("dealer", selectedItem.getDealer());
+                new AddEditDealerDialog(getStage(), StageMode.EDIT, args);
             });
 
             getRemove().setOnAction(e -> {

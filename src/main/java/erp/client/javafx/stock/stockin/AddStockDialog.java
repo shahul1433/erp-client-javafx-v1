@@ -13,6 +13,7 @@ import erp.client.javafx.component.textfield.currency.IndianRupeesField;
 import erp.client.javafx.component.textfield.percentage.GstPercentageField;
 import erp.client.javafx.component.textfield.quantity.QuantityField;
 import erp.client.javafx.container.AbstractDialog;
+import erp.client.javafx.container.Arguments;
 import erp.client.javafx.container.StageMode;
 import erp.client.javafx.dealer.DealerChooserPanel;
 import erp.client.javafx.entity.TStockIn;
@@ -38,13 +39,13 @@ public class AddStockDialog extends AbstractDialog {
     private StockDetailsPanel stockDetailsPanel;
     private AddStockService stockService;
 
-    public AddStockDialog(Stage parentStage, StageMode stageMode, TStockIn stockIn) {
-        super(parentStage, stageMode);
-        this.stockIn = stockIn;
+    public AddStockDialog(Stage parentStage, StageMode stageMode, Arguments args) {
+        super(parentStage, stageMode, args);
     }
 
     @Override
     protected void init() {
+        this.stockIn = getArgument("stockIn", TStockIn.class);
         stockService = new AddStockService(this);
         add = new Button("Add");
         add.setStyle("-fx-base: green");

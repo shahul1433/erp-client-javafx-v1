@@ -2,6 +2,7 @@ package erp.client.javafx.user;
 
 import erp.client.javafx.common.AddEditRemoveTopBar;
 import erp.client.javafx.component.enums.UserRole;
+import erp.client.javafx.container.Arguments;
 import erp.client.javafx.container.StageMode;
 import erp.client.javafx.container.tablewithnavigation.AbstractTableWithNavigationDialog;
 import erp.client.javafx.container.tablewithnavigation.TableColumnDataWrapper;
@@ -107,7 +108,9 @@ public class UserManagementDialog extends AbstractTableWithNavigationDialog<User
         this.centerPane.getTable().setOnMouseClicked(e -> {
             if(e.getClickCount() >= 2) {
                 User user = this.centerPane.getTable().getSelectionModel().getSelectedItem();
-                new AddEditViewUserDialog(getStage(), StageMode.VIEW, user.getUser());
+                Arguments args = new Arguments();
+                args.setArgument("user", user.getUser());
+                new AddEditViewUserDialog(getStage(), StageMode.VIEW, args);
             }
         });
     }
@@ -122,7 +125,9 @@ public class UserManagementDialog extends AbstractTableWithNavigationDialog<User
 
             getEdit().setOnAction(e -> {
                 User user = getCenterPane().getTable().getSelectionModel().getSelectedItem();
-                new AddEditViewUserDialog(getStage(), StageMode.EDIT, user.getUser());
+                Arguments args = new Arguments();
+                args.setArgument("user", user.getUser());
+                new AddEditViewUserDialog(getStage(), StageMode.EDIT, args);
             });
 
             getRemove().setOnAction(e -> {

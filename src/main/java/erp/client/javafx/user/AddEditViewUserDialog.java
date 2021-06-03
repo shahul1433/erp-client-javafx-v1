@@ -7,6 +7,7 @@ import erp.client.javafx.component.textfield.email.EmailField;
 import erp.client.javafx.component.textfield.phone.Country;
 import erp.client.javafx.component.textfield.phone.PhoneField;
 import erp.client.javafx.container.AbstractDialog;
+import erp.client.javafx.container.Arguments;
 import erp.client.javafx.container.StageMode;
 import erp.client.javafx.entity.TUser;
 import erp.client.javafx.entity.UserType;
@@ -38,13 +39,14 @@ public class AddEditViewUserDialog extends AbstractDialog {
     AddEditViewUserService userService;
     TUser user;
 
-    public AddEditViewUserDialog(Stage parentStage, StageMode stageMode, TUser user) {
-        super(parentStage, stageMode);
+    public AddEditViewUserDialog(Stage parentStage, StageMode stageMode, Arguments args) {
+        super(parentStage, stageMode, args);
         this.user = user;
     }
 
     @Override
     protected void init() {
+        this.user = getArgument("user", TUser.class);
         tabPane = new TabPane();
         detailsTab = new Tab("Details");
         detailsTab.setClosable(false);
