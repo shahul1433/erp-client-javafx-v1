@@ -15,9 +15,9 @@
 
 #dealer-info-panel {
     -fx-background-color: linear-gradient(to top right, #80e5ff, #ccffcc);
-    -fx-background-radius: 10px 10px 10px 10px;
+    -fx-background-radius: 10px;
     -fx-border-color: #00ccff;
-    -fx-border-radius : 10px 10px 10px 10px;
+    -fx-border-radius : 10px;
     -fx-border-width : 2px;
     -fx-effect : dropshadow(three-pass-box, grey, 10, 0.5, 0, 0);
 }
@@ -44,4 +44,93 @@
 
 #dealer-info-panel .text-area .scroll-pane .content{
     -fx-background-color: transparent;
+}
+
+#dealer-ledger-top-bar {
+    -fx-background-color: linear-gradient(to bottom, #292970, #303082);
+    -fx-background-radius : 10px 10px 0px 0px;
+    -fx-padding: 10px;
+    -fx-pref-height: 100px;
+    -fx-effect : dropshadow(three-pass-box, grey, 10, 0.5, 0, 0);
+}
+
+#dealer-ledger-top-bar .label {
+    -fx-text-fill: #b3b3cc;
+}
+
+#ledger-balance-pane {
+    -fx-text-fill: #b3b3cc;
+    -fx-font-weight: bold;
+    -fx-font-size: 18px;
+}
+
+#ledger-balance-pane .text-field {
+    -fx-background-color: linear-gradient(to top, #001a33, 	#003333);
+    -fx-border-color: #7575a3;
+    -fx-border-width: 3px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+#dealer-ledger-bottom-bar {
+    -fx-background-color: linear-gradient(to top, #303082, #292970);
+    -fx-background-radius : 0px 0px 10px 10px;
+    -fx-padding: 10px;
+    -fx-pref-height: 100px;
+    -fx-effect : dropshadow(three-pass-box, grey, 10, 0.5, 0, 0);
+}
+
+#ledger-heading-label {
+    -fx-font-size: 48px;
+    -fx-text-fill: #b3b3cc;
+    -fx-padding: 0px 0px 0px 20px;
+}
+
+#dealer-ledger-content {
+    -fx-border-color: #292970;
+    -fx-effect : dropshadow(three-pass-box, grey, 10, 0.5, 0, 0);
+}
+
+#prev-button {
+    -fx-shape: "M 100 300 L 350 100 L 350 200 L 600 200 L 600 400 L 350 400 L 350 500 L 100 300 ";
+    -fx-background-color: linear-gradient(to top, #009900, #00e600);
+    -fx-pref-width: 40px;
+    -fx-cursor: hand;
+    -fx-padding: 10px;
+}
+
+#prev-button: hover {
+    -fx-background-color: #1aff1a;
+}
+
+#next-button {
+    -fx-shape: "M 700 300 L 450 100 L 450 200 L 200 200 L 200 400 L 450 400 L 450 500 L 700 300 ";
+    -fx-background-color: linear-gradient(to top, #009900, #00e600);
+    -fx-pref-width: 40px;
+    -fx-cursor: hand;
+    -fx-padding: 10px;
+}
+
+#next-button: hover {
+    -fx-background-color: #1aff1a;
+}
+
+#dealer-balance-panel {
+    -fx-background-color: linear-gradient(to top, #001a33, 	#003333);
+    -fx-padding: 10px;
+    -fx-background-radius: 10px;
+    -fx-effect : dropshadow(three-pass-box, grey, 10, 0.5, 0, 0);
+}
+
+#dealer-balance-panel .label{
+    -fx-text-fill: #b3b3cc;
+    -fx-font-weight: bolder;
+    -fx-font-size : 22px;
+}
+
+#dealer-balance-panel .text-field{
+    -fx-background-color: transparent;
+    -fx-text-fill: #00e600;
+    -fx-font-weight: bolder;
+    -fx-font-size : 22px;
 }

@@ -63,6 +63,7 @@ public class LoginPane extends AbstractGridPane {
         login = new Button("\uf2f6");
         login.setFont(FontAwsomeManager.getSolidFontPlain(16));
         login.setTooltip(new Tooltip("Login"));
+        login.setStyle("-fx-base: green");
 
         progressIndicator = new ProgressIndicator();
         progressIndicator.setPrefSize(50, 50);
