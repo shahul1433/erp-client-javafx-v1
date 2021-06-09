@@ -6,16 +6,13 @@ import erp.client.javafx.component.filter.textfield.DoubleFieldSearch;
 import erp.client.javafx.component.filter.textfield.TextFieldSearch;
 import erp.client.javafx.container.tablewithnavigation.AbstractFilterDialog;
 import erp.client.javafx.container.tablewithnavigation.AbstractTableWithNavigationDialog;
-import erp.client.javafx.entity.TDealer;
-import erp.client.javafx.entity.TStockIn;
-import erp.client.javafx.entity.TUser;
+import erp.client.javafx.dealer.DealerDTO;
+import erp.client.javafx.user.UserDTO;
 import javafx.geometry.Insets;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
-
-import java.time.LocalDateTime;
 
 public class StockInFilterDialog extends AbstractFilterDialog<StockInFilter> {
 
@@ -189,7 +186,7 @@ public class StockInFilterDialog extends AbstractFilterDialog<StockInFilter> {
     @Override
     public StockInFilter getForm() {
 
-        TStockIn stockIn = new TStockIn();
+        StockInDTO stockIn = new StockInDTO();
         stockIn.setArchive(false);
         stockIn.setName(name.getSearchString());
         stockIn.setModel(model.getSearchString());
@@ -208,12 +205,12 @@ public class StockInFilterDialog extends AbstractFilterDialog<StockInFilter> {
         stockIn.setSpecifications(specifications.getSearchString());
         stockIn.setScale(scale.getSelectedScale());
 
-        TDealer dealerObj = new TDealer();
+        DealerDTO dealerObj = new DealerDTO();
         dealerObj.setArchive(false);
         dealerObj.setName(dealer.getSearchString());
         stockIn.setDealer(dealerObj);
 
-        TUser user = new TUser();
+        UserDTO user = new UserDTO();
         user.setArchive(false);
         user.setName(addedBy.getSearchString());
         stockIn.setAddedBy(user);

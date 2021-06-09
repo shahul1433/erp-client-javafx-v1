@@ -3,15 +3,16 @@ package erp.client.javafx.login;
 import com.fasterxml.jackson.core.type.TypeReference;
 import erp.client.javafx.config.ConfigurationManager;
 import erp.client.javafx.config.Constants;
-import erp.client.javafx.entity.TUser;
 import erp.client.javafx.exception.WorkerStateEventExceptionHandler;
 import erp.client.javafx.exception.FormValidationException;
 import erp.client.javafx.home.HomeWindow;
 import erp.client.javafx.http.HttpModule;
 import erp.client.javafx.http.ResponseEntity;
 import erp.client.javafx.session.AppSession;
+import erp.client.javafx.user.UserDTO;
 import erp.client.javafx.utility.GuiUtility;
 import erp.client.javafx.utility.JacksonService;
+import erp.client.javafx.utility.PopupUtility;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
@@ -57,9 +58,15 @@ public class LoginService {
         task.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
             @Override
             public void handle(WorkerStateEvent workerStateEvent) {
-                Stage primaryStage = (Stage) view.login.getScene().getWindow();
-                primaryStage.setScene(new Scene(new HomeWindow(((TUser)workerStateEvent.getSource().getValue()).getName()), GuiUtility.getScreenWidth(), GuiUtility.getScreenHeight()));
-                primaryStage.setMaximized(true);
+                UserDTO userDTO = task.getValue();
+                if(userDTO != null) {
+                    AppSession.setLoggedUser(userDTO);
+                    Stage primaryStage = (Stage) view.login.getScene().getWindow();
+                    primaryStage.setScene(new Scene(new HomeWindow(userDTO.getName()), GuiUtility.getScreenWidth(), GuiUtility.getScreenHeight()));
+                    primaryStage.setMaximized(true);
+                }else {
+                    PopupUtility.showMessage(Alert.AlertType.ERROR, "Sorry, logged user information is not found in the database");
+                }
             }
         });
         view.progressIndicator.visibleProperty().bind(task.runningProperty());
@@ -67,10 +74,10 @@ public class LoginService {
         new Thread(task).start();
     }
 
-    class LoginTask extends Task<TUser> {
+    class LoginTask extends Task<UserDTO> {
 
         @Override
-        protected TUser call() throws Exception {
+        protected UserDTO call() throws Exception {
             String msg;
             String username = view.username.getText().trim();
             String password = view.password.getText().trim();
@@ -105,10 +112,9 @@ public class LoginService {
                 AuthenticationResponse tokenResponse = JacksonService.jsonToObject(new TypeReference<AuthenticationResponse>() {}, JacksonService.getResponse(response));
                 AppSession.setAuthorization(tokenResponse.getToken());
 
-                ResponseEntity<TUser> responseEntity = HttpModule.getRequest(getLoggedUserUrl, new TypeReference<TUser>() {});
+                ResponseEntity<UserDTO> responseEntity = HttpModule.getRequest(getLoggedUserUrl, new TypeReference<UserDTO>() {});
                 if(responseEntity == null)
                     throw new FormValidationException(Alert.AlertType.ERROR, "Something went wrong while retrieve logged user");
-                AppSession.setLoggedUser(responseEntity.getEntity());
                 return responseEntity.getEntity();
             }finally {
                 if(response != null){

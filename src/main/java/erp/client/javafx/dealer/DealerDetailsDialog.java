@@ -7,7 +7,6 @@ import erp.client.javafx.component.textfield.currency.IndianRupeesField;
 import erp.client.javafx.container.AbstractDialog;
 import erp.client.javafx.container.Arguments;
 import erp.client.javafx.container.StageMode;
-import erp.client.javafx.entity.TDealer;
 import erp.client.javafx.layout.AbstractBorderPane;
 import erp.client.javafx.layout.AbstractGridPane;
 import erp.client.javafx.layout.AbstractVBoxPane;
@@ -34,7 +33,8 @@ public class DealerDetailsDialog extends AbstractDialog {
 
     private LeftSidePanel leftSidePanel;
     private CenterPanel centerPanel;
-    private TDealer dealer;
+    private DealerDTO dealer;
+    private DealerDetailsService dealerDetailsService;
 
     public DealerDetailsDialog(Stage parentStage, StageMode stageMode, Arguments args) {
         super(parentStage, stageMode, args);
@@ -44,9 +44,11 @@ public class DealerDetailsDialog extends AbstractDialog {
     @Override
     protected void init() {
         this.getStylesheets().add(DealerDetailsDialog.class.getResource("style.css").toExternalForm());
+        dealerDetailsService = new DealerDetailsService(this);
         leftSidePanel = new LeftSidePanel();
         centerPanel = new CenterPanel();
-        dealer = getArgument("dealer", TDealer.class);
+        dealer = getArgument("dealer", DealerDTO.class);
+        dealerDetailsService.getLedgerYearsByDealer(dealer);
         leftSidePanel.dealerInfoPanel.populateFields();
         leftSidePanel.balanceAmountPanel.populateFields();
     }
@@ -57,6 +59,18 @@ public class DealerDetailsDialog extends AbstractDialog {
         pane.setLeft(leftSidePanel);
         pane.setCenter(centerPanel);
         return pane;
+    }
+
+    public LeftSidePanel getLeftSidePanel() {
+        return leftSidePanel;
+    }
+
+    public CenterPanel getCenterPanel() {
+        return centerPanel;
+    }
+
+    public DealerDTO getDealer() {
+        return dealer;
     }
 
     @Override

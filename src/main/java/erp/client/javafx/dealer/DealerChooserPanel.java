@@ -3,7 +3,6 @@ package erp.client.javafx.dealer;
 import erp.client.javafx.component.searchbox.dealer.DealerSearchBox;
 import erp.client.javafx.component.textfield.CTextArea;
 import erp.client.javafx.component.textfield.CTextField;
-import erp.client.javafx.entity.TDealer;
 import erp.client.javafx.layout.AbstractGridPane;
 import erp.client.javafx.utility.PopupUtility;
 import javafx.geometry.Pos;
@@ -20,14 +19,14 @@ public class DealerChooserPanel extends AbstractGridPane {
     private DealerSearchBox searchBar;
     private CTextField name, shop, email, phone, gstin, gstStateCode, balance, addedDate, modifiedDate;
     private CTextArea address;
-    private TDealer dealer;
+    private DealerDTO dealer;
 
     static NumberFormat currencyInstance = NumberFormat.getCurrencyInstance(new Locale("en", "IN"));
 
     public DealerChooserPanel() {
     }
 
-    public TDealer getSelectedDealer() {
+    public DealerDTO getSelectedDealer() {
         return searchBar.getSelectedDealer();
     }
 
@@ -112,7 +111,7 @@ public class DealerChooserPanel extends AbstractGridPane {
     }
 
     private void populateFields() {
-        TDealer selectedDealer = searchBar.getSelectedDealer();
+        DealerDTO selectedDealer = searchBar.getSelectedDealer();
         if (selectedDealer != null) {
             name.setText(selectedDealer.getName());
             shop.setText(selectedDealer.getShop());

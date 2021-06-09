@@ -1,6 +1,6 @@
 package erp.client.javafx.component.searchbox.dealer;
 
-import erp.client.javafx.entity.TDealer;
+import erp.client.javafx.dealer.DealerDTO;
 import erp.client.javafx.icon.FontAwsomeManager;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
@@ -54,7 +54,7 @@ public class DealerSearchBox extends Region {
         return combobox;
     }
 
-    public TDealer getSelectedDealer() {
+    public DealerDTO getSelectedDealer() {
         return combobox.getSelectedDealer();
     }
 }

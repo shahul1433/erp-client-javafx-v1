@@ -7,12 +7,11 @@ import erp.client.javafx.container.StageMode;
 import erp.client.javafx.container.tablewithnavigation.AbstractTableWithNavigationDialog;
 import erp.client.javafx.container.tablewithnavigation.TableColumnDataWrapper;
 import erp.client.javafx.container.tablewithnavigation.TopBar;
-import erp.client.javafx.entity.TDealer;
-import erp.client.javafx.entity.TStockIn;
-import erp.client.javafx.entity.TUser;
+import erp.client.javafx.dealer.DealerDTO;
 import erp.client.javafx.http.SortMap;
 import erp.client.javafx.icon.FontAwsomeManager;
 import erp.client.javafx.session.AppSession;
+import erp.client.javafx.user.UserDTO;
 import erp.client.javafx.utility.GuiUtility;
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
@@ -107,9 +106,9 @@ public class StockInManagementDialog extends AbstractTableWithNavigationDialog<S
         scaleColumn.setStyle("-fx-alignment: CENTER-LEFT;");
         TableColumnDataWrapper<StockIn, String> specificationsColumn = new TableColumnDataWrapper<>("Specifications", "specifications");
         specificationsColumn.setStyle("-fx-alignment: CENTER-LEFT;");
-        TableColumnDataWrapper<StockIn, TDealer> dealerColumn = new TableColumnDataWrapper<>("Dealer", "dealer");
+        TableColumnDataWrapper<StockIn, DealerDTO> dealerColumn = new TableColumnDataWrapper<>("Dealer", "dealer");
         dealerColumn.setStyle("-fx-alignment: CENTER-LEFT;");
-        TableColumnDataWrapper<StockIn, TUser> addedByColumn = new TableColumnDataWrapper<>("Added By", "addedBy");
+        TableColumnDataWrapper<StockIn, UserDTO> addedByColumn = new TableColumnDataWrapper<>("Added By", "addedBy");
         addedByColumn.setStyle("-fx-alignment: CENTER-LEFT;");
         TableColumnDataWrapper<StockIn, LocalDateTime> addedDateColumn = new TableColumnDataWrapper<>("Added Date", "addedDate");
         addedDateColumn.setStyle("-fx-alignment: CENTER-LEFT;");
@@ -180,7 +179,7 @@ public class StockInManagementDialog extends AbstractTableWithNavigationDialog<S
         public void registerListeners() {
             super.registerListeners();
             Arguments args = new Arguments();
-            args.setArgument("stockIn", new TStockIn());
+            args.setArgument("stockIn", new StockInDTO());
             addStock.setOnAction(e -> new AddStockDialog(getStage(), StageMode.ADD, args));
         }
     }

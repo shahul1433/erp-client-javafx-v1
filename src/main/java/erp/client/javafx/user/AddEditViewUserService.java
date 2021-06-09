@@ -3,9 +3,6 @@ package erp.client.javafx.user;
 import erp.client.javafx.component.event.trigger.TriggerEvent;
 import erp.client.javafx.container.StageMode;
 import erp.client.javafx.container.status.StatusBarStatus;
-import erp.client.javafx.entity.TUser;
-import erp.client.javafx.entity.TUserRole;
-import erp.client.javafx.entity.UserType;
 import erp.client.javafx.exception.WorkerStateEventStatusBarExceptionHandler;
 import erp.client.javafx.http.ResponseEntity;
 import erp.client.javafx.user.thread.AddUserService;
@@ -31,7 +28,6 @@ public class AddEditViewUserService {
 
     public void addUser() {
         String name = view.detailsPane.name.getText().trim();
-        UserType userType = view.detailsPane.userType.getSelectedUserType();
         String designation = view.detailsPane.designation.getText().trim();
         String email = view.detailsPane.email.getText().trim();
         String phone = view.detailsPane.phone.getPhoneNo();
@@ -39,21 +35,20 @@ public class AddEditViewUserService {
         String password = view.detailsPane.password.getText().trim();
         HashSet<UserRole> userRoles = view.rolesPane.selectedRoles.getRoles();
 
-        TUser user;
+        UserPersistDTO user;
         if(view.getStageMode() == StageMode.EDIT) {
             user = view.user;
         }else {
-            user = new TUser();
+            user = new UserPersistDTO();
         }
         user.setName(name);
-        user.setUserType(userType);
         user.setDesignation(designation);
         user.setEmail(email);
         user.setPhone(phone);
         user.setUsername(username);
         user.setPassword(password);
 
-        Set<TUserRole> roles = new HashSet<>();
+        Set<UserRoleDTO> roles = new HashSet<>();
         userRoles.forEach(ur -> roles.add(ur.getUserRole()));
 
         user.setRoles(roles);
@@ -65,7 +60,7 @@ public class AddEditViewUserService {
         service.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
             @Override
             public void handle(WorkerStateEvent workerStateEvent) {
-                ResponseEntity<TUser> entity = service.getValue();
+                ResponseEntity<UserDTO> entity = service.getValue();
                 view.getStatusBar().setStatus(StatusBarStatus.READY);
                 PopupUtility.showMessage(Alert.AlertType.INFORMATION, entity.getMessage());
                 view.getStage().close();
@@ -83,7 +78,7 @@ public class AddEditViewUserService {
             @Override
             public void handle(WorkerStateEvent workerStateEvent) {
                 UserRolesList userRolesList = service.getValue();
-                for (TUserRole role : userRolesList.getRoles()) {
+                for (UserRoleDTO role : userRolesList.getRoles()) {
                     view.rolesPane.availableRoles.addUserRole(new UserRole(role));
                 }
                 view.getStatusBar().setStatus(StatusBarStatus.READY);

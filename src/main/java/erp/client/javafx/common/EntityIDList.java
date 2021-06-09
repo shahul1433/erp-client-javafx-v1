@@ -1,4 +1,4 @@
-package erp.client.javafx.entity;
+package erp.client.javafx.common;
 
 import java.util.HashSet;
 import java.util.Set;

@@ -1,7 +1,6 @@
 package erp.client.javafx.dealer;
 
-import erp.client.javafx.entity.TDealer;
-import erp.client.javafx.entity.TGstStateCode;
+import erp.client.javafx.gst.GstStateCodeDTO;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -22,16 +21,16 @@ public class Dealer {
 	private final SimpleStringProperty email;
 	private final SimpleStringProperty phone;
 	private final SimpleStringProperty gstin;
-	private final ObjectProperty<TGstStateCode> gstStateCode;
+	private final ObjectProperty<GstStateCodeDTO> gstStateCode;
 	private final SimpleDoubleProperty balance;
 	private final ObjectProperty<LocalDateTime> addedDate;
 	private final ObjectProperty<LocalDateTime> modifiedDate;
 	
-	private TDealer dealer;
+	private DealerDTO dealer;
 	
 	private static NumberFormat rupeesFormat = NumberFormat.getCurrencyInstance(new Locale("en", "IN"));
 	
-	public Dealer(TDealer dealer) {
+	public Dealer(DealerDTO dealer) {
 		this.dealer = dealer;
 		this.name = new SimpleStringProperty(dealer.getName());
 		this.shop = new SimpleStringProperty(dealer.getShop());
@@ -44,11 +43,11 @@ public class Dealer {
 		this.modifiedDate = new SimpleObjectProperty<>(dealer.getModifiedDate());
 	}
 
-	public TDealer getDealer() {
+	public DealerDTO getDealer() {
 		return dealer;
 	}
 
-	public void setDealer(TDealer dealer) {
+	public void setDealer(DealerDTO dealer) {
 		this.dealer = dealer;
 	}
 
@@ -92,11 +91,11 @@ public class Dealer {
 		this.gstin.set(gstin);
 	}
 
-	public TGstStateCode getGstStateCode() {
+	public GstStateCodeDTO getGstStateCode() {
 		return gstStateCode.get();
 	}
 	
-	public void setGstStateCode(TGstStateCode gstStateCode) {
+	public void setGstStateCode(GstStateCodeDTO gstStateCode) {
 		this.gstStateCode.set(gstStateCode);
 	}
 
@@ -180,13 +179,13 @@ public class Dealer {
 		}
 	}
 
-	static class GstStateCodeCellFactory implements Callback<TableColumn<Dealer, TGstStateCode>, TableCell<Dealer, TGstStateCode>> {
+	static class GstStateCodeCellFactory implements Callback<TableColumn<Dealer, GstStateCodeDTO>, TableCell<Dealer, GstStateCodeDTO>> {
 
 		@Override
-		public TableCell<Dealer, TGstStateCode> call(TableColumn<Dealer, TGstStateCode> dealerTGstStateCodeTableColumn) {
+		public TableCell<Dealer, GstStateCodeDTO> call(TableColumn<Dealer, GstStateCodeDTO> dealerTGstStateCodeTableColumn) {
 			return new TableCell<>() {
 				@Override
-				protected void updateItem(TGstStateCode tGstStateCode, boolean b) {
+				protected void updateItem(GstStateCodeDTO tGstStateCode, boolean b) {
 					super.updateItem(tGstStateCode, b);
 					if(tGstStateCode != null)
 						setText(tGstStateCode.getCode() + " - " + tGstStateCode.getState());

@@ -2,8 +2,7 @@ package erp.client.javafx.user;
 
 import erp.client.javafx.container.status.StatusBarStatus;
 import erp.client.javafx.container.tablewithnavigation.AbstractTableWithNavigationDialog;
-import erp.client.javafx.entity.EntityIDList;
-import erp.client.javafx.entity.TUser;
+import erp.client.javafx.common.EntityIDList;
 import erp.client.javafx.exception.TableWithNavigationHandler;
 import erp.client.javafx.exception.WorkerStateEventStatusBarExceptionHandler;
 import erp.client.javafx.http.Page;
@@ -34,12 +33,12 @@ public class UserManagementService {
     public void removeUser() {
         EntityIDList entityIDList = new EntityIDList();
         ObservableList<User> selectedItems = view.getCenterPane().getTable().getSelectionModel().getSelectedItems();
-        Optional<User> loggedUser = selectedItems.stream().filter(u -> u.getUser().getId().equals(AppSession.getLoggedUser().getId())).findFirst();
+        Optional<User> loggedUser = selectedItems.stream().filter(u -> u.getUser().getUserId().equals(AppSession.getLoggedUser().getUserId())).findFirst();
         if(loggedUser.isPresent()) {
             PopupUtility.showMessage(Alert.AlertType.WARNING, "Sorry, user can't delete own account - " +AppSession.getLoggedUser().getName());
             return;
         }
-        selectedItems.forEach(user -> entityIDList.addId(user.getUser().getId()));
+        selectedItems.forEach(user -> entityIDList.addId(user.getUser().getUserId()));
 
         var service = new RemoveUserService(entityIDList);
         service.setOnFailed(new WorkerStateEventStatusBarExceptionHandler(view, view.getBottomBar().getStatusBar()));
@@ -60,9 +59,9 @@ public class UserManagementService {
         var service = new GetAllUserService(sortMap, view);
         view.setStatusBarStatus(StatusBarStatus.WORKING);
         service.setOnFailed(new WorkerStateEventStatusBarExceptionHandler(view, view.getBottomBar().getStatusBar()));
-        service.setOnSucceeded(new TableWithNavigationHandler<TUser, User>(service, view) {
+        service.setOnSucceeded(new TableWithNavigationHandler<UserDTO, User>(service, view) {
             @Override
-            public void setData(Page<TUser> page, AbstractTableWithNavigationDialog<User> view) {
+            public void setData(Page<UserDTO> page, AbstractTableWithNavigationDialog<User> view) {
                 page.getContent().forEach(obj -> view.getCenterPane().getTable().getItems().add(new User(obj)));
             }
         });

@@ -1,9 +1,9 @@
+/*
 package erp.client.javafx.stock.transaction.thread;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import erp.client.javafx.config.ConfigurationManager;
 import erp.client.javafx.config.Constants;
-import erp.client.javafx.entity.TStockTransaction;
 import erp.client.javafx.exception.FormValidationException;
 import erp.client.javafx.http.HttpModule;
 import erp.client.javafx.http.Page;
@@ -54,3 +54,4 @@ public class GetAllStockTransactionService extends Service<Page<TStockTransactio
         }
     }
 }
+*/

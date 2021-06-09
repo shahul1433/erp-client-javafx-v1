@@ -4,7 +4,6 @@ import erp.client.javafx.component.border.BorderedTitledPane;
 import erp.client.javafx.component.enums.ProductScale;
 import erp.client.javafx.component.enums.UserRole;
 import erp.client.javafx.component.event.popup.PopupEvent;
-import erp.client.javafx.component.event.trigger.TriggerEvent;
 import erp.client.javafx.component.scale.ProductScaleCombobox;
 import erp.client.javafx.component.searchbox.category.CategorySearchCombobox;
 import erp.client.javafx.component.textfield.CTextArea;
@@ -16,7 +15,6 @@ import erp.client.javafx.container.AbstractDialog;
 import erp.client.javafx.container.Arguments;
 import erp.client.javafx.container.StageMode;
 import erp.client.javafx.dealer.DealerChooserPanel;
-import erp.client.javafx.entity.TStockIn;
 import erp.client.javafx.exception.FormValidationException;
 import erp.client.javafx.layout.AbstractGridPane;
 import erp.client.javafx.session.AppSession;
@@ -32,7 +30,7 @@ import java.math.BigDecimal;
 
 public class AddStockDialog extends AbstractDialog {
 
-    private TStockIn stockIn;
+    private StockInDTO stockIn;
     private Button add, clear;
 
     private DealerChooserPanel dealerChooserPanel;
@@ -45,7 +43,7 @@ public class AddStockDialog extends AbstractDialog {
 
     @Override
     protected void init() {
-        this.stockIn = getArgument("stockIn", TStockIn.class);
+        this.stockIn = getArgument("stockIn", StockInDTO.class);
         stockService = new AddStockService(this);
         add = new Button("Add");
         add.setStyle("-fx-base: green");
@@ -269,7 +267,7 @@ public class AddStockDialog extends AbstractDialog {
             );
         }
 
-        public TStockIn populateAndGetStockIn() {
+        public StockInDTO populateAndGetStockIn() {
 
             String barcodeVal = barcode.getText().trim();
             String nameVal = name.getText().trim();
@@ -309,7 +307,7 @@ public class AddStockDialog extends AbstractDialog {
             return stockIn;
         }
 
-        public void setStockIn(TStockIn stockIn) {
+        public void setStockIn(StockInDTO stockIn) {
             if(stockIn != null) {
                 barcode.setText(stockIn.getBarcode());
                 name.setText(stockIn.getName());
@@ -331,7 +329,7 @@ public class AddStockDialog extends AbstractDialog {
         }
 
         public void clearForm() {
-            stockIn = new TStockIn();
+            stockIn = new StockInDTO();
             barcode.clearField();
             name.clearField();
             model.clearField();

@@ -1,15 +1,15 @@
 package erp.client.javafx.stock.stockin;
 
+import erp.client.javafx.component.enums.ProductScale;
+import erp.client.javafx.dealer.DealerDTO;
+import erp.client.javafx.user.UserDTO;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+
 import java.text.NumberFormat;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Locale;
-
-import erp.client.javafx.component.enums.ProductScale;
-import erp.client.javafx.entity.TDealer;
-import erp.client.javafx.entity.TStockIn;
-import erp.client.javafx.entity.TUser;
-import javafx.beans.property.SimpleStringProperty;
 
 public class StockIn {
 
@@ -19,27 +19,27 @@ public class StockIn {
 	private final SimpleStringProperty company;
 	private final SimpleStringProperty warranty;
 	private final SimpleStringProperty guarantee;
-	private final SimpleStringProperty stockQuantity;
-	private final SimpleStringProperty currentQuantity;
-	private final SimpleStringProperty reorderLimit;
-	private final SimpleStringProperty stockPrice;
-	private final SimpleStringProperty customerPrice;
-	private final SimpleStringProperty gst;
-	private final SimpleStringProperty gstAmount;
-	private final SimpleStringProperty netAmount;
-	private final SimpleStringProperty scale;
+	private final SimpleDoubleProperty stockQuantity;
+	private final SimpleDoubleProperty currentQuantity;
+	private final SimpleDoubleProperty reorderLimit;
+	private final SimpleDoubleProperty stockPrice;
+	private final SimpleDoubleProperty customerPrice;
+	private final SimpleDoubleProperty gst;
+	private final SimpleDoubleProperty gstAmount;
+	private final SimpleDoubleProperty netAmount;
+	private final SimpleObjectProperty<ProductScale> scale;
 	private final SimpleStringProperty specifications;
-	private final SimpleStringProperty dealer;
-	private final SimpleStringProperty addedBy;
-	private final SimpleStringProperty addedDate;
+	private final SimpleObjectProperty<DealerDTO> dealer;
+	private final SimpleObjectProperty<UserDTO> addedBy;
+	private final SimpleObjectProperty<LocalDateTime> addedDate;
 	
-	private TStockIn stockIn;
+	private StockInDTO stockIn;
 	
 	private NumberFormat rupeesFormat = NumberFormat.getCurrencyInstance(new Locale("en", "IN"));
 	private NumberFormat numberFormat = NumberFormat.getNumberInstance(new Locale("en", "IN"));
 	private NumberFormat percentageFormat = NumberFormat.getPercentInstance(new Locale("en", "IN"));
 
-	public StockIn(TStockIn stockIn) {
+	public StockIn(StockInDTO stockIn) {
 		this.stockIn = stockIn;
 		this.name = new SimpleStringProperty(stockIn.getName());
 		this.model = new SimpleStringProperty(stockIn.getModel());
@@ -47,26 +47,26 @@ public class StockIn {
 		this.company = new SimpleStringProperty(stockIn.getCompany());
 		this.warranty = new SimpleStringProperty(stockIn.getWarranty());
 		this.guarantee = new SimpleStringProperty(stockIn.getGuarantee());
-		this.stockQuantity = new SimpleStringProperty(stockIn.getStockQuantity() != null ? numberFormat.format(stockIn.getStockQuantity()) : "");
-		this.currentQuantity = new SimpleStringProperty(stockIn.getCurrentQuantity() != null ? numberFormat.format(stockIn.getCurrentQuantity()) : "");
-		this.reorderLimit = new SimpleStringProperty(stockIn.getReorderLimit() != null ? numberFormat.format(stockIn.getReorderLimit()) : "");
-		this.stockPrice = new SimpleStringProperty(stockIn.getStockPrice() != null ? rupeesFormat.format(stockIn.getStockPrice()) : "");
-		this.customerPrice = new SimpleStringProperty(stockIn.getCustomerPrice() != null ? rupeesFormat.format(stockIn.getCustomerPrice()) : "");
-		this.gst = new SimpleStringProperty(stockIn.getGst() != null ? percentageFormat.format(stockIn.getGst()) : "");
-		this.gstAmount = new SimpleStringProperty(stockIn.getGstAmount() != null ? rupeesFormat.format(stockIn.getGstAmount()) : "");
-		this.netAmount = new SimpleStringProperty(stockIn.getNetAmount() != null ? rupeesFormat.format(stockIn.getNetAmount()) : "");
-		this.scale = new SimpleStringProperty(stockIn.getScale().getName());
+		this.stockQuantity = new SimpleDoubleProperty(stockIn.getStockQuantity());
+		this.currentQuantity = new SimpleDoubleProperty(stockIn.getCurrentQuantity());
+		this.reorderLimit = new SimpleDoubleProperty(stockIn.getReorderLimit());
+		this.stockPrice = new SimpleDoubleProperty(stockIn.getStockPrice());
+		this.customerPrice = new SimpleDoubleProperty(stockIn.getCustomerPrice());
+		this.gst = new SimpleDoubleProperty(stockIn.getGst());
+		this.gstAmount = new SimpleDoubleProperty(stockIn.getGstAmount());
+		this.netAmount = new SimpleDoubleProperty(stockIn.getNetAmount());
+		this.scale = new SimpleObjectProperty<ProductScale>(stockIn.getScale());
 		this.specifications = new SimpleStringProperty(stockIn.getSpecifications());
-		this.dealer = new SimpleStringProperty(stockIn.getDealer().getName());
-		this.addedBy = new SimpleStringProperty(stockIn.getAddedBy().getName());
-		this.addedDate = new SimpleStringProperty(stockIn.getAddedDate().format(DateTimeFormatter.ofPattern("dd-MMM-yyyy")));
+		this.dealer = new SimpleObjectProperty<DealerDTO>(stockIn.getDealer());
+		this.addedBy = new SimpleObjectProperty<UserDTO>(stockIn.getAddedBy());
+		this.addedDate = new SimpleObjectProperty<LocalDateTime>(stockIn.getAddedDate());
 	}
 
-	public TStockIn getStockIn() {
+	public StockInDTO getStockIn() {
 		return stockIn;
 	}
 
-	public void setStockIn(TStockIn stockIn) {
+	public void setStockIn(StockInDTO stockIn) {
 		this.stockIn = stockIn;
 	}
 
@@ -118,76 +118,76 @@ public class StockIn {
 		this.guarantee.set(guarantee);
 	}
 
-	public String getStockQuantity() {
+	public double getStockQuantity() {
 		return stockQuantity.get();
 	}
 	
 	public void setStockQuantity(Double stockQuantity) {
-		this.stockQuantity.set(stockQuantity == null ? "" : numberFormat.format(stockQuantity));
+		this.stockQuantity.set(stockQuantity);
 	}
 
-	public String getCurrentQuantity() {
+	public double getCurrentQuantity() {
 		return currentQuantity.get();
 	}
 	
 	public void setCurrentQuantity(Double currentQuantity) {
-		this.currentQuantity.set(currentQuantity == null ? "" : numberFormat.format(currentQuantity));
+		this.currentQuantity.set(currentQuantity);
 	}
 
-	public String getReorderLimit() {
+	public double getReorderLimit() {
 		return reorderLimit.get();
 	}
 	
 	public void setReorderLimit(Double reorderLimit) {
-		this.reorderLimit.set(reorderLimit == null? "" : numberFormat.format(reorderLimit));
+		this.reorderLimit.set(reorderLimit);
 	}
 
-	public String getStockPrice() {
+	public double getStockPrice() {
 		return stockPrice.get();
 	}
 	
 	public void setStockPrice(Double stockPrice) {
-		this.stockPrice.set(stockPrice == null ? "" : rupeesFormat.format(stockPrice));
+		this.stockPrice.set(stockPrice);
 	}
 
-	public String getCustomerPrice() {
+	public double getCustomerPrice() {
 		return customerPrice.get();
 	}
 
 	public void setCustomerPrice(Double customerPrice) {
-		this.customerPrice.set(customerPrice == null ? "" : rupeesFormat.format(customerPrice));
+		this.customerPrice.set(customerPrice);
 	}
 	
-	public String getGst() {
+	public double getGst() {
 		return gst.get();
 	}
 	
 	public void setGst(Double gst) {
-		this.gst.set(gst == null ? "" : numberFormat.format(gst));
+		this.gst.set(gst);
 	}
 
-	public String getGstAmount() {
+	public double getGstAmount() {
 		return gstAmount.get();
 	}
 	
 	public void setGstAmount(Double gstAmount) {
-		this.gstAmount.set(gstAmount == null? "" : rupeesFormat.format(gstAmount));
+		this.gstAmount.set(gstAmount);
 	}
 
-	public String getNetAmount() {
+	public double getNetAmount() {
 		return netAmount.get();
 	}
 
 	public void setNetAmount(Double netAmount) {
-		this.netAmount.set(netAmount == null ? "" : rupeesFormat.format(netAmount));
+		this.netAmount.set(netAmount);
 	}
 	
-	public String getScale() {
+	public ProductScale getScale() {
 		return scale.get();
 	}
 	
 	public void setScale(ProductScale productScale) {
-		this.scale.set(productScale.getName());
+		this.scale.set(productScale);
 	}
 
 	public String getSpecifications() {
@@ -198,28 +198,28 @@ public class StockIn {
 		this.specifications.set(specifications);
 	}
 	
-	public String getDealer() {
+	public DealerDTO getDealer() {
 		return dealer.get();
 	}
 	
-	public void setDealer(TDealer dealer) {
-		this.dealer.set(dealer == null ? "" : dealer.getName());
+	public void setDealer(DealerDTO dealer) {
+		this.dealer.set(dealer);
 	}
 
-	public String getAddedBy() {
+	public UserDTO getAddedBy() {
 		return addedBy.get();
 	}
 	
-	public void setAddedBy(TUser addedBy) {
-		this.addedBy.set(addedBy == null ? "" : addedBy.getName());
+	public void setAddedBy(UserDTO addedBy) {
+		this.addedBy.set(addedBy);
 	}
 
-	public String getAddedDate() {
+	public LocalDateTime getAddedDate() {
 		return addedDate.get();
 	}
 	
 	public void setAddedDate(LocalDateTime addedDate) {
-		this.addedDate.set(addedDate == null ? "" : addedDate.format(DateTimeFormatter.ofPattern("dd-MMM-yyyy")));
+		this.addedDate.set(addedDate);
 	}
 	
 }

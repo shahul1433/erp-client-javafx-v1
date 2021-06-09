@@ -1,15 +1,13 @@
 package erp.client.javafx.stock.stockin;
 
-import erp.client.javafx.component.enums.ProductScale;
 import erp.client.javafx.component.event.trigger.TriggerEvent;
 import erp.client.javafx.container.status.StatusBarStatus;
-import erp.client.javafx.entity.TDealer;
-import erp.client.javafx.entity.TStockIn;
-import erp.client.javafx.entity.TUser;
+import erp.client.javafx.dealer.DealerDTO;
 import erp.client.javafx.exception.FormValidationException;
 import erp.client.javafx.exception.WorkerStateEventStatusBarExceptionHandler;
 import erp.client.javafx.http.ResponseEntity;
 import erp.client.javafx.session.AppSession;
+import erp.client.javafx.user.UserDTO;
 import erp.client.javafx.utility.PopupUtility;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
@@ -29,8 +27,8 @@ public class AddStockService {
 
     public void addStock() throws FormValidationException {
         String msg;
-        TDealer selectedDealer = view.getDealerChooserPanel().getSelectedDealer();
-        TUser loggedUser = AppSession.getLoggedUser();
+        DealerDTO selectedDealer = view.getDealerChooserPanel().getSelectedDealer();
+        UserDTO loggedUser = AppSession.getLoggedUser();
 
         if(selectedDealer == null) {
             msg = "Please select a dealer";
@@ -44,7 +42,7 @@ public class AddStockService {
             throw new FormValidationException(Alert.AlertType.ERROR, msg);
         }
 
-        TStockIn stockIn = view.getStockDetailsPanel().populateAndGetStockIn();
+        StockInDTO stockIn = view.getStockDetailsPanel().populateAndGetStockIn();
         LocalDateTime addedDate = LocalDateTime.now();
         stockIn.setAddedDate(addedDate);
         stockIn.setAddedBy(loggedUser);
@@ -57,7 +55,7 @@ public class AddStockService {
         service.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
             @Override
             public void handle(WorkerStateEvent workerStateEvent) {
-                ResponseEntity<TStockIn> entity = service.getValue();
+                ResponseEntity<StockInDTO> entity = service.getValue();
                 view.setStatusBarStatus(StatusBarStatus.READY);
                 PopupUtility.showMessage(Alert.AlertType.INFORMATION, entity.getMessage());
                 view.getParentStage().fireEvent(new TriggerEvent(TriggerEvent.REFRESH));

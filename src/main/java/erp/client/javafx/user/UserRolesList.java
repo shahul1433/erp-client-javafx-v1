@@ -2,25 +2,23 @@ package erp.client.javafx.user;
 
 import java.util.List;
 
-import erp.client.javafx.entity.TUserRole;
-
 public class UserRolesList {
 
-	private List<TUserRole> roles;
+	private List<UserRoleDTO> roles;
 	
 	public UserRolesList() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public UserRolesList(List<TUserRole> roles) {
+	public UserRolesList(List<UserRoleDTO> roles) {
 		this.roles = roles;
 	}
 
-	public List<TUserRole> getRoles() {
+	public List<UserRoleDTO> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(List<TUserRole> roles) {
+	public void setRoles(List<UserRoleDTO> roles) {
 		this.roles = roles;
 	}
 	

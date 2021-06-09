@@ -1,6 +1,5 @@
 package erp.client.javafx.user;
 
-import erp.client.javafx.component.combobox.UserTypeCombobox;
 import erp.client.javafx.component.textfield.CPasswordField;
 import erp.client.javafx.component.textfield.CTextField;
 import erp.client.javafx.component.textfield.email.EmailField;
@@ -9,8 +8,6 @@ import erp.client.javafx.component.textfield.phone.PhoneField;
 import erp.client.javafx.container.AbstractDialog;
 import erp.client.javafx.container.Arguments;
 import erp.client.javafx.container.StageMode;
-import erp.client.javafx.entity.TUser;
-import erp.client.javafx.entity.UserType;
 import erp.client.javafx.icon.FontAwsomeManager;
 import erp.client.javafx.layout.AbstractGridPane;
 import erp.client.javafx.layout.AbstractHBoxPane;
@@ -37,7 +34,7 @@ public class AddEditViewUserDialog extends AbstractDialog {
     RolesPane rolesPane;
 
     AddEditViewUserService userService;
-    TUser user;
+    UserPersistDTO user;
 
     public AddEditViewUserDialog(Stage parentStage, StageMode stageMode, Arguments args) {
         super(parentStage, stageMode, args);
@@ -46,7 +43,7 @@ public class AddEditViewUserDialog extends AbstractDialog {
 
     @Override
     protected void init() {
-        this.user = getArgument("user", TUser.class);
+        this.user = getArgument("user", UserPersistDTO.class);
         tabPane = new TabPane();
         detailsTab = new Tab("Details");
         detailsTab.setClosable(false);
@@ -94,7 +91,7 @@ public class AddEditViewUserDialog extends AbstractDialog {
 
         add.setOnAction(e -> {
             if(
-                detailsPane.name.validateField() && detailsPane.userType.validateField() &&
+                detailsPane.name.validateField() &&
                         detailsPane.designation.validateField() &&
                         detailsPane.email.validateField() &&
                         detailsPane.phone.validateField() &&
@@ -118,7 +115,6 @@ public class AddEditViewUserDialog extends AbstractDialog {
 
     private void clearFields() {
         detailsPane.name.clearField();
-        detailsPane.userType.clearField();
         detailsPane.designation.clearField();
         detailsPane.email.clearField();
         detailsPane.phone.clearField();
@@ -179,7 +175,6 @@ public class AddEditViewUserDialog extends AbstractDialog {
             case VIEW:
                 getStage().setTitle("View User");
                 detailsPane.name.setEditable(false);
-                detailsPane.userType.setEditable(false);
                 detailsPane.designation.setEditable(false);
                 detailsPane.email.setEditable(false);
                 detailsPane.phone.setFieldEditable(false);
@@ -289,16 +284,12 @@ public class AddEditViewUserDialog extends AbstractDialog {
         CTextField name, designation, username, confirmPassword;
         PhoneField phone;
         EmailField email;
-        UserTypeCombobox userType;
         CPasswordField password;
         CheckBox isChangePassword;
         
         @Override
         public void init() {
             name = new CTextField("Name",  true, 100);
-            userType = new UserTypeCombobox("User Type", true, stage);
-            userType.setPrefWidth(Double.MAX_VALUE);
-            userType.setSelectedUserType(UserType.ADMINISTRATOR);
             designation = new CTextField("Designation",  true, 100);
             email = new EmailField( false, 200);
             phone = new PhoneField("Phone",  true, Country.INDIA);
@@ -335,9 +326,6 @@ public class AddEditViewUserDialog extends AbstractDialog {
             this.add(name.getLabel(), col++, row);
             this.add(name, col--, row++);
 
-            this.add(userType.getLabel(), col++, row);
-            this.add(userType, col--, row++);
-
             this.add(designation.getLabel(), col++, row);
             this.add(designation, col--, row++);
 
@@ -366,7 +354,6 @@ public class AddEditViewUserDialog extends AbstractDialog {
             if(stageMode == StageMode.EDIT || stageMode == StageMode.VIEW){
                 if(user != null) {
                     name.setText(user.getName());
-                    userType.setSelectedUserType(user.getUserType());
                     designation.setText(user.getDesignation());
                     email.setText(user.getEmail());
                     phone.setPhoneNo(user.getPhone());
@@ -379,7 +366,7 @@ public class AddEditViewUserDialog extends AbstractDialog {
         public void registerListeners() {
             name.setOnAction(e -> {
                 if(name.validateField())
-                    userType.requestFocus();
+                    designation.requestFocus();
             });
             designation.setOnAction(e -> {
                 if(designation.validateField())

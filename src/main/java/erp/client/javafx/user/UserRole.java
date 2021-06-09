@@ -1,20 +1,19 @@
 package erp.client.javafx.user;
 
-import erp.client.javafx.entity.TUserRole;
 import javafx.beans.property.SimpleStringProperty;
 
 public class UserRole {
 
 	private SimpleStringProperty role;
 	
-	private TUserRole userRole;
+	private UserRoleDTO userRole;
 	
-	public UserRole(TUserRole useRole) {
+	public UserRole(UserRoleDTO useRole) {
 		this.userRole = useRole;
 		this.role = new SimpleStringProperty(userRole.getRole());
 	}
 	
-	public TUserRole getUserRole() {
+	public UserRoleDTO getUserRole() {
 		return userRole;
 	}
 	

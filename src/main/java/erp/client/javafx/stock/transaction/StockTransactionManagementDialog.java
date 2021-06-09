@@ -1,3 +1,4 @@
+/*
 package erp.client.javafx.stock.transaction;
 
 import erp.client.javafx.component.enums.UserRole;
@@ -76,3 +77,4 @@ public class StockTransactionManagementDialog extends AbstractTableWithNavigatio
         return AppSession.hasRole(UserRole.STOCK_TRANSACTION);
     }
 }
+*/

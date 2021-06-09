@@ -6,7 +6,7 @@ import erp.client.javafx.container.Arguments;
 import erp.client.javafx.container.StageMode;
 import erp.client.javafx.container.tablewithnavigation.AbstractTableWithNavigationDialog;
 import erp.client.javafx.container.tablewithnavigation.TableColumnDataWrapper;
-import erp.client.javafx.entity.TGstStateCode;
+import erp.client.javafx.gst.GstStateCodeDTO;
 import erp.client.javafx.http.SortMap;
 import erp.client.javafx.session.AppSession;
 import erp.client.javafx.utility.GuiUtility;
@@ -22,7 +22,6 @@ import javafx.stage.Modality;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class DealerManagementDialog extends AbstractTableWithNavigationDialog<Dealer> {
 
@@ -77,7 +76,7 @@ public class DealerManagementDialog extends AbstractTableWithNavigationDialog<De
         TableColumnDataWrapper<Dealer, String> emailColumn = new TableColumnDataWrapper<>("Email", "email");
         TableColumnDataWrapper<Dealer, String> phoneColumn = new TableColumnDataWrapper<>("Phone", "phone");
         TableColumnDataWrapper<Dealer, String> gstinColumn = new TableColumnDataWrapper<>("GSTIN", "gstin");
-        TableColumnDataWrapper<Dealer, TGstStateCode> gstStateCodeColumn = new TableColumnDataWrapper<Dealer, TGstStateCode>("GST State Code", "gstStateCode", new Dealer.GstStateCodeCellFactory());
+        TableColumnDataWrapper<Dealer, GstStateCodeDTO> gstStateCodeColumn = new TableColumnDataWrapper<Dealer, GstStateCodeDTO>("GST State Code", "gstStateCode", new Dealer.GstStateCodeCellFactory());
         TableColumnDataWrapper<Dealer, Double> balanceColumn = new TableColumnDataWrapper<Dealer, Double>("Balance", "balance", new Dealer.BalanceCellFactory());
         TableColumnDataWrapper<Dealer, LocalDateTime> addedDateColumn = new TableColumnDataWrapper<>("Added On", "addedDate", new Dealer.DateCellFactory());
         TableColumnDataWrapper<Dealer, LocalDateTime> modifiedDateColumn = new TableColumnDataWrapper<>("Modified On", "modifiedDate", new Dealer.DateCellFactory());

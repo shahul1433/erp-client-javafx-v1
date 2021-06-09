@@ -4,7 +4,6 @@ import erp.client.javafx.component.date.DateSearchPanel;
 import erp.client.javafx.component.filter.combobox.GSTStateCodeCombobox;
 import erp.client.javafx.component.filter.textfield.TextFieldSearch;
 import erp.client.javafx.container.tablewithnavigation.AbstractFilterDialog;
-import erp.client.javafx.entity.TDealer;
 import javafx.geometry.Insets;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -110,7 +109,7 @@ public class DealerFilterDialog extends AbstractFilterDialog<DealerFilter> {
 
     @Override
     public DealerFilter getForm() {
-        TDealer dealer = new TDealer();
+        DealerDTO dealer = new DealerDTO();
         dealer.setArchive(false);
         dealer.setName(this.name.getSearchString());
         dealer.setShop(this.shop.getSearchString());

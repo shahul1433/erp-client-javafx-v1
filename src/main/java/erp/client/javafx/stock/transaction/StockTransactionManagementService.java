@@ -1,8 +1,8 @@
+/*
 package erp.client.javafx.stock.transaction;
 
 import erp.client.javafx.container.status.StatusBarStatus;
 import erp.client.javafx.container.tablewithnavigation.AbstractTableWithNavigationDialog;
-import erp.client.javafx.entity.TStockTransaction;
 import erp.client.javafx.exception.TableWithNavigationHandler;
 import erp.client.javafx.exception.WorkerStateEventStatusBarExceptionHandler;
 import erp.client.javafx.http.Page;
@@ -32,3 +32,4 @@ public class StockTransactionManagementService {
         service.start();
     }
 }
+*/

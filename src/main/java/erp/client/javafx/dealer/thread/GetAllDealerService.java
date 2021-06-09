@@ -3,9 +3,9 @@ package erp.client.javafx.dealer.thread;
 import com.fasterxml.jackson.core.type.TypeReference;
 import erp.client.javafx.config.ConfigurationManager;
 import erp.client.javafx.config.Constants;
+import erp.client.javafx.dealer.DealerDTO;
 import erp.client.javafx.dealer.DealerFilter;
 import erp.client.javafx.dealer.DealerManagementDialog;
-import erp.client.javafx.entity.TDealer;
 import erp.client.javafx.exception.FormValidationException;
 import erp.client.javafx.http.HttpModule;
 import erp.client.javafx.http.Page;
@@ -15,7 +15,7 @@ import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.scene.control.Alert;
 
-public class GetAllDealerService extends Service<Page<TDealer>> {
+public class GetAllDealerService extends Service<Page<DealerDTO>> {
 
     private DealerManagementDialog view;
     private SortMap sortMap;
@@ -26,16 +26,16 @@ public class GetAllDealerService extends Service<Page<TDealer>> {
     }
 
     @Override
-    protected Task<Page<TDealer>> createTask() {
+    protected Task<Page<DealerDTO>> createTask() {
         return new GetAllDealerTask();
     }
 
-    class GetAllDealerTask extends Task<Page<TDealer>> {
+    class GetAllDealerTask extends Task<Page<DealerDTO>> {
 
         @Override
-        protected Page<TDealer> call() throws Exception {
+        protected Page<DealerDTO> call() throws Exception {
             if (sortMap == null) {
-                sortMap = new SortMap("id", "desc");
+                sortMap = new SortMap("dealerId", "desc");
             }
             int pageNo = view.getBottomBar().getPageNo().getValue() != null ? view.getBottomBar().getPageNo().getValue()-1 : 0;
             int size = view.getBottomBar().getItemsPerPage().getValue() != null ? view.getBottomBar().getItemsPerPage().getValue() : 20;
@@ -45,7 +45,7 @@ public class GetAllDealerService extends Service<Page<TDealer>> {
             filter.setSortMap(sortMap);
 
             String getAllDealerUrl = ConfigurationManager.getConfiguration().getServer().getServerUrl() + Constants.Dealer.GET_ALL_DEALERS_URL;
-            ResponseEntity<Page<TDealer>> responseEntity = HttpModule.postRequest(getAllDealerUrl, filter, new TypeReference<Page<TDealer>>() {
+            ResponseEntity<Page<DealerDTO>> responseEntity = HttpModule.postRequest(getAllDealerUrl, filter, new TypeReference<Page<DealerDTO>>() {
             });
             if (responseEntity == null) {
                 throw new FormValidationException(Alert.AlertType.ERROR, "Something went wrong while fetch dealers from DB,\nPlease find log for more info");

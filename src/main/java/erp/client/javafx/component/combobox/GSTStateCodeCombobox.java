@@ -7,9 +7,9 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import erp.client.javafx.component.FormField;
 import erp.client.javafx.config.ConfigurationManager;
 import erp.client.javafx.config.Constants;
-import erp.client.javafx.entity.GstStateCodeList;
-import erp.client.javafx.entity.TGstStateCode;
+import erp.client.javafx.gst.GstStateCodeList;
 import erp.client.javafx.exception.FormValidationException;
+import erp.client.javafx.gst.GstStateCodeDTO;
 import erp.client.javafx.http.HttpModule;
 import erp.client.javafx.http.ResponseEntity;
 import erp.client.javafx.utility.PopupUtility;
@@ -23,7 +23,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 
-public class GSTStateCodeCombobox extends ComboBox<TGstStateCode> implements FormField{
+public class GSTStateCodeCombobox extends ComboBox<GstStateCodeDTO> implements FormField{
 
 	private Label label;
 	private String name;
@@ -49,10 +49,10 @@ public class GSTStateCodeCombobox extends ComboBox<TGstStateCode> implements For
 		service.start();
 	}
 	
-	private ListCell<TGstStateCode> createGstStateCodeCell() {
-		return new ListCell<TGstStateCode>() {
+	private ListCell<GstStateCodeDTO> createGstStateCodeCell() {
+		return new ListCell<GstStateCodeDTO>() {
 			@Override
-			protected void updateItem(TGstStateCode item, boolean empty) {
+			protected void updateItem(GstStateCodeDTO item, boolean empty) {
 				super.updateItem(item, empty);
 				if(item == null || empty)
 					setGraphic(null);
@@ -62,11 +62,11 @@ public class GSTStateCodeCombobox extends ComboBox<TGstStateCode> implements For
 		};
 	}
 
-	public TGstStateCode getSelectedGstStateCode() {
+	public GstStateCodeDTO getSelectedGstStateCode() {
 		return getSelectionModel().getSelectedItem();
 	}
 	
-	public void setSelectedGstStateCode(TGstStateCode gstStateCode) {
+	public void setSelectedGstStateCode(GstStateCodeDTO gstStateCode) {
 		service.restart();
 		service.setOnSucceeded(new GstStateCodeSucceedHandler(){
 			@Override
@@ -104,9 +104,9 @@ public class GSTStateCodeCombobox extends ComboBox<TGstStateCode> implements For
 		public void handle(WorkerStateEvent workerStateEvent) {
 			GstStateCodeList gstStateCodeList = service.getValue();
 			gstStateCodeList.getGstStateList().forEach(gst -> {getItems().add(gst);});
-			getItems().sort(new Comparator<TGstStateCode>() {
+			getItems().sort(new Comparator<GstStateCodeDTO>() {
 				@Override
-				public int compare(TGstStateCode o1, TGstStateCode o2) {
+				public int compare(GstStateCodeDTO o1, GstStateCodeDTO o2) {
 					return o1.getCode().compareTo(o2.getCode());
 				}
 			});

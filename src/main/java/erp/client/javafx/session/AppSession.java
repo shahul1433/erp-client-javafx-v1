@@ -1,13 +1,13 @@
 package erp.client.javafx.session;
 
 import erp.client.javafx.component.enums.UserRole;
-import erp.client.javafx.entity.TUser;
-import erp.client.javafx.entity.TUserRole;
+import erp.client.javafx.user.UserDTO;
+import erp.client.javafx.user.UserRoleDTO;
 
 public class AppSession {
 
 	private static String authorization;
-	private static TUser loggedUser;
+	private static UserDTO loggedUser;
 	
 	public AppSession() {
 		// TODO Auto-generated constructor stub
@@ -21,11 +21,11 @@ public class AppSession {
 		AppSession.authorization = authorization;
 	}
 
-	public static TUser getLoggedUser() {
+	public static UserDTO getLoggedUser() {
 		return loggedUser;
 	}
 
-	public static void setLoggedUser(TUser loggedUser) {
+	public static void setLoggedUser(UserDTO loggedUser) {
 		AppSession.loggedUser = loggedUser;
 	}
 	
@@ -38,7 +38,7 @@ public class AppSession {
 	}
 	
 	public static boolean hasRole(UserRole userRole) {
-		for(TUserRole ur: loggedUser.getRoles()) {
+		for(UserRoleDTO ur: loggedUser.getRoles()) {
 			if(ur.getRole().equalsIgnoreCase(userRole.getName())) {
 				return true;
 			}

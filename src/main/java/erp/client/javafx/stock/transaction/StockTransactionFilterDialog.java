@@ -1,3 +1,4 @@
+/*
 package erp.client.javafx.stock.transaction;
 
 import erp.client.javafx.component.date.DateSearchPanel;
@@ -5,8 +6,6 @@ import erp.client.javafx.component.filter.combobox.StockTransactionTypeCombobox;
 import erp.client.javafx.component.filter.textfield.TextFieldSearch;
 import erp.client.javafx.container.tablewithnavigation.AbstractFilterDialog;
 import erp.client.javafx.container.tablewithnavigation.AbstractTableWithNavigationDialog;
-import erp.client.javafx.entity.TStockIn;
-import erp.client.javafx.entity.TStockTransaction;
 import javafx.geometry.Insets;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -123,3 +122,4 @@ public class StockTransactionFilterDialog extends AbstractFilterDialog<StockTran
         return filter;
     }
 }
+*/

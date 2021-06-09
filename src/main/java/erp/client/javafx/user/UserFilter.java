@@ -1,28 +1,27 @@
 package erp.client.javafx.user;
 
 import erp.client.javafx.component.date.DateSearchable;
-import erp.client.javafx.entity.TUser;
 import erp.client.javafx.http.DatabaseTableFilter;
 import erp.client.javafx.http.SortMap;
 
 public class UserFilter extends DatabaseTableFilter{
 
-	private TUser user;
+	private UserDTO user;
 	
 	private DateSearchable addedDate, modifiedDate;
 	
-	public UserFilter(TUser user, DateSearchable addedDate, DateSearchable modifiedDate, int page, int size, SortMap sortMap) {
+	public UserFilter(UserDTO user, DateSearchable addedDate, DateSearchable modifiedDate, int page, int size, SortMap sortMap) {
 		super(page, size, sortMap);
 		this.user = user;
 		this.addedDate = addedDate;
 		this.modifiedDate = modifiedDate;
 	}
 
-	public TUser getUser() {
+	public UserDTO getUser() {
 		return user;
 	}
 
-	public void setUser(TUser user) {
+	public void setUser(UserDTO user) {
 		this.user = user;
 	}
 

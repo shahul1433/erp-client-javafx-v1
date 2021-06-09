@@ -4,8 +4,7 @@ import erp.client.javafx.container.status.StatusBarStatus;
 import erp.client.javafx.container.tablewithnavigation.AbstractTableWithNavigationDialog;
 import erp.client.javafx.dealer.thread.GetAllDealerService;
 import erp.client.javafx.dealer.thread.RemoveDealerService;
-import erp.client.javafx.entity.EntityIDList;
-import erp.client.javafx.entity.TDealer;
+import erp.client.javafx.common.EntityIDList;
 import erp.client.javafx.exception.TableWithNavigationHandler;
 import erp.client.javafx.exception.WorkerStateEventStatusBarExceptionHandler;
 import erp.client.javafx.http.Page;
@@ -32,9 +31,9 @@ public class DealerManagementService {
         var service = new GetAllDealerService(view, sortMap);
         view.setStatusBarStatus(StatusBarStatus.WORKING);
         service.setOnFailed(new WorkerStateEventStatusBarExceptionHandler(view, view.getBottomBar().getStatusBar()));
-        service.setOnSucceeded(new TableWithNavigationHandler<TDealer, Dealer>(service, view) {
+        service.setOnSucceeded(new TableWithNavigationHandler<DealerDTO, Dealer>(service, view) {
             @Override
-            public void setData(Page<TDealer> page, AbstractTableWithNavigationDialog<Dealer> view) {
+            public void setData(Page<DealerDTO> page, AbstractTableWithNavigationDialog<Dealer> view) {
                 page.getContent().forEach(obj -> view.getCenterPane().getTable().getItems().add(new Dealer(obj)));
             }
         });
@@ -44,7 +43,7 @@ public class DealerManagementService {
     public void removeDealer() {
         EntityIDList entityIDList = new EntityIDList();
         ObservableList<Dealer> selectedItems = view.getCenterPane().getTable().getSelectionModel().getSelectedItems();
-        selectedItems.forEach(dealer -> entityIDList.addId(dealer.getDealer().getId()));
+        selectedItems.forEach(dealer -> entityIDList.addId(dealer.getDealer().getDealerId()));
         view.setStatusBarStatus(StatusBarStatus.WORKING);
 
         var service = new RemoveDealerService(entityIDList);

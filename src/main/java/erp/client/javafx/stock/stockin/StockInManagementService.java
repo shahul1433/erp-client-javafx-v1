@@ -2,7 +2,6 @@ package erp.client.javafx.stock.stockin;
 
 import erp.client.javafx.container.status.StatusBarStatus;
 import erp.client.javafx.container.tablewithnavigation.AbstractTableWithNavigationDialog;
-import erp.client.javafx.entity.TStockIn;
 import erp.client.javafx.exception.TableWithNavigationHandler;
 import erp.client.javafx.exception.WorkerStateEventStatusBarExceptionHandler;
 import erp.client.javafx.http.Page;
@@ -23,9 +22,9 @@ public class StockInManagementService {
         var service = new GetAllStockInService(view, sortMap);
         view.setStatusBarStatus(StatusBarStatus.WORKING);
         service.setOnFailed(new WorkerStateEventStatusBarExceptionHandler(view, view.getBottomBar().getStatusBar()));
-        service.setOnSucceeded(new TableWithNavigationHandler<TStockIn, StockIn>(service, view) {
+        service.setOnSucceeded(new TableWithNavigationHandler<StockInDTO, StockIn>(service, view) {
             @Override
-            public void setData(Page<TStockIn> page, AbstractTableWithNavigationDialog<StockIn> view) {
+            public void setData(Page<StockInDTO> page, AbstractTableWithNavigationDialog<StockIn> view) {
                 page.getContent().forEach(obj -> view.getCenterPane().getTable().getItems().add(new StockIn(obj)));
             }
         });

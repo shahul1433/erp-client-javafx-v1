@@ -3,10 +3,8 @@ package erp.client.javafx.component.searchbox.dealer;
 import com.fasterxml.jackson.core.type.TypeReference;
 import erp.client.javafx.config.ConfigurationManager;
 import erp.client.javafx.config.Constants;
-import erp.client.javafx.container.status.StatusBar;
-import erp.client.javafx.container.status.StatusBarStatus;
+import erp.client.javafx.dealer.DealerDTO;
 import erp.client.javafx.dealer.DealerList;
-import erp.client.javafx.entity.TDealer;
 import erp.client.javafx.exception.FormValidationException;
 import erp.client.javafx.http.HttpModule;
 import erp.client.javafx.http.ResponseEntity;
@@ -22,7 +20,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.input.KeyEvent;
 import javafx.util.StringConverter;
 
-public class DealerSearchCombobox extends ComboBox<TDealer> implements EventHandler<KeyEvent> {
+public class DealerSearchCombobox extends ComboBox<DealerDTO> implements EventHandler<KeyEvent> {
 
     private GetDealersForSearchService service;
     private ProgressBar progressBar;
@@ -63,10 +61,10 @@ public class DealerSearchCombobox extends ComboBox<TDealer> implements EventHand
         this.getEditor().positionCaret(textLength);
     }
 
-    private ListCell<TDealer> createDealerCell() {
-        return new ListCell<TDealer>() {
+    private ListCell<DealerDTO> createDealerCell() {
+        return new ListCell<DealerDTO>() {
             @Override
-            protected void updateItem(TDealer item, boolean empty) {
+            protected void updateItem(DealerDTO item, boolean empty) {
                 super.updateItem(item, empty);
                 if(item == null || empty)
                     setGraphic(null);
@@ -76,7 +74,7 @@ public class DealerSearchCombobox extends ComboBox<TDealer> implements EventHand
         };
     }
 
-    public TDealer getSelectedDealer() {
+    public DealerDTO getSelectedDealer() {
         return getSelectionModel().getSelectedItem();
     }
 
@@ -95,15 +93,15 @@ public class DealerSearchCombobox extends ComboBox<TDealer> implements EventHand
         }
     }
 
-    class DealerConverter extends StringConverter<TDealer> {
+    class DealerConverter extends StringConverter<DealerDTO> {
 
         @Override
-        public String toString(TDealer dealer) {
+        public String toString(DealerDTO dealer) {
             return dealer == null ? null : dealer.getName() +" - " + dealer.getShop() + " - " + dealer.getGstin();
         }
 
         @Override
-        public TDealer fromString(String s) {
+        public DealerDTO fromString(String s) {
             return getSelectionModel().getSelectedItem();
         }
     }

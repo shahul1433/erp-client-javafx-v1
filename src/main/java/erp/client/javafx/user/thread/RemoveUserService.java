@@ -3,7 +3,7 @@ package erp.client.javafx.user.thread;
 import com.fasterxml.jackson.core.type.TypeReference;
 import erp.client.javafx.config.ConfigurationManager;
 import erp.client.javafx.config.Constants;
-import erp.client.javafx.entity.EntityIDList;
+import erp.client.javafx.common.EntityIDList;
 import erp.client.javafx.exception.FormValidationException;
 import erp.client.javafx.http.HttpModule;
 import erp.client.javafx.http.ResponseEntity;

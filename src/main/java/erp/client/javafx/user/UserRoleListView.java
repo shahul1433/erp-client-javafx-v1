@@ -1,6 +1,5 @@
 package erp.client.javafx.user;
 
-import erp.client.javafx.entity.TUserRole;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
@@ -40,9 +39,9 @@ public class UserRoleListView extends ListView<UserRole>{
 		return new HashSet<>(getItems());
 	}
 	
-	public void setRoles(Set<TUserRole> roles) {
+	public void setRoles(Set<UserRoleDTO> roles) {
 		getItems().clear();
-		for(TUserRole role : roles) {
+		for(UserRoleDTO role : roles) {
 			getItems().add(new UserRole(role));
 		}
 	}

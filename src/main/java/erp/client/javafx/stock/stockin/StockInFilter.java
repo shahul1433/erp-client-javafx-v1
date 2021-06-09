@@ -1,26 +1,25 @@
 package erp.client.javafx.stock.stockin;
 
 import erp.client.javafx.component.date.DateSearchable;
-import erp.client.javafx.entity.TStockIn;
 import erp.client.javafx.http.DatabaseTableFilter;
 import erp.client.javafx.http.SortMap;
 
 public class StockInFilter extends DatabaseTableFilter{
 
-	private TStockIn stockIn;
+	private StockInDTO stockIn;
 	private DateSearchable addedDate;
 	
-	public StockInFilter(TStockIn stockIn, DateSearchable addedDate, int page, int size, SortMap sortMap) {
+	public StockInFilter(StockInDTO stockIn, DateSearchable addedDate, int page, int size, SortMap sortMap) {
 		super(page, size, sortMap);
 		this.stockIn = stockIn;
 		this.addedDate = addedDate;
 	}
 
-	public TStockIn getStockIn() {
+	public StockInDTO getStockIn() {
 		return stockIn;
 	}
 
-	public void setStockIn(TStockIn stockIn) {
+	public void setStockIn(StockInDTO stockIn) {
 		this.stockIn = stockIn;
 	}
 

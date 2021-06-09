@@ -1,3 +1,4 @@
+/*
 package erp.client.javafx.stock.transaction;
 
 import java.text.NumberFormat;
@@ -6,8 +7,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 import erp.client.javafx.component.enums.StockTransactionType;
-import erp.client.javafx.entity.TStockIn;
-import erp.client.javafx.entity.TStockTransaction;
 import javafx.beans.property.SimpleStringProperty;
 
 public class StockTransaction {
@@ -82,3 +81,4 @@ public class StockTransaction {
 	}
 	
 }
+*/

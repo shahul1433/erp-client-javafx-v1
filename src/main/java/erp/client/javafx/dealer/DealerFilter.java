@@ -1,27 +1,26 @@
 package erp.client.javafx.dealer;
 
 import erp.client.javafx.component.date.DateSearchable;
-import erp.client.javafx.entity.TDealer;
 import erp.client.javafx.http.DatabaseTableFilter;
 import erp.client.javafx.http.SortMap;
 
 public class DealerFilter extends DatabaseTableFilter{
 
-	private TDealer dealer;
+	private DealerDTO dealer;
 	private DateSearchable addedDate, modifiedDate;
 	
-	public DealerFilter(TDealer dealer, DateSearchable addedDate, DateSearchable modifiedDate, int page, int size, SortMap sortMap) {
+	public DealerFilter(DealerDTO dealer, DateSearchable addedDate, DateSearchable modifiedDate, int page, int size, SortMap sortMap) {
 		super(page, size, sortMap);
 		this.dealer = dealer;
 		this.addedDate = addedDate;
 		this.modifiedDate = modifiedDate;
 	}
 
-	public TDealer getDealer() {
+	public DealerDTO getDealer() {
 		return dealer;
 	}
 
-	public void setDealer(TDealer dealer) {
+	public void setDealer(DealerDTO dealer) {
 		this.dealer = dealer;
 	}
 

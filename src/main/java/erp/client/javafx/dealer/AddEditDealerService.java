@@ -4,9 +4,8 @@ import erp.client.javafx.component.event.trigger.TriggerEvent;
 import erp.client.javafx.container.StageMode;
 import erp.client.javafx.container.status.StatusBarStatus;
 import erp.client.javafx.dealer.thread.SaveDealerService;
-import erp.client.javafx.entity.TDealer;
-import erp.client.javafx.entity.TGstStateCode;
 import erp.client.javafx.exception.WorkerStateEventStatusBarExceptionHandler;
+import erp.client.javafx.gst.GstStateCodeDTO;
 import erp.client.javafx.http.ResponseEntity;
 import erp.client.javafx.utility.PopupUtility;
 import javafx.concurrent.WorkerStateEvent;
@@ -30,17 +29,18 @@ public class AddEditDealerService {
         String email = view.getEmail().getText().trim();
         String phoneNo = view.getPhone().getPhoneNo();
         String gstin = view.getGstin().getText().trim();
-        TGstStateCode selectedGstStateCode = view.getGstStateCodeCombobox().getSelectedGstStateCode();
+        GstStateCodeDTO selectedGstStateCode = view.getGstStateCodeCombobox().getSelectedGstStateCode();
         String address = view.getAddress().getText().trim();
 
-        TDealer dealer;
+        DealerDTO dealer;
         if (view.getStageMode() == StageMode.EDIT) {
             dealer = view.getDealer();
         }else {
-            dealer = new TDealer();
+            dealer = new DealerDTO();
         }
         dealer.setName(name);
         dealer.setShop(shop);
+        dealer.setAddress(address);
         dealer.setEmail(email);
         dealer.setPhone(phoneNo);
         dealer.setGstin(gstin);
@@ -54,7 +54,7 @@ public class AddEditDealerService {
         service.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
             @Override
             public void handle(WorkerStateEvent workerStateEvent) {
-                ResponseEntity<TDealer> responseEntity = service.getValue();
+                ResponseEntity<DealerDTO> responseEntity = service.getValue();
                 view.setStatusBarStatus(StatusBarStatus.READY);
                 PopupUtility.showMessage(Alert.AlertType.INFORMATION, responseEntity.getMessage());
                 view.getStage().close();

@@ -69,7 +69,6 @@ public class UserManagementDialog extends AbstractTableWithNavigationDialog<User
         getCenterPane().getTable().getColumns().add(index);
 
         tableColumns.add(new TableColumnDataWrapper<>("Name", "name"));
-        tableColumns.add(new TableColumnDataWrapper<>("Type", "userType"));
         tableColumns.add(new TableColumnDataWrapper<>("Designation", "designation"));
         tableColumns.add(new TableColumnDataWrapper<>("Email", "email"));
         tableColumns.add(new TableColumnDataWrapper<>("Phone", "phone"));
@@ -109,7 +108,8 @@ public class UserManagementDialog extends AbstractTableWithNavigationDialog<User
             if(e.getClickCount() >= 2) {
                 User user = this.centerPane.getTable().getSelectionModel().getSelectedItem();
                 Arguments args = new Arguments();
-                args.setArgument("user", user.getUser());
+                UserPersistDTO dto = new UserPersistDTO(user.getUser());
+                args.setArgument("user", dto);
                 new AddEditViewUserDialog(getStage(), StageMode.VIEW, args);
             }
         });
@@ -126,7 +126,8 @@ public class UserManagementDialog extends AbstractTableWithNavigationDialog<User
             getEdit().setOnAction(e -> {
                 User user = getCenterPane().getTable().getSelectionModel().getSelectedItem();
                 Arguments args = new Arguments();
-                args.setArgument("user", user.getUser());
+                UserPersistDTO dto = new UserPersistDTO(user.getUser());
+                args.setArgument("user", dto);
                 new AddEditViewUserDialog(getStage(), StageMode.EDIT, args);
             });
 
