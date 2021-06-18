@@ -26,11 +26,13 @@ public class PageNoCombobox extends ComboBox<Integer>{
 		setItems(items);
 		removeEventFilter(ActionEvent.ACTION, filter);
 	}
-	
-	private EventHandler<ActionEvent> disableDefaultActionEvent() {
-		
-		return new EventHandler<ActionEvent>() {
 
+	public Integer getPageNo() {
+		return getSelectionModel().getSelectedItem() - 1;
+	}
+
+	private EventHandler<ActionEvent> disableDefaultActionEvent() {
+		return new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				event.consume();

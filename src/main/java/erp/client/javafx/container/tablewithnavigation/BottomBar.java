@@ -1,5 +1,6 @@
 package erp.client.javafx.container.tablewithnavigation;
 
+import erp.client.javafx.component.combobox.PageNoCombobox;
 import erp.client.javafx.container.status.StatusBar;
 import erp.client.javafx.icon.FontAwsomeManager;
 import erp.client.javafx.layout.AbstractBorderPane;

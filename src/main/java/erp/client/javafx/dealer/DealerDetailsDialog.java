@@ -1,5 +1,7 @@
 package erp.client.javafx.dealer;
 
+import erp.client.javafx.component.combobox.PageNoCombobox;
+import erp.client.javafx.component.enums.LedgerTransactionType;
 import erp.client.javafx.component.enums.UserRole;
 import erp.client.javafx.component.textfield.CTextArea;
 import erp.client.javafx.component.textfield.CTextField;
@@ -7,10 +9,14 @@ import erp.client.javafx.component.textfield.currency.IndianRupeesField;
 import erp.client.javafx.container.AbstractDialog;
 import erp.client.javafx.container.Arguments;
 import erp.client.javafx.container.StageMode;
+import erp.client.javafx.dealer.card.LedgerTransactionCard;
+import erp.client.javafx.icon.FontAwsomeManager;
 import erp.client.javafx.layout.AbstractBorderPane;
 import erp.client.javafx.layout.AbstractGridPane;
 import erp.client.javafx.layout.AbstractVBoxPane;
 import erp.client.javafx.session.AppSession;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -18,27 +24,27 @@ import javafx.geometry.VPos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.io.InputStream;
+import java.time.LocalDateTime;
 import java.time.Month;
 
 public class DealerDetailsDialog extends AbstractDialog {
 
     private LeftSidePanel leftSidePanel;
     private CenterPanel centerPanel;
-    private DealerDTO dealer;
+    private DealerDTO dealerDTO;
+    private LedgerDTO ledgerDTO;
     private DealerDetailsService dealerDetailsService;
 
     public DealerDetailsDialog(Stage parentStage, StageMode stageMode, Arguments args) {
         super(parentStage, stageMode, args);
-        getStage().setTitle("Dealer Details | "+ (dealer != null ? dealer.getName() : "--"));
+        getStage().setTitle("Dealer Details | "+ (dealerDTO != null ? dealerDTO.getName() : "--"));
     }
 
     @Override
@@ -47,8 +53,9 @@ public class DealerDetailsDialog extends AbstractDialog {
         dealerDetailsService = new DealerDetailsService(this);
         leftSidePanel = new LeftSidePanel();
         centerPanel = new CenterPanel();
-        dealer = getArgument("dealer", DealerDTO.class);
-        dealerDetailsService.getLedgerYearsByDealer(dealer);
+        dealerDTO = getArgument("dealer", DealerDTO.class);
+        ledgerDTO = null;
+        dealerDetailsService.getLedgerYearsByDealer(dealerDTO);
         leftSidePanel.dealerInfoPanel.populateFields();
         leftSidePanel.balanceAmountPanel.populateFields();
     }
@@ -69,8 +76,8 @@ public class DealerDetailsDialog extends AbstractDialog {
         return centerPanel;
     }
 
-    public DealerDTO getDealer() {
-        return dealer;
+    public DealerDTO getDealerDTO() {
+        return dealerDTO;
     }
 
     @Override
@@ -97,6 +104,14 @@ public class DealerDetailsDialog extends AbstractDialog {
     @Override
     protected void adjustViewByStageMode() {
 
+    }
+
+    public LedgerDTO getLedgerDTO() {
+        return ledgerDTO;
+    }
+
+    public void setLedgerDTO(LedgerDTO ledgerDTO) {
+        this.ledgerDTO = ledgerDTO;
     }
 
     class CenterPanel extends AbstractBorderPane {
@@ -132,7 +147,7 @@ public class DealerDetailsDialog extends AbstractDialog {
 
         class TopBar extends AbstractBorderPane {
 
-            Label label;
+            Label label, imgLabel;
             ComboBox<Integer> year;
             ComboBox<Month> month;
             IndianRupeesField openBalance, closedBalance;
@@ -140,27 +155,48 @@ public class DealerDetailsDialog extends AbstractDialog {
             @Override
             public void init() {
                 this.setId("dealer-ledger-top-bar");
+                imgLabel = new Label("\uf03a");
+                imgLabel.setFont(FontAwsomeManager.getSolidFontPlain(48));
                 label = new Label("Ledger");
                 label.setId("ledger-heading-label");
                 year = new ComboBox<>();
                 month = new ComboBox<>();
                 openBalance = new IndianRupeesField("Open Balance", false);
-                openBalance.setStyle("-fx-text-fill: #00e600");
-//                openBalance.setEditable(false);
+                openBalance.setEditable(false);
                 closedBalance = new IndianRupeesField("Closed Balance", false);
-//                closedBalance.setEditable(false);
-                closedBalance.setStyle("-fx-text-fill: red");
+                closedBalance.setEditable(false);
+            }
+
+            public void setOpenBalance(Double amount) {
+                openBalance.setCashAmount(amount);
+                if(amount < 0) {
+                    openBalance.setStyle("-fx-text-fill: red");
+                } else {
+                    openBalance.setStyle("-fx-text-fill: #00e600");
+                }
+            }
+
+            public void setClosedBalance(Double amount) {
+                closedBalance.setCashAmount(amount);
+                if(amount < 0) {
+                    closedBalance.setStyle("-fx-text-fill: red");
+                } else {
+                    closedBalance.setStyle("-fx-text-fill: #00e600");
+                }
             }
 
             @Override
             public void designGUI() {
-                setLeft(label);
+                HBox labelPane = new HBox(2);
+                labelPane.getChildren().addAll(imgLabel, label);
+                labelPane.setAlignment(Pos.CENTER);
+                labelPane.setPadding(new Insets(5));
+                setLeft(labelPane);
                 BorderPane.setAlignment(label, Pos.CENTER);
 
                 setCenter(designToolBar());
 
                 setRight(designLedgerBalancePane());
-
 
             }
             private HBox designToolBar() {
@@ -197,6 +233,19 @@ public class DealerDetailsDialog extends AbstractDialog {
             @Override
             public void registerListeners() {
 
+                year.valueProperty().addListener(new ChangeListener<Integer>() {
+                    @Override
+                    public void changed(ObservableValue<? extends Integer> observableValue, Integer integer, Integer t1) {
+                        dealerDetailsService.getLedgerMonthsByYearAndDealer();
+                    }
+                });
+
+                month.valueProperty().addListener(new ChangeListener<Month>() {
+                    @Override
+                    public void changed(ObservableValue<? extends Month> observableValue, Month month, Month t1) {
+                        dealerDetailsService.getLedgerByMonthAndYearAndDealer();
+                    }
+                });
             }
 
             @Override
@@ -205,16 +254,38 @@ public class DealerDetailsDialog extends AbstractDialog {
             }
         }
 
-        class ContentPane extends AbstractGridPane {
+        class ContentPane extends AbstractBorderPane {
+
+            private VBox contentBox;
 
             @Override
             public void init() {
                 this.setId("dealer-ledger-content");
+                contentBox = new VBox(10);
+                contentBox.setPadding(new Insets(10));
+                showEmptyContentInfo();
             }
 
             @Override
             public void designGUI() {
+                ScrollPane pane = new ScrollPane(contentBox);
+                pane.setPrefHeight(400);
+                pane.setFitToWidth(true);
+                setCenter(pane);
+            }
 
+            public void showEmptyContentInfo() {
+                Label noContentLabel = new Label("There is no transactions yet");
+                noContentLabel.setId("no-content-label");
+                noContentLabel.setAlignment(Pos.CENTER);
+
+                BorderPane pane = new BorderPane();
+                pane.setCenter(noContentLabel);
+                contentBox.getChildren().add(pane);
+            }
+
+            public VBox getContentBox() {
+                return contentBox;
             }
 
             @Override
@@ -226,23 +297,38 @@ public class DealerDetailsDialog extends AbstractDialog {
             public boolean checkSecurity() {
                 return false;
             }
+
         }
 
         class BottomBar extends AbstractBorderPane {
 
             Button prev, next;
+            Label info;
+            PageNoCombobox pageNo;
 
             @Override
             public void init() {
                 this.setId("dealer-ledger-bottom-bar");
                 prev = new Button();
                 prev.setId("prev-button");
+                prev.setDisable(true);
                 next = new Button();
                 next.setId("next-button");
+                next.setDisable(true);
+
+                info = new Label("Showing 0 - 0 0f 0 transactions");
+                info.setId("ledger-info-text");
+                pageNo = new PageNoCombobox();
             }
 
             @Override
             public void designGUI() {
+
+                VBox vBox = new VBox(10);
+                vBox.getChildren().addAll(pageNo, info);
+                vBox.setAlignment(Pos.CENTER);
+                setCenter(vBox);
+
                 setLeft(prev);
                 BorderPane.setAlignment(prev, Pos.CENTER);
 
@@ -252,7 +338,17 @@ public class DealerDetailsDialog extends AbstractDialog {
 
             @Override
             public void registerListeners() {
+                next.setOnAction(e -> {
+                    pageNo.getSelectionModel().selectNext();
+                    dealerDetailsService.getLedgerTransactions();
+                });
 
+                prev.setOnAction(e -> {
+                    pageNo.getSelectionModel().selectPrevious();
+                    dealerDetailsService.getLedgerTransactions();
+                });
+
+                pageNo.setOnAction(e -> dealerDetailsService.getLedgerTransactions());
             }
 
             @Override
@@ -359,14 +455,14 @@ public class DealerDetailsDialog extends AbstractDialog {
             }
 
             public void populateFields() {
-                if(dealer != null) {
-                    name.setText(dealer.getName().isEmpty()? "--" : dealer.getName());
-                    shop.setText(dealer.getShop().isEmpty() ? "--" : dealer.getShop());
-                    email.setText(dealer.getEmail().isEmpty() ? "--" : dealer.getEmail());
-                    phone.setText(dealer.getPhone().isEmpty() ? "--" : dealer.getPhone());
-                    gstin.setText(dealer.getGstin().isEmpty() ? "--" : dealer.getGstin());
-                    gstStateCode.setText(dealer.getGstStateCode() != null ? dealer.getGstStateCode().getCode() + " - " + dealer.getGstStateCode().getState() : "--");
-                    address.setText(dealer.getAddress().isEmpty() ? "--" : dealer.getAddress());
+                if(dealerDTO != null) {
+                    name.setText(dealerDTO.getName().isEmpty()? "--" : dealerDTO.getName());
+                    shop.setText(dealerDTO.getShop().isEmpty() ? "--" : dealerDTO.getShop());
+                    email.setText(dealerDTO.getEmail().isEmpty() ? "--" : dealerDTO.getEmail());
+                    phone.setText(dealerDTO.getPhone().isEmpty() ? "--" : dealerDTO.getPhone());
+                    gstin.setText(dealerDTO.getGstin().isEmpty() ? "--" : dealerDTO.getGstin());
+                    gstStateCode.setText(dealerDTO.getGstStateCode() != null ? dealerDTO.getGstStateCode().getCode() + " - " + dealerDTO.getGstStateCode().getState() : "--");
+                    address.setText(dealerDTO.getAddress().isEmpty() ? "--" : dealerDTO.getAddress());
                 }
             }
 
@@ -396,9 +492,9 @@ public class DealerDetailsDialog extends AbstractDialog {
             }
 
             public void populateFields() {
-                if(dealer != null) {
-                    balanceField.setCashAmount(dealer.getBalance());
-                    if(dealer.getBalance() >= 0) {
+                if(dealerDTO != null) {
+                    balanceField.setCashAmount(dealerDTO.getBalance());
+                    if(dealerDTO.getBalance() >= 0) {
                         balanceField.setStyle("-fx-text-fill: #00e600");
                     }
                     else {

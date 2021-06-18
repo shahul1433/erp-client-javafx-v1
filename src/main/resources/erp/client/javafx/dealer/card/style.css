@@ -1,0 +1,60 @@
+#card {
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-background-color: linear-gradient(to top, #009900, 	#00cc00);
+}
+
+#date-panel {
+    -fx-background-color: linear-gradient(to top, #001a33, 	#003333);
+    -fx-padding: 10px;
+    -fx-background-radius: 5px 0px 0px 5px;
+}
+
+#date {
+    -fx-text-fill : white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+
+#description-panel {
+    -fx-padding: 10px;
+}
+
+#amount-panel {
+    -fx-background-color: linear-gradient(to top, #001a33, 	#003333);
+    -fx-text-fill : white;
+    -fx-padding: 10px;
+    -fx-background-radius: 0px 5px 5px 0px;
+    -fx-font-size: 18px;
+    -fx-font-weight: bolder;
+}
+
+.credit {
+    -fx-background-color: linear-gradient(to top, #009900, 	#00cc00);
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.credit .label {
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+}
+
+.credit-amount {
+    -fx-text-fill: #00e600;
+}
+
+.debit-amount {
+    -fx-text-fill: red;
+}
+
+.debit {
+    -fx-background-color: linear-gradient(to top, #e60000, 	#ff3333);
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.debit .label {
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+}

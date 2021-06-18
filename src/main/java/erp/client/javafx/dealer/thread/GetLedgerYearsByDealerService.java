@@ -30,7 +30,7 @@ public class GetLedgerYearsByDealerService extends Service<ListValue<Integer>> {
         @Override
         protected ListValue<Integer> call() throws Exception {
 
-            String getDealerLedgerYearsUrl = ConfigurationManager.getConfiguration().getServer().getServerUrl() + Constants.Dealer.GET_LEDGER_YEARS_BY_DEALER_URL;
+            String getDealerLedgerYearsUrl = ConfigurationManager.getConfiguration().getServer().getServerUrl() + Constants.Dealer.Ledger.GET_LEDGER_YEARS_BY_DEALER_URL;
             ResponseEntity<ListValue<Integer>> responseEntity = HttpModule.postRequest(getDealerLedgerYearsUrl, dealer.getDealerId(), new TypeReference<ListValue<Integer>>() {
             });
             if(responseEntity == null) {

@@ -21,7 +21,15 @@ public class Constants {
 		public static final String GET_ALL_DEALERS_FOR_SEARCH_BOX_URL = "/dealer/get-all-dealers-for-search-box";
 		public static final String SAVE_DEALER_URL = "/dealer/save";
 		public static final String REMOVE_DEALER_URL = "/dealer/remove";
-		public static final String GET_LEDGER_YEARS_BY_DEALER_URL = "/dealer/ledger/get-years";
+
+		public static class Ledger {
+			public static final String GET_LEDGER_YEARS_BY_DEALER_URL = "/dealer/ledger/get-years";
+			public static final String GET_LEDGER_MONTHS_BY_YEAR_AND_DEALER_URL = "/dealer/ledger/get-months";
+			public static final String GET_LEDGER_BY_MONTH_AND_YEAR_AND_DEALER_URL = "/dealer/ledger/get-ledger";
+		}
+		public static class Transaction {
+			public static final String GET_LEDGER_TRANSACTION_URL = "/dealer/ledger/transaction/get-transactions";
+		}
 	}
 	
 	public static class Stock {
