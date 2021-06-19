@@ -1,18 +1,3 @@
-.debit-balance {
-    -fx-text-background-color: red;
-    -fx-font-weight: bold;
-}
-
-.credit-balance {
-    -fx-text-background-color: green;
-    -fx-font-weight: bold;
-}
-
-.zero-balance {
-    -fx-text-background-color: navy;
-    -fx-font-weight: bold;
-}
-
 #dealer-info-panel {
     -fx-background-color: linear-gradient(to top right, #80e5ff, #ccffcc);
     -fx-background-radius: 10px;

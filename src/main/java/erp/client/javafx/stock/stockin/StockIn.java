@@ -6,9 +6,13 @@ import erp.client.javafx.user.UserDTO;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.util.Callback;
 
 import java.text.NumberFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 public class StockIn {
@@ -35,10 +39,6 @@ public class StockIn {
 	
 	private StockInDTO stockIn;
 	
-	private NumberFormat rupeesFormat = NumberFormat.getCurrencyInstance(new Locale("en", "IN"));
-	private NumberFormat numberFormat = NumberFormat.getNumberInstance(new Locale("en", "IN"));
-	private NumberFormat percentageFormat = NumberFormat.getPercentInstance(new Locale("en", "IN"));
-
 	public StockIn(StockInDTO stockIn) {
 		this.stockIn = stockIn;
 		this.name = new SimpleStringProperty(stockIn.getName());
@@ -221,5 +221,5 @@ public class StockIn {
 	public void setAddedDate(LocalDateTime addedDate) {
 		this.addedDate.set(addedDate);
 	}
-	
+
 }

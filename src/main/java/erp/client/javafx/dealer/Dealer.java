@@ -28,8 +28,6 @@ public class Dealer {
 	
 	private DealerDTO dealer;
 	
-	private static NumberFormat rupeesFormat = NumberFormat.getCurrencyInstance(new Locale("en", "IN"));
-	
 	public Dealer(DealerDTO dealer) {
 		this.dealer = dealer;
 		this.name = new SimpleStringProperty(dealer.getName());
@@ -128,71 +126,4 @@ public class Dealer {
 		return "Dealer [name=" + name + "]";
 	}
 
-	static class DateCellFactory implements  Callback<TableColumn<Dealer, LocalDateTime>, TableCell<Dealer, LocalDateTime>> {
-
-		@Override
-		public TableCell<Dealer, LocalDateTime> call(TableColumn<Dealer, LocalDateTime> dealerLocalDateTimeTableColumn) {
-			return new TableCell<>(){
-				@Override
-				protected void updateItem(LocalDateTime localDateTime, boolean b) {
-					super.updateItem(localDateTime, b);
-					setStyle("-fx-alignment: center");
-					if(localDateTime != null) {
-						setText(localDateTime.format(DateTimeFormatter.ofPattern("dd-MMM-yyyy")));
-					} else
-						setText(null);
-				}
-			};
-		}
-	}
-
-	static class BalanceCellFactory implements  Callback<TableColumn<Dealer, Double>, TableCell<Dealer, Double>> {
-
-		@Override
-		public TableCell<Dealer, Double> call(TableColumn<Dealer, Double> dealerDoubleTableColumn) {
-			return new TableCell<>() {
-
-				@Override
-				protected void updateItem(Double value, boolean b) {
-					getStylesheets().add(Dealer.class.getResource("style.css").toExternalForm());
-					super.updateItem(value, b);
-					setStyle("-fx-alignment: center-right");
-					if(value != null) {
-						setText(rupeesFormat.format(value));
-						if(value < 0) {
-							getStyleClass().add("debit-balance");
-							getStyleClass().removeAll("credit-balance");
-							getStyleClass().removeAll("zero-balance");
-						}else if(value > 0) {
-							getStyleClass().add("credit-balance");
-							getStyleClass().removeAll("debit-balance");
-							getStyleClass().removeAll("zero-balance");
-						}else {
-							getStyleClass().add("zero-balance");
-							getStyleClass().removeAll("debit-balance");
-							getStyleClass().removeAll("credit-balance");
-						}
-					} else
-						setText(null);
-				}
-			};
-		}
-	}
-
-	static class GstStateCodeCellFactory implements Callback<TableColumn<Dealer, GstStateCodeDTO>, TableCell<Dealer, GstStateCodeDTO>> {
-
-		@Override
-		public TableCell<Dealer, GstStateCodeDTO> call(TableColumn<Dealer, GstStateCodeDTO> dealerTGstStateCodeTableColumn) {
-			return new TableCell<>() {
-				@Override
-				protected void updateItem(GstStateCodeDTO tGstStateCode, boolean b) {
-					super.updateItem(tGstStateCode, b);
-					if(tGstStateCode != null)
-						setText(tGstStateCode.getCode() + " - " + tGstStateCode.getState());
-					else
-						setText(null);
-				}
-			};
-		}
-	}
 }

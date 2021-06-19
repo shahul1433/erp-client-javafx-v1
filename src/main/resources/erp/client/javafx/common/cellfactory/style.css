@@ -1,0 +1,14 @@
+.debit-balance {
+    -fx-text-background-color: red;
+    -fx-font-weight: bold;
+}
+
+.credit-balance {
+    -fx-text-background-color: green;
+    -fx-font-weight: bold;
+}
+
+.zero-balance {
+    -fx-text-background-color: navy;
+    -fx-font-weight: bold;
+}

@@ -1,6 +1,10 @@
 package erp.client.javafx.dealer;
 
 import erp.client.javafx.common.AddEditRemoveTopBar;
+import erp.client.javafx.common.cellfactory.BalanceAmountCellFactory;
+import erp.client.javafx.common.cellfactory.DateCellFactory;
+import erp.client.javafx.common.cellfactory.GstStateCodeCellFactory;
+import erp.client.javafx.common.cellfactory.TextCellFactory;
 import erp.client.javafx.component.enums.UserRole;
 import erp.client.javafx.container.Arguments;
 import erp.client.javafx.container.StageMode;
@@ -71,15 +75,15 @@ public class DealerManagementDialog extends AbstractTableWithNavigationDialog<De
         });
         getCenterPane().getTable().getColumns().add(index);
 
-        TableColumnDataWrapper<Dealer, String> nameColumn = new TableColumnDataWrapper<>("Name", "name");
-        TableColumnDataWrapper<Dealer, String> shopColumn = new TableColumnDataWrapper<>("Shop", "shop");
-        TableColumnDataWrapper<Dealer, String> emailColumn = new TableColumnDataWrapper<>("Email", "email");
-        TableColumnDataWrapper<Dealer, String> phoneColumn = new TableColumnDataWrapper<>("Phone", "phone");
-        TableColumnDataWrapper<Dealer, String> gstinColumn = new TableColumnDataWrapper<>("GSTIN", "gstin");
-        TableColumnDataWrapper<Dealer, GstStateCodeDTO> gstStateCodeColumn = new TableColumnDataWrapper<Dealer, GstStateCodeDTO>("GST State Code", "gstStateCode", new Dealer.GstStateCodeCellFactory());
-        TableColumnDataWrapper<Dealer, Double> balanceColumn = new TableColumnDataWrapper<Dealer, Double>("Balance", "balance", new Dealer.BalanceCellFactory());
-        TableColumnDataWrapper<Dealer, LocalDateTime> addedDateColumn = new TableColumnDataWrapper<>("Added On", "addedDate", new Dealer.DateCellFactory());
-        TableColumnDataWrapper<Dealer, LocalDateTime> modifiedDateColumn = new TableColumnDataWrapper<>("Modified On", "modifiedDate", new Dealer.DateCellFactory());
+        TableColumnDataWrapper<Dealer, String> nameColumn = new TableColumnDataWrapper<>("Name", "name", new TextCellFactory());
+        TableColumnDataWrapper<Dealer, String> shopColumn = new TableColumnDataWrapper<>("Shop", "shop", new TextCellFactory());
+        TableColumnDataWrapper<Dealer, String> emailColumn = new TableColumnDataWrapper<>("Email", "email", new TextCellFactory());
+        TableColumnDataWrapper<Dealer, String> phoneColumn = new TableColumnDataWrapper<>("Phone", "phone", new TextCellFactory());
+        TableColumnDataWrapper<Dealer, String> gstinColumn = new TableColumnDataWrapper<>("GSTIN", "gstin", new TextCellFactory());
+        TableColumnDataWrapper<Dealer, GstStateCodeDTO> gstStateCodeColumn = new TableColumnDataWrapper<Dealer, GstStateCodeDTO>("GST State Code", "gstStateCode", new GstStateCodeCellFactory());
+        TableColumnDataWrapper<Dealer, Double> balanceColumn = new TableColumnDataWrapper<Dealer, Double>("Balance", "balance", new BalanceAmountCellFactory());
+        TableColumnDataWrapper<Dealer, LocalDateTime> addedDateColumn = new TableColumnDataWrapper<>("Added On", "addedDate", new DateCellFactory());
+        TableColumnDataWrapper<Dealer, LocalDateTime> modifiedDateColumn = new TableColumnDataWrapper<>("Modified On", "modifiedDate", new DateCellFactory());
 
         tableColumns.add(nameColumn);
         tableColumns.add(shopColumn);
