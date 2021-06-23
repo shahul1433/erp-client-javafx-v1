@@ -5,6 +5,7 @@ import erp.client.javafx.container.StageMode;
 import erp.client.javafx.container.status.StatusBarStatus;
 import erp.client.javafx.exception.WorkerStateEventStatusBarExceptionHandler;
 import erp.client.javafx.http.ResponseEntity;
+import erp.client.javafx.session.AppSession;
 import erp.client.javafx.user.thread.AddUserService;
 import erp.client.javafx.user.thread.GetAllRolesService;
 import erp.client.javafx.utility.PopupUtility;
@@ -62,6 +63,7 @@ public class AddEditViewUserService {
             public void handle(WorkerStateEvent workerStateEvent) {
                 ResponseEntity<UserDTO> entity = service.getValue();
                 view.getStatusBar().setStatus(StatusBarStatus.READY);
+                AppSession.updateLoggedUserIfApplicable(entity.getEntity());
                 PopupUtility.showMessage(Alert.AlertType.INFORMATION, entity.getMessage());
                 view.getStage().close();
                 view.getParentStage().fireEvent(new TriggerEvent(TriggerEvent.REFRESH));
