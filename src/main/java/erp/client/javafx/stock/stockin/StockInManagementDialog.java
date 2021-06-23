@@ -133,6 +133,19 @@ public class StockInManagementDialog extends AbstractTableWithNavigationDialog<S
         return AppSession.hasRole(UserRole.STOCK_IN);
     }
 
+    @Override
+    public void registerListeners() {
+        super.registerListeners();
+
+        this.getCenterPane().getTable().setOnMouseClicked(e -> {
+            if(e.getClickCount() >= 2) {
+                Arguments arguments = new Arguments();
+                arguments.setArgument("stockIn", getCenterPane().getTable().getSelectionModel().getSelectedItem().getStockIn());
+                new StockInDetailsDialog(this.stage, StageMode.VIEW, arguments);
+            }
+        });
+    }
+
     class StockInManagementTopBar extends TopBar {
 
         private Button addStock;

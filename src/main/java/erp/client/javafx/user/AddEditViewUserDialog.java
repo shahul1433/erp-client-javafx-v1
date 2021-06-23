@@ -55,7 +55,7 @@ public class AddEditViewUserDialog extends AbstractDialog {
         detailsPane = new DetailsPane();
         detailsTab.setContent(detailsPane);
 
-        rolesPane = new RolesPane();
+        rolesPane = new RolesPane(null);
         rolesTab.setContent(rolesPane);
 
         add = new Button("Add");
@@ -191,6 +191,10 @@ public class AddEditViewUserDialog extends AbstractDialog {
 
         UserRoleListView availableRoles, selectedRoles;
         Button moveRight, moveLeft;
+
+        public RolesPane(Arguments arguments) {
+            super(arguments);
+        }
 
         @Override
         public void init() {

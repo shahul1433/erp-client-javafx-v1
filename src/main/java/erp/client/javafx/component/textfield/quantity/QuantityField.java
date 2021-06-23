@@ -6,6 +6,7 @@ import erp.client.javafx.component.textfield.CTextField;
 import erp.client.javafx.component.textfield.number.DoubleFilter;
 import erp.client.javafx.component.textfield.number.IntegerFilter;
 import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -33,6 +34,10 @@ public class QuantityField extends HBox implements FormField{
 		HBox.setHgrow(field, Priority.ALWAYS);
 		this.setSpacing(5);
 		getChildren().addAll(field, scale);
+	}
+
+	public Label getLabel() {
+		return field.getLabel();
 	}
 
 	public void setScale(ProductScale scale) {
