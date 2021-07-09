@@ -15,7 +15,7 @@ public class CenterPane<T> extends AbstractBorderPane {
 
     @Override
     public void init() {
-        this.getStylesheets().add(getClass().getResource("tableStyle.css").toExternalForm());
+        this.getStylesheets().add(CenterPane.class.getResource("tableStyle.css").toExternalForm());
         table = new TableView<>();
         table.setTableMenuButtonVisible(true);
 //        createTableColumns(tableColumns);

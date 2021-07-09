@@ -1,12 +1,12 @@
-package erp.client.javafx.stock.stockin;
+package erp.client.javafx.stock.stockreturn;
 
 import erp.client.javafx.component.date.DateSearchPanel;
-import erp.client.javafx.component.filter.combobox.ProductScaleCombobox;
 import erp.client.javafx.component.filter.textfield.DoubleFieldSearch;
 import erp.client.javafx.component.filter.textfield.TextFieldSearch;
 import erp.client.javafx.container.tablewithnavigation.AbstractFilterDialog;
 import erp.client.javafx.container.tablewithnavigation.AbstractTableWithNavigationDialog;
 import erp.client.javafx.dealer.DealerDTO;
+import erp.client.javafx.stock.stockin.StockInDTO;
 import erp.client.javafx.user.UserDTO;
 import javafx.geometry.Insets;
 import javafx.scene.layout.ColumnConstraints;
@@ -14,14 +14,13 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 
-public class StockInFilterDialog extends AbstractFilterDialog<StockInFilter> {
+public class StockReturnFilterDialog extends AbstractFilterDialog<StockReturnFilter> {
 
-    private TextFieldSearch name, model, category, company, warranty, guarantee,  specifications, dealer, addedBy;
-    DoubleFieldSearch stockQuantity, currentQuantity, reorderLimit, stockPrice, customerPrice, gst, gstAmount, netAmount;
-    ProductScaleCombobox scale;
-    DateSearchPanel addedDate;
+    private TextFieldSearch name, model, category, company, warranty, guarantee,  specifications, dealer, stockInAddedBy, stockReturnAddedBy, reason;
+    private DoubleFieldSearch returnQuantity, refundAmount;
+    private DateSearchPanel addedDate;
 
-    public StockInFilterDialog(AbstractTableWithNavigationDialog parent) {
+    public StockReturnFilterDialog(AbstractTableWithNavigationDialog parent) {
         super(parent);
     }
 
@@ -80,46 +79,30 @@ public class StockInFilterDialog extends AbstractFilterDialog<StockInFilter> {
         pane.add(dealer, col, row++);
 
         col = 0;
-        pane.add(addedBy.getLabel(), col++, row);
-        pane.add(addedBy.getPattern(), col++, row);
-        pane.add(addedBy, col, row++);
-
-        col = 3;
-        row = 0;
-        pane.add(stockQuantity.getLabel(), col++, row);
-        pane.add(stockQuantity, col++, row++, 2, 1);
-
-        col = 3;
-        pane.add(currentQuantity.getLabel(), col++, row);
-        pane.add(currentQuantity, col++, row++, 2, 1);
-
-        col = 3;
-        pane.add(reorderLimit.getLabel(), col++, row);
-        pane.add(reorderLimit, col++, row++, 2, 1);
-
-        col = 3;
-        pane.add(stockPrice.getLabel(), col++, row);
-        pane.add(stockPrice, col++, row++, 2, 1);
-
-        col = 3;
-        pane.add(customerPrice.getLabel(), col++, row);
-        pane.add(customerPrice, col++, row++, 2, 1);
-
-        col = 3;
-        pane.add(gst.getLabel(), col++, row);
-        pane.add(gst, col++, row++, 2, 1);
-
-        col = 3;
-        pane.add(gstAmount.getLabel(), col++, row);
-        pane.add(gstAmount, col++, row++, 2, 1);
-
-        col = 3;
-        pane.add(netAmount.getLabel(), col++, row);
-        pane.add(netAmount, col++, row++, 2, 1);
+        pane.add(stockInAddedBy.getLabel(), col++, row);
+        pane.add(stockInAddedBy.getPattern(), col++, row);
+        pane.add(stockInAddedBy, col, row++);
 
         col = 0;
-        row = row+1;
-        pane.add(addedDate, col++, row++,3, 1);
+        pane.add(stockReturnAddedBy.getLabel(), col++, row);
+        pane.add(stockReturnAddedBy.getPattern(), col++, row);
+        pane.add(stockReturnAddedBy, col, row++);
+
+        col = 0;
+        pane.add(reason.getLabel(), col++, row);
+        pane.add(reason.getPattern(), col++, row);
+        pane.add(reason, col, row++);
+
+        col = 0;
+        pane.add(returnQuantity.getLabel(), col++, row);
+        pane.add(returnQuantity, col++, row++, 2, 1);
+
+        col = 0;
+        pane.add(refundAmount.getLabel(), col++, row);
+        pane.add(refundAmount, col++, row++, 2, 1);
+
+        col = 0;
+        pane.add(addedDate, col++, row++, 3, 1);
 
         return pane;
     }
@@ -132,17 +115,13 @@ public class StockInFilterDialog extends AbstractFilterDialog<StockInFilter> {
         company.clearSearch();
         warranty.clearSearch();
         guarantee.clearSearch();
-        stockQuantity.clearSearch();
-        currentQuantity.clearSearch();
-        reorderLimit.clearSearch();
-        stockPrice.clearSearch();
-        customerPrice.clearSearch();
-        gst.clearSearch();
-        gstAmount.clearSearch();
-        netAmount.clearSearch();
         specifications.clearSearch();
         dealer.clearSearch();
-        addedBy.clearSearch();
+        stockInAddedBy.clearSearch();
+        stockReturnAddedBy.clearSearch();
+        reason.clearSearch();
+        returnQuantity.clearSearch();
+        refundAmount.clearSearch();
         addedDate.clearSearch();
     }
 
@@ -151,14 +130,13 @@ public class StockInFilterDialog extends AbstractFilterDialog<StockInFilter> {
         try {
             return (
                     name.isValidFilterField() || model.isValidFilterField() || category.isValidFilterField() || company.isValidFilterField() ||
-                            warranty.isValidFilterField() || guarantee.isValidFilterField() || stockQuantity.isValidFilterField() ||
-                            currentQuantity.isValidFilterField() || reorderLimit.isValidFilterField() || stockPrice.isValidFilterField() ||
-                            customerPrice.isValidFilterField() || gst.isValidFilterField() || gstAmount.isValidFilterField() ||
-                            netAmount.isValidFilterField() || specifications.isValidFilterField() || dealer.isValidFilterField() ||
-                            addedBy.isValidFilterField() || addedDate.isValidFilterField()
+                            warranty.isValidFilterField() || guarantee.isValidFilterField() || specifications.isValidFilterField() ||
+                            dealer.isValidFilterField() || stockInAddedBy.isValidFilterField() || stockReturnAddedBy.isValidFilterField() ||
+                            reason.isValidFilterField() || returnQuantity.isValidFilterField() || refundAmount.isValidFilterField() ||
+                            addedDate.isValidFilterField()
                     );
-        } catch (Exception exception) {
-            handleException(exception);
+        }catch (Exception e) {
+            handleException(e);
             return false;
         }
     }
@@ -171,24 +149,22 @@ public class StockInFilterDialog extends AbstractFilterDialog<StockInFilter> {
         company = new TextFieldSearch("Company");
         warranty = new TextFieldSearch("Warranty");
         guarantee = new TextFieldSearch("Guarantee");
-        stockQuantity = new DoubleFieldSearch("Stock Quantity");
-        currentQuantity = new DoubleFieldSearch("Current Quantity");
-        reorderLimit = new DoubleFieldSearch("Reorder Limit");
-        stockPrice = new DoubleFieldSearch("Stock Price");
-        customerPrice = new DoubleFieldSearch("Customer Price");
-        gst = new DoubleFieldSearch("GST (%)");
-        gstAmount = new DoubleFieldSearch("GST Amount");
-        netAmount = new DoubleFieldSearch("Net Amount");
         specifications = new TextFieldSearch("Specifications");
         dealer = new TextFieldSearch("Dealer");
-        addedBy = new TextFieldSearch("Added By");
-        addedDate = new DateSearchPanel("Added Date");
+        stockInAddedBy = new TextFieldSearch("Stock In Added By");
+        stockReturnAddedBy = new TextFieldSearch("Stock Return Added By");
+        reason = new TextFieldSearch("Reason");
 
-        scale = new ProductScaleCombobox();
+        returnQuantity = new DoubleFieldSearch("Return Quantity");
+        refundAmount = new DoubleFieldSearch("Refund Amount");
+
+        addedDate = new DateSearchPanel("Added Date");
     }
 
     @Override
-    public StockInFilter getForm() {
+    public StockReturnFilter getForm() {
+        StockReturnDTO stockreturn = new StockReturnDTO();
+        stockreturn.setArchive(false);
 
         StockInDTO stockIn = new StockInDTO();
         stockIn.setArchive(false);
@@ -198,28 +174,26 @@ public class StockInFilterDialog extends AbstractFilterDialog<StockInFilter> {
         stockIn.setCompany(company.getSearchString());
         stockIn.setWarranty(warranty.getSearchString());
         stockIn.setGuarantee(guarantee.getSearchString());
-        stockIn.setStockQuantity(stockQuantity.getSearchValue());
-        stockIn.setCurrentQuantity(currentQuantity.getSearchValue());
-        stockIn.setReorderLimit(reorderLimit.getSearchValue());
-        stockIn.setStockPrice(stockPrice.getSearchValue());
-        stockIn.setCustomerPrice(customerPrice.getSearchValue());
-        stockIn.setGst(gst.getSearchValue());
-        stockIn.setGstAmount(gstAmount.getSearchValue());
-        stockIn.setNetAmount(netAmount.getSearchValue());
         stockIn.setSpecifications(specifications.getSearchString());
-        stockIn.setScale(scale.getSelectedScale());
 
         DealerDTO dealerObj = new DealerDTO();
         dealerObj.setArchive(false);
         dealerObj.setName(dealer.getSearchString());
         stockIn.setDealer(dealerObj);
 
-        UserDTO user = new UserDTO();
-        user.setArchive(false);
-        user.setName(addedBy.getSearchString());
-        stockIn.setAddedBy(user);
+        UserDTO stockInAddedByUser = new UserDTO();
+        stockInAddedByUser.setArchive(false);
+        stockInAddedByUser.setName(stockInAddedBy.getSearchString());
+        stockIn.setAddedBy(stockInAddedByUser);
 
-        StockInFilter filter = new StockInFilter(stockIn,addedDate.getDateSearchable(), 0, 0, null);
+        stockreturn.setStockIn(stockIn);
+        UserDTO stockReturnAddedByUser = new UserDTO();
+        stockReturnAddedByUser.setArchive(false);
+        stockReturnAddedByUser.setName(stockReturnAddedBy.getSearchString());
+        stockreturn.setAddedBy(stockReturnAddedByUser);
+
+
+        StockReturnFilter filter = new StockReturnFilter(stockreturn, addedDate.getDateSearchable(), 0, 0, null);
         return filter;
     }
 }

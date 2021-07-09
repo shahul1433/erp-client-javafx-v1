@@ -1,6 +1,6 @@
 package erp.client.javafx.container.tablewithnavigation;
 
-import erp.client.javafx.icon.FontAwsomeManager;
+import erp.client.javafx.icon.FontAwesomeManager;
 import erp.client.javafx.layout.AbstractBorderPane;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -19,11 +19,11 @@ public class TopBar extends AbstractBorderPane {
         this.getStylesheets().add(TopBar.class.getResource("tableStyle.css").toExternalForm());
         this.setId("topbar");
         filter = new Button("\uf0b0");
-        filter.setFont(FontAwsomeManager.getSolidFontPlain(14));
+        filter.setFont(FontAwesomeManager.getSolidFontPlain(14));
         filter.setTooltip(new Tooltip("Filter"));
 
         refresh = new Button("\uf2f1");
-        refresh.setFont(FontAwsomeManager.getSolidFontPlain(14));
+        refresh.setFont(FontAwesomeManager.getSolidFontPlain(14));
         refresh.setTooltip(new Tooltip("Refresh"));
 
         Image image = new Image(getClass().getResourceAsStream("/image/clear_filter.png"));

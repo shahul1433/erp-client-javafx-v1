@@ -1,0 +1,10 @@
+@font-face {
+    src: url('/font/Roboto-Regular.ttf');
+}
+
+.read-only {
+    -fx-font-family: "Roboto";
+    -fx-background-color: #ccf5ff;
+    -fx-border-color: #00b8e6;
+    -fx-border-radius: 3px;
+}

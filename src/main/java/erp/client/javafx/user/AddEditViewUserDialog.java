@@ -8,7 +8,7 @@ import erp.client.javafx.component.textfield.phone.PhoneField;
 import erp.client.javafx.container.AbstractDialog;
 import erp.client.javafx.container.Arguments;
 import erp.client.javafx.container.StageMode;
-import erp.client.javafx.icon.FontAwsomeManager;
+import erp.client.javafx.icon.FontAwesomeManager;
 import erp.client.javafx.layout.AbstractGridPane;
 import erp.client.javafx.layout.AbstractHBoxPane;
 import erp.client.javafx.session.AppSession;
@@ -202,13 +202,13 @@ public class AddEditViewUserDialog extends AbstractDialog {
             selectedRoles = new UserRoleListView();
 
             moveLeft = new Button("\uf04a");
-            moveLeft.setFont(FontAwsomeManager.getSolidFontPlain(14));
+            moveLeft.setFont(FontAwesomeManager.getSolidFontPlain(14));
             moveLeft.setTooltip(new Tooltip("Move to available roles"));
             moveLeft.setStyle("-fx-base: orange");
             moveLeft.setDisable(true);
 
             moveRight = new Button("\uf04e");
-            moveRight.setFont(FontAwsomeManager.getSolidFontPlain(14));
+            moveRight.setFont(FontAwesomeManager.getSolidFontPlain(14));
             moveRight.setTooltip(new Tooltip("Move to selected roles"));
             moveRight.setStyle("-fx-base: orange");
             moveRight.setDisable(true);

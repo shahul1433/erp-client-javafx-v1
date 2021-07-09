@@ -1,7 +1,7 @@
 package erp.client.javafx.common;
 
 import erp.client.javafx.container.tablewithnavigation.TopBar;
-import erp.client.javafx.icon.FontAwsomeManager;
+import erp.client.javafx.icon.FontAwesomeManager;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
@@ -18,16 +18,16 @@ public abstract class AddEditRemoveTopBar extends TopBar {
         super.init();
 
         add = new Button("\uf234");
-        add.setFont(FontAwsomeManager.getSolidFontPlain(14));
+        add.setFont(FontAwesomeManager.getSolidFontPlain(14));
         add.setTooltip(new Tooltip("Add User"));
 
         edit = new Button("\uf4ff");
-        edit.setFont(FontAwsomeManager.getSolidFontPlain(14));
+        edit.setFont(FontAwesomeManager.getSolidFontPlain(14));
         edit.setTooltip(new Tooltip("Edit User"));
         edit.setDisable(true);
 
         remove = new Button("\uf1f8");
-        remove.setFont(FontAwsomeManager.getSolidFontPlain(14));
+        remove.setFont(FontAwesomeManager.getSolidFontPlain(14));
         remove.setTooltip(new Tooltip("Remove User"));
         remove.setDisable(true);
     }

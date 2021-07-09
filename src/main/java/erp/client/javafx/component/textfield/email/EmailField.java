@@ -21,6 +21,7 @@ public class EmailField extends TextField implements FormField{
 	private final boolean isMandatoryField;
 	
 	public EmailField(boolean isMandatoryField, int characterLimit_setMinusOneForNoLimit) {
+		this.getStylesheets().add(FormField.class.getResource("style.css").toExternalForm());
 		this.isMandatoryField = isMandatoryField;
 		this.label = new Label("Email"+(isMandatoryField ? " *": ""));
 		this.maxLength = new SimpleIntegerProperty(characterLimit_setMinusOneForNoLimit);
@@ -102,5 +103,15 @@ public class EmailField extends TextField implements FormField{
 	public void clearField() {
 		super.clear();
 		getStyleClass().removeAll("validation-error");
+	}
+
+	@Override
+	public void setReadOnly(boolean isReadOnly) {
+		setEditable(!isReadOnly);
+		if (isReadOnly) {
+			this.getStyleClass().add("read-only");
+		} else {
+			this.getStyleClass().removeAll("read-only");
+		}
 	}
 }

@@ -4,7 +4,7 @@ import java.io.InputStream;
 
 import javafx.scene.text.Font;
 
-public class FontAwsomeManager {
+public class FontAwesomeManager {
 
 	/**
 	 * @return the solidFont
@@ -12,7 +12,7 @@ public class FontAwsomeManager {
 	public static Font getSolidFontPlain(double size) {
 		Font font = null;
 		try {
-			InputStream inputStreamSolid = FontAwsomeManager.class.getResourceAsStream("/font/fa-solid-900.ttf");
+			InputStream inputStreamSolid = FontAwesomeManager.class.getResourceAsStream("/font/fa-solid-900.ttf");
 			font = Font.loadFont(inputStreamSolid, size);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -26,7 +26,7 @@ public class FontAwsomeManager {
 	public static Font getRegularFontPlain(double size) {
 		Font font = null;
 		try {
-			InputStream inputStreamRegular = FontAwsomeManager.class.getResourceAsStream("/font/fa-regular-400.ttf");
+			InputStream inputStreamRegular = FontAwesomeManager.class.getResourceAsStream("/font/fa-regular-400.ttf");
 			font = Font.loadFont(inputStreamRegular, size);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -40,7 +40,7 @@ public class FontAwsomeManager {
 	public static Font getBrandsFontPlain(double size) {
 		Font font = null;
 		try {
-			InputStream inputStreamBrands = FontAwsomeManager.class.getResourceAsStream("/font/fa-brands-400.ttf");
+			InputStream inputStreamBrands = FontAwesomeManager.class.getResourceAsStream("/font/fa-brands-400.ttf");
 			font = Font.loadFont(inputStreamBrands, size);
 		} catch (Exception e) {
 			e.printStackTrace();

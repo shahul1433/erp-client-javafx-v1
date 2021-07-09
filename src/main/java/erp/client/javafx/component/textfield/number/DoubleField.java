@@ -6,6 +6,7 @@ public class DoubleField extends CTextField{
 
 	public DoubleField(String name, boolean isMandatoryField) {
 		super(name, isMandatoryField, -1);
+		setStyle("-fx-alignment: CENTER_RIGHT");
 	}
 
 	@Override

@@ -29,20 +29,20 @@ public class DealerViewerDialog extends AbstractDialog {
     protected void init() {
         dealerDTO = args.getArgument("dealer", DealerDTO.class);
         name = new CTextField("Name", false, -1);
-        name.setEditable(false);
+        name.setReadOnly(true);
         shop = new CTextField("Shop", false, -1);
-        shop.setEditable(false);
+        shop.setReadOnly(true);
         email = new CTextField("Email", false, -1);
-        email.setEditable(false);
+        email.setReadOnly(true);
         phone = new CTextField("Phone", false, -1);
-        phone.setEditable(false);
+        phone.setReadOnly(true);
         gstin = new CTextField("GSTIN", false, -1);
-        gstin.setEditable(false);
+        gstin.setReadOnly(true);
         gstStateCode = new CTextField("GST State Code", false, -1);
-        gstStateCode.setEditable(false);
+        gstStateCode.setReadOnly(true);
 
         address = new CTextArea("Address", false, -1);
-        address.setEditable(false);
+        address.setReadOnly(true);
 
         populateFields();
     }

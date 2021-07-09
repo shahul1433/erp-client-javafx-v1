@@ -3,7 +3,7 @@ package erp.client.javafx.component.viewerfield;
 import erp.client.javafx.container.Arguments;
 import erp.client.javafx.container.StageMode;
 import erp.client.javafx.dealer.DealerDTO;
-import erp.client.javafx.icon.FontAwsomeManager;
+import erp.client.javafx.icon.FontAwesomeManager;
 import javafx.scene.control.Tooltip;
 
 public class DealerViewerField extends ViewerField {
@@ -20,7 +20,7 @@ public class DealerViewerField extends ViewerField {
     public void init() {
         super.init();
         button.setText("\uf508");
-        button.setFont(FontAwsomeManager.getSolidFontPlain(14));
+        button.setFont(FontAwesomeManager.getSolidFontPlain(14));
         button.setTooltip(new Tooltip("View Dealer"));
     }
 

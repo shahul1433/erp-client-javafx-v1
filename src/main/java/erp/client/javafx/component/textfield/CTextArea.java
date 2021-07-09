@@ -13,7 +13,10 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
 
 public class CTextArea extends TextArea implements FormField{
 
@@ -31,16 +34,18 @@ public class CTextArea extends TextArea implements FormField{
 	private static final String[] barColorStyleClasses = { RED_BAR, ORANGE_BAR, YELLOW_BAR, GREEN_BAR };
 
 	public CTextArea(String name, boolean isMandatoryField, int characterLimit_setMinusOneForNoLimit) {
+		this.getStylesheets().add(FormField.class.getResource("style.css").toExternalForm());
+		this.getStylesheets().add(CTextArea.class.getResource("style.css").toExternalForm());
 		this.name = name;
 		this.isMandatoryField = isMandatoryField;
 		this.maxLength = new SimpleIntegerProperty(characterLimit_setMinusOneForNoLimit);
 		this.label = new Label(isMandatoryField ? name + " *" : name);
 		sizeBar = new ProgressBar(0);
-		sizeBar.setPrefWidth(Double.MAX_VALUE);
+		sizeBar.setPrefWidth(this.getPrefWidth());
 		sizeBar.getStylesheets().add(getClass().getResource("progressBar.css").toExternalForm());
 		textAreaWithProgressBar = new VBox(0);
 		textAreaWithProgressBar.getChildren().addAll(this, sizeBar);
-		
+
 		this.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent event) {
@@ -50,6 +55,8 @@ public class CTextArea extends TextArea implements FormField{
 				}
 			}
 		});
+
+		sizeBar.prefWidthProperty().bind(this.widthProperty());
 	}
 	
 	@Override
@@ -116,6 +123,10 @@ public class CTextArea extends TextArea implements FormField{
 		return label;
 	}
 
+	public ProgressBar getSizeBar() {
+		return sizeBar;
+	}
+
 	public boolean isMandatoryField() {
 		return isMandatoryField;
 	}
@@ -137,6 +148,16 @@ public class CTextArea extends TextArea implements FormField{
 	public void clearField() {
 		clear();
 		sizeBar.setProgress(0);
+	}
+
+	@Override
+	public void setReadOnly(boolean isReadOnly) {
+		setEditable(!isReadOnly);
+		if (isReadOnly) {
+			this.getStyleClass().add("read-only-area");
+		} else {
+			this.getStyleClass().removeAll("read-only-area");
+		}
 	}
 
 }

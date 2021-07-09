@@ -78,46 +78,46 @@ public class StockInDetailsDialog extends AbstractDialog {
         @Override
         public void init() {
             barcode = new CTextField("Barcode", false, -1);
-            barcode.setEditable(false);
+            barcode.setReadOnly(true);
             name = new CTextField("Name", false, -1);
-            name.setEditable(false);
+            name.setReadOnly(true);
             model = new CTextField("Model", false, -1);
-            model.setEditable(false);
+            model.setReadOnly(true);
             category = new CTextField("Category", false, -1);
-            category.setEditable(false);
+            category.setReadOnly(true);
             company = new CTextField("Company", false, -1);
-            company.setEditable(false);
+            company.setReadOnly(true);
             warranty = new CTextField("Warranty", false, -1);
-            warranty.setEditable(false);
+            warranty.setReadOnly(true);
             guarantee = new CTextField("Guarantee", false, -1);
-            guarantee.setEditable(false);
+            guarantee.setReadOnly(true);
             scale = new CTextField("Scale", false, -1);
-            scale.setEditable(false);
+            scale.setReadOnly(true);
 
             dealer = new DealerViewerField("Dealer", null, null);
             addedBy = new UserViewerField("Added By", null, null);
 
             specifications = new CTextArea("Specifications", false, -1);
-            specifications.setEditable(false);
+            specifications.setReadOnly(true);
 
-            stockInQuantity = new QuantityField("Stock In Quantity", false, ProductScale.COUNT);
-            stockInQuantity.getField().setEditable(false);
+            stockInQuantity = new QuantityField("Stock Quantity", false, ProductScale.COUNT);
+            stockInQuantity.setReadOnly(true);
             currentQuantity = new QuantityField("Current Quantity", false, ProductScale.COUNT);
-            currentQuantity.getField().setEditable(false);
+            currentQuantity.setReadOnly(true);
             reOrderLimit = new QuantityField("Re-Order Limit", false, ProductScale.COUNT);
-            reOrderLimit.getField().setEditable(false);
+            reOrderLimit.setReadOnly(true);
 
             stockPrice = new IndianRupeesField("Stock Price", false);
-            stockPrice.setEditable(false);
+            stockPrice.setReadOnly(true);
             customerPrice = new IndianRupeesField("Customer Price", false);
-            customerPrice.setEditable(false);
+            customerPrice.setReadOnly(true);
             gstAmount = new IndianRupeesField("GST Amount", false);
-            gstAmount.setEditable(false);
+            gstAmount.setReadOnly(true);
             netAmount = new IndianRupeesField("Net Amount", false);
-            netAmount.setEditable(false);
+            netAmount.setReadOnly(true);
 
             gstPercentageField = new GstPercentageField("GST (%)", false);
-            gstPercentageField.setEditable(false);
+            gstPercentageField.setReadOnly(true);
 
             populateFields();
         }
@@ -198,10 +198,10 @@ public class StockInDetailsDialog extends AbstractDialog {
                 company.setText(stockInDTO.getCompany());
                 warranty.setText(stockInDTO.getWarranty());
                 guarantee.setText(stockInDTO.getGuarantee());
-                scale.setText(stockInDTO.getScale().getName());
+                scale.setText(stockInDTO.getScale().getName() + " (" + stockInDTO.getScale().getRepresentation() +")");
                 specifications.setText(stockInDTO.getSpecifications());
 
-                stockInQuantity.setQuantity(stockInDTO.getCurrentQuantity(), stockInDTO.getScale());
+                stockInQuantity.setQuantity(stockInDTO.getStockQuantity(), stockInDTO.getScale());
                 currentQuantity.setQuantity(stockInDTO.getCurrentQuantity(), stockInDTO.getScale());
                 reOrderLimit.setQuantity(stockInDTO.getReorderLimit(), stockInDTO.getScale());
 

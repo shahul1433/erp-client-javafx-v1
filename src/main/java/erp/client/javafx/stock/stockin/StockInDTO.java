@@ -4,6 +4,7 @@ import erp.client.javafx.component.enums.ProductScale;
 import erp.client.javafx.dealer.DealerDTO;
 import erp.client.javafx.user.UserDTO;
 
+import java.beans.Transient;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -275,5 +276,10 @@ public class StockInDTO {
     @Override
     public int hashCode() {
         return Objects.hash(getStockInId(), getBarcode(), getName(), getModel(), getCategory(), getCompany(), getWarranty(), getGuarantee(), getStockQuantity(), getCurrentQuantity(), getReorderLimit(), getStockPrice(), getCustomerPrice(), getGst(), getGstAmount(), getNetAmount(), getScale(), getSpecifications(), getDealer(), getAddedBy(), getAddedDate(), getArchive());
+    }
+
+    @Transient
+    public String getItemBriefInfo() {
+        return name + " - " + model + " - " + category + " - " + company;
     }
 }

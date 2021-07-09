@@ -26,6 +26,7 @@ public class PhoneField extends TextField implements FormField{
 	
 	public PhoneField(String name, boolean isMandatoryField, Country defaultCountry) {
 		this.getStylesheets().add(PhoneField.class.getResource("style.css").toExternalForm());
+		this.getStylesheets().add(FormField.class.getResource("style.css").toExternalForm());
 		this.defaultCountry = defaultCountry;
 		this.isMandatoryField = isMandatoryField;
 		this.name = name;
@@ -196,5 +197,16 @@ public class PhoneField extends TextField implements FormField{
 		super.clear();
 		countryListCombobox.selectCountry(defaultCountry);
 		getStyleClass().removeAll("validation-error");
+	}
+
+	@Override
+	public void setReadOnly(boolean isReadOnly) {
+		setEditable(!isReadOnly);
+		countryListCombobox.setEditable(isReadOnly);
+		if (isReadOnly) {
+			this.getStyleClass().add("read-only");
+		} else {
+			this.getStyleClass().removeAll("read-only");
+		}
 	}
 }

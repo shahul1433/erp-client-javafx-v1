@@ -1,5 +1,6 @@
 package erp.client.javafx.component.viewerfield;
 
+import erp.client.javafx.component.FormField;
 import erp.client.javafx.container.Arguments;
 import erp.client.javafx.layout.AbstractHBoxPane;
 import javafx.scene.control.Button;
@@ -20,9 +21,11 @@ abstract public class ViewerField extends AbstractHBoxPane {
 
     @Override
     public void init() {
+        this.getStylesheets().add(FormField.class.getResource("style.css").toExternalForm());
         label = new Label();
         textField = new TextField();
         textField.setEditable(false);
+        textField.getStyleClass().add("read-only");
         button = new Button("view");
     }
 

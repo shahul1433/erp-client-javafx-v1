@@ -1,7 +1,6 @@
 package erp.client.javafx.dealer;
 
 import erp.client.javafx.component.combobox.PageNoCombobox;
-import erp.client.javafx.component.enums.LedgerTransactionType;
 import erp.client.javafx.component.enums.UserRole;
 import erp.client.javafx.component.textfield.CTextArea;
 import erp.client.javafx.component.textfield.CTextField;
@@ -9,8 +8,7 @@ import erp.client.javafx.component.textfield.currency.IndianRupeesField;
 import erp.client.javafx.container.AbstractDialog;
 import erp.client.javafx.container.Arguments;
 import erp.client.javafx.container.StageMode;
-import erp.client.javafx.dealer.card.LedgerTransactionCard;
-import erp.client.javafx.icon.FontAwsomeManager;
+import erp.client.javafx.icon.FontAwesomeManager;
 import erp.client.javafx.layout.AbstractBorderPane;
 import erp.client.javafx.layout.AbstractGridPane;
 import erp.client.javafx.layout.AbstractVBoxPane;
@@ -31,7 +29,6 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.io.InputStream;
-import java.time.LocalDateTime;
 import java.time.Month;
 
 public class DealerDetailsDialog extends AbstractDialog {
@@ -156,7 +153,7 @@ public class DealerDetailsDialog extends AbstractDialog {
             public void init() {
                 this.setId("dealer-ledger-top-bar");
                 imgLabel = new Label("\uf03a");
-                imgLabel.setFont(FontAwsomeManager.getSolidFontPlain(48));
+                imgLabel.setFont(FontAwesomeManager.getSolidFontPlain(48));
                 label = new Label("Ledger");
                 label.setId("ledger-heading-label");
                 year = new ComboBox<>();

@@ -98,6 +98,11 @@ public class GSTStateCodeCombobox extends ComboBox<GstStateCodeDTO> implements F
 		setSelectedGstStateCode(null);
 	}
 
+	@Override
+	public void setReadOnly(boolean isReadOnly) {
+		setEditable(!isReadOnly);
+	}
+
 	class GstStateCodeSucceedHandler implements EventHandler<WorkerStateEvent> {
 
 		@Override

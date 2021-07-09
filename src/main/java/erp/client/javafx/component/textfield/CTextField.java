@@ -19,6 +19,7 @@ public class CTextField extends TextField implements FormField{
 	private final IntegerProperty maxLength;
 	
 	public CTextField(String name, boolean isMandatoryField, int characterLimit_setMinusOneForNoLimit){
+		this.getStylesheets().add(FormField.class.getResource("style.css").toExternalForm());
 		this.isMandatoryField = isMandatoryField;
 		this.name = name;
 		label = new Label(isMandatoryField ? name + " *" : name);
@@ -88,5 +89,15 @@ public class CTextField extends TextField implements FormField{
 	@Override
 	public void clearField() {
 		clear();
+	}
+
+	@Override
+	public void setReadOnly(boolean isReadOnly) {
+		setEditable(!isReadOnly);
+		if (isReadOnly) {
+			this.getStyleClass().add("read-only");
+		} else {
+			this.getStyleClass().removeAll("read-only");
+		}
 	}
 }

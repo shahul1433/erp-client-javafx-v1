@@ -27,15 +27,15 @@ public class UserViewerDialog extends AbstractDialog {
     protected void init() {
         userDTO = args.getArgument("user", UserDTO.class);
         name = new CTextField("Name", false, -1);
-        name.setEditable(false);
+        name.setReadOnly(true);
         designation = new CTextField("Designation", false, -1);
-        designation.setEditable(false);
+        designation.setReadOnly(true);
         email = new CTextField("Email", false, -1);
-        email.setEditable(false);
+        email.setReadOnly(true);
         phone = new CTextField("Phone", false, -1);
-        phone.setEditable(false);
+        phone.setReadOnly(true);
         username = new CTextField("Username", false, -1);
-        username.setEditable(false);
+        username.setReadOnly(true);
 
         populateFields();
     }

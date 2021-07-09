@@ -44,5 +44,6 @@ public class Constants {
 	
 	public static class StockReturn {
 		public static final String GET_ALL_STOCK_RETURN = "/stock/stock-return/get-all";
+		public static final String SAVE_STOCK_RETURN = "/stock/stock-return/save";
 	}
 }

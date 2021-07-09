@@ -177,4 +177,8 @@ public abstract class AbstractTableWithNavigationDialog<T> extends AbstractBorde
     public void setBottomBar(BottomBar bottomBar) {
         this.bottomBar = bottomBar;
     }
+
+    public void showMessage(Alert.AlertType alertType, String message) {
+        stage.fireEvent(new PopupEvent<>(alertType, message));
+    }
 }

@@ -1,7 +1,7 @@
 package erp.client.javafx.component.searchbox.dealer;
 
 import erp.client.javafx.dealer.DealerDTO;
-import erp.client.javafx.icon.FontAwsomeManager;
+import erp.client.javafx.icon.FontAwesomeManager;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
@@ -24,7 +24,7 @@ public class DealerSearchBox extends Region {
 
         clearButton = new Label("\uf057");
         clearButton.setId("clear-button");
-        clearButton.setFont(FontAwsomeManager.getSolidFontPlain(18));
+        clearButton.setFont(FontAwesomeManager.getSolidFontPlain(18));
         clearButton.setTooltip(new Tooltip("Clear Dealer"));
         clearButton.setVisible(false);
 

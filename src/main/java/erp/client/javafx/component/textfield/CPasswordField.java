@@ -15,6 +15,7 @@ public class CPasswordField extends PasswordField implements FormField{
 	private String name;
 	
 	public CPasswordField(String name) {
+		this.getStylesheets().add(FormField.class.getResource("style.css").toExternalForm());
 		this.name = name;
 		this.label = new Label(name + " *");
 		
@@ -50,5 +51,15 @@ public class CPasswordField extends PasswordField implements FormField{
 	@Override
 	public void clearField() {
 		clear();
+	}
+
+	@Override
+	public void setReadOnly(boolean isReadOnly) {
+		setEditable(!isReadOnly);
+		if (isReadOnly) {
+			this.getStyleClass().add("read-only");
+		} else {
+			this.getStyleClass().removeAll("read-only");
+		}
 	}
 }

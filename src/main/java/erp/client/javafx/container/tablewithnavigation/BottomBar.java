@@ -2,7 +2,7 @@ package erp.client.javafx.container.tablewithnavigation;
 
 import erp.client.javafx.component.combobox.PageNoCombobox;
 import erp.client.javafx.container.status.StatusBar;
-import erp.client.javafx.icon.FontAwsomeManager;
+import erp.client.javafx.icon.FontAwesomeManager;
 import erp.client.javafx.layout.AbstractBorderPane;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -26,10 +26,10 @@ public class BottomBar extends AbstractBorderPane {
         this.getStylesheets().add(getClass().getResource("tableStyle.css").toExternalForm());
         this.setId("bottombar");
         previous = new Button("\uf04a");
-        previous.setFont(FontAwsomeManager.getSolidFontPlain(14));
+        previous.setFont(FontAwesomeManager.getSolidFontPlain(14));
 
         next = new Button("\uf04e");
-        next.setFont(FontAwsomeManager.getSolidFontPlain(14));
+        next.setFont(FontAwesomeManager.getSolidFontPlain(14));
 
         info = new Text("Showing 0 - 0 of 0");
         info.setFill(Color.WHITE);

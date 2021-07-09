@@ -5,6 +5,7 @@ import erp.client.javafx.layout.AbstractBorderPane;
 import erp.client.javafx.login.LoginPane;
 import erp.client.javafx.session.AppSession;
 import erp.client.javafx.stock.stockin.StockInManagementDialog;
+import erp.client.javafx.stock.stockreturn.StockReturnManagementDialog;
 import erp.client.javafx.user.UserManagementDialog;
 import erp.client.javafx.utility.GuiUtility;
 import javafx.application.Platform;
@@ -114,7 +115,7 @@ public class HomeWindow extends AbstractBorderPane {
 			Platform.runLater(new Runnable() {
 				@Override
 				public void run() {
-//					new StockReturnManagementDialog();
+					new StockReturnManagementDialog();
 				}
 			});
 		});

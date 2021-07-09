@@ -2,7 +2,7 @@ package erp.client.javafx.login;
 
 import erp.client.javafx.component.event.popup.PopupEvent;
 import erp.client.javafx.exception.FormValidationException;
-import erp.client.javafx.icon.FontAwsomeManager;
+import erp.client.javafx.icon.FontAwesomeManager;
 import erp.client.javafx.layout.AbstractGridPane;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -61,7 +61,7 @@ public class LoginPane extends AbstractGridPane {
         password.setId("password");
 
         login = new Button("\uf2f6");
-        login.setFont(FontAwsomeManager.getSolidFontPlain(16));
+        login.setFont(FontAwesomeManager.getSolidFontPlain(16));
         login.setTooltip(new Tooltip("Login"));
         login.setStyle("-fx-base: green");
 

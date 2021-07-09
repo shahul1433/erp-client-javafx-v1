@@ -10,7 +10,7 @@ import erp.client.javafx.container.tablewithnavigation.TableColumnDataWrapper;
 import erp.client.javafx.container.tablewithnavigation.TopBar;
 import erp.client.javafx.dealer.DealerDTO;
 import erp.client.javafx.http.SortMap;
-import erp.client.javafx.icon.FontAwsomeManager;
+import erp.client.javafx.icon.FontAwesomeManager;
 import erp.client.javafx.session.AppSession;
 import erp.client.javafx.user.UserDTO;
 import erp.client.javafx.utility.GuiUtility;
@@ -155,7 +155,7 @@ public class StockInManagementDialog extends AbstractTableWithNavigationDialog<S
             super.init();
 
             addStock = new Button("\uf067");
-            addStock.setFont(FontAwsomeManager.getSolidFontPlain(14));
+            addStock.setFont(FontAwesomeManager.getSolidFontPlain(14));
             addStock.setTooltip(new Tooltip("Add Stock"));
         }
 

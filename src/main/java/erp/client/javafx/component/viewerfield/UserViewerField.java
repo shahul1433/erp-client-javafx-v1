@@ -2,7 +2,7 @@ package erp.client.javafx.component.viewerfield;
 
 import erp.client.javafx.container.Arguments;
 import erp.client.javafx.container.StageMode;
-import erp.client.javafx.icon.FontAwsomeManager;
+import erp.client.javafx.icon.FontAwesomeManager;
 import erp.client.javafx.user.UserDTO;
 import javafx.scene.control.Tooltip;
 
@@ -20,7 +20,7 @@ public class UserViewerField extends ViewerField{
     public void init() {
         super.init();
         button.setText("\uf508");
-        button.setFont(FontAwsomeManager.getSolidFontPlain(14));
+        button.setFont(FontAwesomeManager.getSolidFontPlain(14));
         button.setTooltip(new Tooltip("View User"));
     }
 

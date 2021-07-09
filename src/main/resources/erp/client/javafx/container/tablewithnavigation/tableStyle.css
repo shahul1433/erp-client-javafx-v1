@@ -1,3 +1,7 @@
+@font-face {
+    src: url('/font/Roboto-Regular.ttf');
+}
+
 #topbar, #bottombar {
 	-fx-base : #333333;
 	-fx-background-color: #333333;
@@ -10,6 +14,7 @@
 
 .table-view {
     -fx-background-color: transparent;
+    -fx-font-family: "Roboto";
 }
 
 .table-view .column-header-background {

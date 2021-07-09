@@ -1,0 +1,5 @@
+.read-only-area {
+    -fx-control-inner-background: #ccf5ff;
+    -fx-border-color: #00b8e6;
+    -fx-border-radius: 3px;
+}

@@ -104,6 +104,11 @@ public class CategorySearchCombobox extends ComboBox<String> implements FormFiel
     }
 
     @Override
+    public void setReadOnly(boolean isReadOnly) {
+        setEditable(!isReadOnly);
+    }
+
+    @Override
     public void handle(KeyEvent event) {
         switch (event.getCode()) {
             case UP:
