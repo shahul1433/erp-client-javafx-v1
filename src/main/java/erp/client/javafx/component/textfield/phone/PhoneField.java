@@ -1,6 +1,8 @@
 package erp.client.javafx.component.textfield.phone;
 
 import erp.client.javafx.component.FormField;
+import erp.client.javafx.component.font.CustomFontManager;
+import erp.client.javafx.component.label.CLabel;
 import erp.client.javafx.utility.PopupUtility;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -16,7 +18,7 @@ import javafx.stage.Stage;
 
 public class PhoneField extends TextField implements FormField{
 
-	private Label label;
+	private CLabel label;
 	private boolean isMandatoryField;
 	private final String name;
 	private final IntegerProperty maxLength;
@@ -30,10 +32,11 @@ public class PhoneField extends TextField implements FormField{
 		this.defaultCountry = defaultCountry;
 		this.isMandatoryField = isMandatoryField;
 		this.name = name;
-		this.label = new Label(isMandatoryField ? name + " *" : name);
+		this.label = new CLabel(isMandatoryField ? name + " *" : name);
 		this.maxLength = new SimpleIntegerProperty(10);
 		this.countryListCombobox = new CountryListCombobox();
 		this.countryListCombobox.selectCountry(defaultCountry);
+		this.setFont(new CustomFontManager().getRobotoFont(12));
 		
 		gridPane.setHgap(10);
 		gridPane.setVgap(10);

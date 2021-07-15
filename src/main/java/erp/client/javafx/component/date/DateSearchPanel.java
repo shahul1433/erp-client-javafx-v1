@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 import erp.client.javafx.component.filter.FilterField;
+import erp.client.javafx.component.font.CustomFontManager;
+import erp.client.javafx.component.label.CLabel;
 import erp.client.javafx.exception.FormValidationException;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
@@ -27,7 +29,7 @@ public class DateSearchPanel extends StackPane implements FilterField {
 
 		init();
 
-		Label title = new Label(attributeName);
+		CLabel title = new CLabel(attributeName);
 		title.getStyleClass().add("bordered-titled-title");
 		StackPane.setAlignment(title, Pos.TOP_LEFT);
 
@@ -36,10 +38,10 @@ public class DateSearchPanel extends StackPane implements FilterField {
 		contentPane.setHgap(10);
 		contentPane.setVgap(5);
 
-		contentPane.add(new Label("From"), 0, 0);
+		contentPane.add(new CLabel("From"), 0, 0);
 		contentPane.add(fromDate, 0, 1);
 
-		contentPane.add(new Label("To"), 1, 0);
+		contentPane.add(new CLabel("To"), 1, 0);
 		contentPane.add(toDate, 1, 1);
 
 		getStyleClass().add("bordered-titled-border");
@@ -48,7 +50,9 @@ public class DateSearchPanel extends StackPane implements FilterField {
 
 	private void init() {
 		fromDate = new DatePicker();
+		fromDate.getEditor().setFont(new CustomFontManager().getRobotoFont(12));
 		toDate = new DatePicker();
+		toDate.getEditor().setFont(new CustomFontManager().getRobotoFont(12));
 	}
 
 	public LocalDateTime getFromDate() {

@@ -1,6 +1,7 @@
 package erp.client.javafx.dealer;
 
 import erp.client.javafx.component.searchbox.dealer.DealerSearchBox;
+import erp.client.javafx.component.searchbox.dealer.DealerSearchBox1;
 import erp.client.javafx.component.textfield.CTextArea;
 import erp.client.javafx.component.textfield.CTextField;
 import erp.client.javafx.layout.AbstractGridPane;
@@ -16,10 +17,9 @@ import java.util.Locale;
 
 public class DealerChooserPanel extends AbstractGridPane {
 
-    private DealerSearchBox searchBar;
+    private DealerSearchBox1 searchBar;
     private CTextField name, shop, email, phone, gstin, gstStateCode, balance, addedDate, modifiedDate;
     private CTextArea address;
-    private DealerDTO dealer;
 
     static NumberFormat currencyInstance = NumberFormat.getCurrencyInstance(new Locale("en", "IN"));
 
@@ -32,7 +32,7 @@ public class DealerChooserPanel extends AbstractGridPane {
 
     @Override
     public void init() {
-        searchBar = new DealerSearchBox();
+        searchBar = new DealerSearchBox1();
         name = new CTextField("Name", false, -1);
         shop = new CTextField("Shop",  false, -1);
         email = new CTextField("Email",  false, -1);
@@ -45,16 +45,16 @@ public class DealerChooserPanel extends AbstractGridPane {
         modifiedDate = new CTextField("Modified On",  false, -1);
         address = new CTextArea("Address", false, -1);
 
-        name.setEditable(false);
-        shop.setEditable(false);
-        email.setEditable(false);
-        phone.setEditable(false);
-        gstin.setEditable(false);
-        gstStateCode.setEditable(false);
-        balance.setEditable(false);
-        addedDate.setEditable(false);
-        modifiedDate.setEditable(false);
-        address.setEditable(false);
+        name.setReadOnly(true);
+        shop.setReadOnly(true);
+        email.setReadOnly(true);
+        phone.setReadOnly(true);
+        gstin.setReadOnly(true);
+        gstStateCode.setReadOnly(true);
+        balance.setReadOnly(true);
+        addedDate.setReadOnly(true);
+        modifiedDate.setReadOnly(true);
+        address.setReadOnly(true);
     }
 
     @Override

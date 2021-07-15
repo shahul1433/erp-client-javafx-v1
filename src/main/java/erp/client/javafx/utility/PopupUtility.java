@@ -2,6 +2,7 @@ package erp.client.javafx.utility;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -31,6 +32,8 @@ public class PopupUtility {
 	
 	public static void showMessage(AlertType alertType, String msg) {
 		Alert alert = new Alert(alertType);
+		Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
+		alertStage.getIcons().add(new Image(PopupUtility.class.getResourceAsStream("/image/dolphin.png")));
 		alert.initModality(Modality.APPLICATION_MODAL);
 		alert.getDialogPane().setContentText(msg);
 		alert.getDialogPane().setHeaderText(null);

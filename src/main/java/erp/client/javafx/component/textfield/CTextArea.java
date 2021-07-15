@@ -3,6 +3,8 @@ package erp.client.javafx.component.textfield;
 import java.math.BigDecimal;
 
 import erp.client.javafx.component.FormField;
+import erp.client.javafx.component.font.CustomFontManager;
+import erp.client.javafx.component.label.CLabel;
 import erp.client.javafx.utility.PopupUtility;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -20,7 +22,7 @@ import javafx.scene.paint.Paint;
 
 public class CTextArea extends TextArea implements FormField{
 
-	private Label label;
+	private CLabel label;
 	private boolean isMandatoryField;
 	private String name;
 	private final IntegerProperty maxLength;
@@ -39,7 +41,9 @@ public class CTextArea extends TextArea implements FormField{
 		this.name = name;
 		this.isMandatoryField = isMandatoryField;
 		this.maxLength = new SimpleIntegerProperty(characterLimit_setMinusOneForNoLimit);
-		this.label = new Label(isMandatoryField ? name + " *" : name);
+		this.label = new CLabel();
+		this.label.setText(isMandatoryField ? name + " *" : name);
+		this.setFont(new CustomFontManager().getRobotoFont(12));
 		sizeBar = new ProgressBar(0);
 		sizeBar.setPrefWidth(this.getPrefWidth());
 		sizeBar.getStylesheets().add(getClass().getResource("progressBar.css").toExternalForm());

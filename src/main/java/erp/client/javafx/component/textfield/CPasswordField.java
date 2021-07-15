@@ -1,6 +1,8 @@
 package erp.client.javafx.component.textfield;
 
 import erp.client.javafx.component.FormField;
+import erp.client.javafx.component.font.CustomFontManager;
+import erp.client.javafx.component.label.CLabel;
 import erp.client.javafx.utility.PopupUtility;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert.AlertType;
@@ -11,13 +13,14 @@ import javafx.scene.input.KeyEvent;
 
 public class CPasswordField extends PasswordField implements FormField{
 
-	private Label label;
+	private CLabel label;
 	private String name;
 	
 	public CPasswordField(String name) {
 		this.getStylesheets().add(FormField.class.getResource("style.css").toExternalForm());
 		this.name = name;
-		this.label = new Label(name + " *");
+		this.label = new CLabel(name + " *");
+		this.setFont(new CustomFontManager().getRobotoFont(12));
 		
 		this.setOnAction(e -> {
 			validateField();

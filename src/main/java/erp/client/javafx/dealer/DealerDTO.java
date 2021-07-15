@@ -2,7 +2,10 @@ package erp.client.javafx.dealer;
 
 import erp.client.javafx.gst.GstStateCodeDTO;
 
+import java.beans.Transient;
+import java.text.NumberFormat;
 import java.time.LocalDateTime;
+import java.util.Locale;
 import java.util.Objects;
 
 public class DealerDTO {
@@ -163,5 +166,11 @@ public class DealerDTO {
     @Override
     public int hashCode() {
         return Objects.hash(getDealerId(), getName(), getShop(), getAddress(), getEmail(), getPhone(), getGstin(), getGstStateCode(), getBalance(), getArchive());
+    }
+
+    @Transient
+    public String getBriefInfo() {
+        NumberFormat rupees = NumberFormat.getCurrencyInstance(new Locale("en", "IN"));
+        return name + " - " + shop + " - " + gstin + " - " + phone;
     }
 }

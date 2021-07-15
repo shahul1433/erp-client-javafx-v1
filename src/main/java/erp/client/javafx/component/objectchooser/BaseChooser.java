@@ -1,6 +1,8 @@
 package erp.client.javafx.component.objectchooser;
 
 import erp.client.javafx.component.FormField;
+import erp.client.javafx.component.font.CustomFontManager;
+import erp.client.javafx.component.label.CLabel;
 import erp.client.javafx.container.Arguments;
 import erp.client.javafx.icon.FontAwesomeManager;
 import erp.client.javafx.layout.AbstractHBoxPane;
@@ -11,12 +13,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.text.Font;
 
 public abstract class BaseChooser<T> extends AbstractHBoxPane implements FormField {
 
-    protected Label label;
+    protected CLabel label;
     protected TextField textField;
     protected Button select, view, clear;
+    private Font roboto;
 
     /**
      * use this attribute where ever you want to listen changes in the value.
@@ -35,9 +39,11 @@ public abstract class BaseChooser<T> extends AbstractHBoxPane implements FormFie
 
     @Override
     public void init() {
+        roboto = new CustomFontManager().getRobotoFont(12);
         object = new SimpleObjectProperty<>();
-        label = new Label(arguments.getArgument("name", String.class));
+        label = new CLabel(arguments.getArgument("name", String.class));
         textField = new TextField();
+        textField.setFont(roboto);
         textField.setEditable(false);
 
         select = new Button("......");

@@ -13,12 +13,17 @@ import erp.client.javafx.user.UserDTO;
 import erp.client.javafx.utility.GuiUtility;
 import erp.client.javafx.utility.JacksonService;
 import erp.client.javafx.utility.PopupUtility;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.input.ZoomEvent;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -64,6 +69,8 @@ public class LoginService {
                     Stage primaryStage = (Stage) view.login.getScene().getWindow();
                     primaryStage.setScene(new Scene(new HomeWindow(userDTO.getName()), GuiUtility.getScreenWidth(), GuiUtility.getScreenHeight()));
                     primaryStage.setMaximized(true);
+                    primaryStage.hide();
+                    primaryStage.show();
                 }else {
                     PopupUtility.showMessage(Alert.AlertType.ERROR, "Sorry, logged user information is not found in the database");
                 }

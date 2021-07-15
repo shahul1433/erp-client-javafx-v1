@@ -2,6 +2,7 @@ package erp.client.javafx.component.textfield.phone;
 
 import java.util.Comparator;
 
+import erp.client.javafx.component.font.CustomFontManager;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -13,13 +14,16 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.Font;
 
 public class CountryListCombobox extends ComboBox<Country>{
 
 	private StringProperty selectedExtension;
 	private IntegerProperty maxLength;
+	private Font roboto;
 	
 	public CountryListCombobox() {
+		roboto = new CustomFontManager().getRobotoFont(12);
 		this.setCellFactory(c -> new CountryListCell());
 		this.setButtonCell(new CountryListCell());
 		ObservableList<Country> items = FXCollections.observableArrayList();
@@ -52,6 +56,7 @@ public class CountryListCombobox extends ComboBox<Country>{
 		@Override
 		protected void updateItem(Country item, boolean empty) {
 			super.updateItem(item, empty);
+			setFont(roboto);
 			if(item == null || empty) {
 				setGraphic(null);
 				setText(null);

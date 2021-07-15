@@ -117,6 +117,10 @@ public class StockInFilterDialog extends AbstractFilterDialog<StockInFilter> {
         pane.add(netAmount.getLabel(), col++, row);
         pane.add(netAmount, col++, row++, 2, 1);
 
+        col = 3;
+        pane.add(scale.getLabel(), col++, row);
+        pane.add(scale, col++, row++, 2, 1);
+
         col = 0;
         row = row+1;
         pane.add(addedDate, col++, row++,3, 1);
@@ -140,6 +144,7 @@ public class StockInFilterDialog extends AbstractFilterDialog<StockInFilter> {
         gst.clearSearch();
         gstAmount.clearSearch();
         netAmount.clearSearch();
+        scale.clearSearch();
         specifications.clearSearch();
         dealer.clearSearch();
         addedBy.clearSearch();
@@ -154,7 +159,7 @@ public class StockInFilterDialog extends AbstractFilterDialog<StockInFilter> {
                             warranty.isValidFilterField() || guarantee.isValidFilterField() || stockQuantity.isValidFilterField() ||
                             currentQuantity.isValidFilterField() || reorderLimit.isValidFilterField() || stockPrice.isValidFilterField() ||
                             customerPrice.isValidFilterField() || gst.isValidFilterField() || gstAmount.isValidFilterField() ||
-                            netAmount.isValidFilterField() || specifications.isValidFilterField() || dealer.isValidFilterField() ||
+                            netAmount.isValidFilterField() || scale.isValidFilterField() || specifications.isValidFilterField() || dealer.isValidFilterField() ||
                             addedBy.isValidFilterField() || addedDate.isValidFilterField()
                     );
         } catch (Exception exception) {

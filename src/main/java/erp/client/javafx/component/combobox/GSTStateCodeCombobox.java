@@ -5,6 +5,7 @@ import java.util.Comparator;
 import com.fasterxml.jackson.core.type.TypeReference;
 
 import erp.client.javafx.component.FormField;
+import erp.client.javafx.component.font.CustomFontManager;
 import erp.client.javafx.config.ConfigurationManager;
 import erp.client.javafx.config.Constants;
 import erp.client.javafx.gst.GstStateCodeList;
@@ -22,6 +23,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
+import javafx.scene.text.Font;
 
 public class GSTStateCodeCombobox extends ComboBox<GstStateCodeDTO> implements FormField{
 
@@ -29,12 +31,16 @@ public class GSTStateCodeCombobox extends ComboBox<GstStateCodeDTO> implements F
 	private String name;
 	private boolean isMandatoryField;
 	private GetAllGstStateCodeService service;
+	private Font roboto;
 	
 	public GSTStateCodeCombobox(String name, boolean isMandatoryField) {
+		this.roboto = new CustomFontManager().getRobotoFont(12);
 		this.label = new Label(isMandatoryField ? name + " *" : name);
 		this.name = name;
 		this.isMandatoryField = isMandatoryField;
-		
+
+//		this.getEditor().setFont(new CustomFontManager().getRobotoFont(12));
+
 		this.setCellFactory(sf -> createGstStateCodeCell());
 		this.setButtonCell(createGstStateCodeCell());
 
@@ -54,6 +60,7 @@ public class GSTStateCodeCombobox extends ComboBox<GstStateCodeDTO> implements F
 			@Override
 			protected void updateItem(GstStateCodeDTO item, boolean empty) {
 				super.updateItem(item, empty);
+				setFont(roboto);
 				if(item == null || empty)
 					setGraphic(null);
 				else

@@ -27,7 +27,7 @@ public class AddStockService {
 
     public void addStock() throws FormValidationException {
         String msg;
-        DealerDTO selectedDealer = view.getDealerChooserPanel().getSelectedDealer();
+        DealerDTO selectedDealer = view.getStockDetailsPanel().dealerChooser.getDealerDTO();
         UserDTO loggedUser = AppSession.getLoggedUser();
 
         if(selectedDealer == null) {
@@ -59,6 +59,11 @@ public class AddStockService {
                 view.setStatusBarStatus(StatusBarStatus.READY);
                 PopupUtility.showMessage(Alert.AlertType.INFORMATION, entity.getMessage());
                 view.getParentStage().fireEvent(new TriggerEvent(TriggerEvent.REFRESH));
+                if (view.getStockDetailsPanel().hasMoreItem.isSelected()) {
+                    view.getStockDetailsPanel().clearForm();
+                } else {
+                    view.getStage().close();
+                }
             }
         });
         service.start();

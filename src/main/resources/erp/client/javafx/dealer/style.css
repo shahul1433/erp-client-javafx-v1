@@ -1,3 +1,7 @@
+@font-face {
+    src: url('/font/Roboto-Bold.ttf');
+}
+
 #dealer-info-panel {
     -fx-background-color: linear-gradient(to top right, #80e5ff, #ccffcc);
     -fx-background-radius: 10px;
@@ -76,6 +80,7 @@
 }
 
 #ledger-heading-label {
+    -fx-font-family: "Roboto";
     -fx-font-size: 48px;
     -fx-text-fill: #b3b3cc;
     -fx-padding: 0px 0px 0px 20px;
@@ -118,15 +123,17 @@
 }
 
 #dealer-balance-panel .label{
+    -fx-font-family: "Roboto";
     -fx-text-fill: #b3b3cc;
-    -fx-font-weight: bolder;
+    -fx-font-weight: bold;
     -fx-font-size : 22px;
 }
 
 #dealer-balance-panel .text-field{
+    -fx-font-family: "Roboto";
     -fx-background-color: transparent;
     -fx-text-fill: #00e600;
-    -fx-font-weight: bolder;
+    -fx-font-weight: bold;
     -fx-font-size : 22px;
 }
 

@@ -1,6 +1,7 @@
 package erp.client.javafx.dealer.card;
 
 import erp.client.javafx.component.enums.LedgerTransactionType;
+import erp.client.javafx.component.label.CLabel;
 import erp.client.javafx.dealer.LedgerTransactionDTO;
 import erp.client.javafx.layout.AbstractBorderPane;
 import javafx.scene.control.Label;
@@ -12,7 +13,7 @@ import java.util.Locale;
 
 public class LedgerTransactionCard extends AbstractBorderPane {
 
-    private Label date, description, amount;
+    private CLabel date, description, amount;
     private BorderPane datePanel, descriptionPanel, amountPanel;
     private LedgerTransactionDTO ledgerTransactionDTO;
     private NumberFormat rupeesCurrency = NumberFormat.getCurrencyInstance(new Locale("eng", "IN"));
@@ -48,16 +49,16 @@ public class LedgerTransactionCard extends AbstractBorderPane {
         amountPanel = new BorderPane();
         amountPanel.setId("amount-panel");
 
-        date = new Label();
+        date = new CLabel();
         date.setId("date");
         datePanel.setCenter(date);
 
-        description = new Label();
+        description = new CLabel();
         description.setId("description");
         description.setWrapText(true);
         descriptionPanel.setCenter(description);
 
-        amount = new Label();
+        amount = new CLabel();
         amount.setId("amount");
         amountPanel.setCenter(amount);
     }

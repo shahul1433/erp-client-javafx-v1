@@ -4,6 +4,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import erp.client.javafx.component.FormField;
+import erp.client.javafx.component.font.CustomFontManager;
+import erp.client.javafx.component.label.CLabel;
 import erp.client.javafx.utility.PopupUtility;
 import erp.client.javafx.utility.StringUtils;
 import javafx.beans.property.IntegerProperty;
@@ -16,15 +18,16 @@ import javafx.stage.Stage;
 
 public class EmailField extends TextField implements FormField{
 
-	private Label label;
+	private CLabel label;
 	private final IntegerProperty maxLength;
 	private final boolean isMandatoryField;
-	
+
 	public EmailField(boolean isMandatoryField, int characterLimit_setMinusOneForNoLimit) {
 		this.getStylesheets().add(FormField.class.getResource("style.css").toExternalForm());
 		this.isMandatoryField = isMandatoryField;
-		this.label = new Label("Email"+(isMandatoryField ? " *": ""));
+		this.label = new CLabel("Email"+(isMandatoryField ? " *": ""));
 		this.maxLength = new SimpleIntegerProperty(characterLimit_setMinusOneForNoLimit);
+		this.setFont(new CustomFontManager().getRobotoFont(12));
 		
 		this.setOnKeyPressed(e -> {
 			if(e.getCode() == KeyCode.ESCAPE) {

@@ -2,6 +2,7 @@ package erp.client.javafx.dealer;
 
 import erp.client.javafx.component.combobox.PageNoCombobox;
 import erp.client.javafx.component.enums.UserRole;
+import erp.client.javafx.component.label.CLabel;
 import erp.client.javafx.component.textfield.CTextArea;
 import erp.client.javafx.component.textfield.CTextField;
 import erp.client.javafx.component.textfield.currency.IndianRupeesField;
@@ -144,7 +145,8 @@ public class DealerDetailsDialog extends AbstractDialog {
 
         class TopBar extends AbstractBorderPane {
 
-            Label label, imgLabel;
+            Label imgLabel;
+            CLabel label;
             ComboBox<Integer> year;
             ComboBox<Month> month;
             IndianRupeesField openBalance, closedBalance;
@@ -154,7 +156,7 @@ public class DealerDetailsDialog extends AbstractDialog {
                 this.setId("dealer-ledger-top-bar");
                 imgLabel = new Label("\uf03a");
                 imgLabel.setFont(FontAwesomeManager.getSolidFontPlain(48));
-                label = new Label("Ledger");
+                label = new CLabel("Ledger");
                 label.setId("ledger-heading-label");
                 year = new ComboBox<>();
                 month = new ComboBox<>();
@@ -300,7 +302,7 @@ public class DealerDetailsDialog extends AbstractDialog {
         class BottomBar extends AbstractBorderPane {
 
             Button prev, next;
-            Label info;
+            CLabel info;
             PageNoCombobox pageNo;
 
             @Override
@@ -313,7 +315,7 @@ public class DealerDetailsDialog extends AbstractDialog {
                 next.setId("next-button");
                 next.setDisable(true);
 
-                info = new Label("Showing 0 - 0 0f 0 transactions");
+                info = new CLabel("Showing 0 - 0 0f 0 transactions");
                 info.setId("ledger-info-text");
                 pageNo = new PageNoCombobox();
             }
@@ -492,14 +494,14 @@ public class DealerDetailsDialog extends AbstractDialog {
                 if(dealerDTO != null) {
                     balanceField.setCashAmount(dealerDTO.getBalance());
                     if(dealerDTO.getBalance() >= 0) {
-                        balanceField.setStyle("-fx-text-fill: #00e600");
+                        balanceField.setStyle("-fx-text-fill: #00e600;");
                     }
                     else {
-                        balanceField.setStyle("-fx-text-fill: red");
+                        balanceField.setStyle("-fx-text-fill: red;");
                     }
                 }else {
                     balanceField.setCashAmount(0.0);
-                    balanceField.setStyle("-fx-text-fill: #00e600");
+                    balanceField.setStyle("-fx-text-fill: #00e600;");
                 }
             }
 

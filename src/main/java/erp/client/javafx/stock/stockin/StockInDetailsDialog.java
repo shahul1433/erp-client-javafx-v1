@@ -1,5 +1,6 @@
 package erp.client.javafx.stock.stockin;
 
+import erp.client.javafx.component.date.DateField;
 import erp.client.javafx.component.enums.ProductScale;
 import erp.client.javafx.component.textfield.CTextArea;
 import erp.client.javafx.component.textfield.CTextField;
@@ -74,6 +75,7 @@ public class StockInDetailsDialog extends AbstractDialog {
         QuantityField stockInQuantity, reOrderLimit, currentQuantity;
         IndianRupeesField stockPrice, customerPrice, gstAmount, netAmount;
         GstPercentageField gstPercentageField;
+        DateField addedDate;
 
         @Override
         public void init() {
@@ -118,6 +120,9 @@ public class StockInDetailsDialog extends AbstractDialog {
 
             gstPercentageField = new GstPercentageField("GST (%)", false);
             gstPercentageField.setReadOnly(true);
+
+            addedDate = new DateField("Added On", false);
+            addedDate.setReadOnly(true);
 
             populateFields();
         }
@@ -180,13 +185,18 @@ public class StockInDetailsDialog extends AbstractDialog {
 
             col = 0;
             add(specifications.getLabel(), col++, row);
-            add(specifications, col++, row, 1, 3);
+            add(specifications, col++, row, 1, 4);
             add(dealer.getLabel(), col++, row);
             add(dealer, col++, row++);
 
             col = 2;
             add(addedBy.getLabel(), col++, row);
-            add(addedBy, col++, row);
+            add(addedBy, col--, row++);
+
+            col = 2;
+            add(addedDate.getLabel(), col++, row);
+            add(addedDate, col--, row);
+
         }
 
         public void populateFields() {
@@ -213,6 +223,7 @@ public class StockInDetailsDialog extends AbstractDialog {
 
                 dealer.setDealerDTO(stockInDTO.getDealer());
                 addedBy.setUserDTO(stockInDTO.getAddedBy());
+                addedDate.setValue(stockInDTO.getAddedDate().toLocalDate());
             }
         }
 

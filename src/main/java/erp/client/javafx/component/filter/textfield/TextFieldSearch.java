@@ -1,6 +1,8 @@
 package erp.client.javafx.component.filter.textfield;
 
 import erp.client.javafx.component.filter.FilterField;
+import erp.client.javafx.component.font.CustomFontManager;
+import erp.client.javafx.component.label.CLabel;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.ComboBox;
@@ -9,14 +11,18 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Font;
 
 public class TextFieldSearch extends TextField implements FilterField{
 
-	private Label label;
+	private CLabel label;
 	private ComboBox<SearchPattern> pattern;
+	private Font roboto;
 	
 	public TextFieldSearch(String attributeName) {
-		label = new Label(attributeName);
+		roboto = new CustomFontManager().getRobotoFont(12);
+		this.setFont(roboto);
+		label = new CLabel(attributeName);
 		pattern = new ComboBox<>();
 		
 		pattern.getItems().add(SearchPattern.CONTAINS);
@@ -44,7 +50,7 @@ public class TextFieldSearch extends TextField implements FilterField{
 			@Override
 			protected void updateItem(SearchPattern item, boolean empty) {
 				super.updateItem(item, empty);
-				
+				setFont(roboto);
 				if(empty || item == null) {
 					setText(null);
 					setGraphic(null);

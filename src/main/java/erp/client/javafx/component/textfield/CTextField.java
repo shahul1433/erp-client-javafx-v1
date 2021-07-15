@@ -1,6 +1,8 @@
 package erp.client.javafx.component.textfield;
 
 import erp.client.javafx.component.FormField;
+import erp.client.javafx.component.font.CustomFontManager;
+import erp.client.javafx.component.label.CLabel;
 import erp.client.javafx.utility.PopupUtility;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -13,7 +15,7 @@ import javafx.scene.input.KeyEvent;
 
 public class CTextField extends TextField implements FormField{
 
-	private Label label;
+	private CLabel label;
 	private boolean isMandatoryField;
 	private String name;
 	private final IntegerProperty maxLength;
@@ -22,9 +24,12 @@ public class CTextField extends TextField implements FormField{
 		this.getStylesheets().add(FormField.class.getResource("style.css").toExternalForm());
 		this.isMandatoryField = isMandatoryField;
 		this.name = name;
-		label = new Label(isMandatoryField ? name + " *" : name);
+		label = new CLabel();
+		label.setText(isMandatoryField ? name + " *" : name);
 		this.maxLength = new SimpleIntegerProperty(characterLimit_setMinusOneForNoLimit);
-		
+
+		this.setFont(new CustomFontManager().getRobotoFont(12));
+
 		this.setOnAction(e -> {
 			validateField();
 		});

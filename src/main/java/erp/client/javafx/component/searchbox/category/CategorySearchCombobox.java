@@ -2,6 +2,8 @@ package erp.client.javafx.component.searchbox.category;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import erp.client.javafx.component.FormField;
+import erp.client.javafx.component.font.CustomFontManager;
+import erp.client.javafx.component.label.CLabel;
 import erp.client.javafx.config.ConfigurationManager;
 import erp.client.javafx.config.Constants;
 import erp.client.javafx.exception.FormValidationException;
@@ -19,21 +21,25 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.text.Font;
 
 public class CategorySearchCombobox extends ComboBox<String> implements FormField, EventHandler<KeyEvent> {
 
-    private Label label;
+    private CLabel label;
     private final IntegerProperty maxLength;
     private boolean isMandatoryField;
     private GetCategoryService service;
+    private Font roboto;
 
     public CategorySearchCombobox(boolean isMandatoryField, int characterLimit_setMinusOneForNoLimit) {
+        this.roboto = new CustomFontManager().getRobotoFont(12);
         this.isMandatoryField = isMandatoryField;
         this.maxLength = new SimpleIntegerProperty(characterLimit_setMinusOneForNoLimit);
-        label = new Label("Category" + (isMandatoryField ? " *" : ""));
+        label = new CLabel("Category" + (isMandatoryField ? " *" : ""));
 
         this.setPrefWidth(Double.MAX_VALUE);
         this.setEditable(true);
+        this.getEditor().setFont(roboto);
         this.getEditor().setOnKeyPressed(this);
         this.getSelectionModel().selectedIndexProperty().addListener((obs, oldVal, newVal) -> {
             moveCaret(getEditor().getText().length());

@@ -4,6 +4,8 @@ import erp.client.javafx.component.border.BorderedTitledPane;
 import erp.client.javafx.component.enums.ProductScale;
 import erp.client.javafx.component.enums.UserRole;
 import erp.client.javafx.component.event.popup.PopupEvent;
+import erp.client.javafx.component.font.CustomFontManager;
+import erp.client.javafx.component.objectchooser.DealerChooser;
 import erp.client.javafx.component.scale.ProductScaleCombobox;
 import erp.client.javafx.component.searchbox.category.CategorySearchCombobox;
 import erp.client.javafx.component.textfield.CTextArea;
@@ -22,6 +24,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
@@ -33,7 +37,6 @@ public class AddStockDialog extends AbstractDialog {
     private StockInDTO stockIn;
     private Button add, clear;
 
-    private DealerChooserPanel dealerChooserPanel;
     private StockDetailsPanel stockDetailsPanel;
     private AddStockService stockService;
 
@@ -50,14 +53,9 @@ public class AddStockDialog extends AbstractDialog {
         clear = new Button("Clear");
         clear.setStyle("-fx-base: red");
 
-        dealerChooserPanel = new DealerChooserPanel();
         stockDetailsPanel = new StockDetailsPanel();
 
         stage.setWidth(1400);
-    }
-
-    public DealerChooserPanel getDealerChooserPanel() {
-        return dealerChooserPanel;
     }
 
     public StockDetailsPanel getStockDetailsPanel() {
@@ -66,9 +64,6 @@ public class AddStockDialog extends AbstractDialog {
 
     @Override
     protected Pane designContentGUI() {
-
-        BorderedTitledPane dealerPanel = new BorderedTitledPane("Dealer", Pos.TOP_LEFT, dealerChooserPanel);
-        BorderedTitledPane detailsPanel = new BorderedTitledPane("Item", Pos.TOP_LEFT, stockDetailsPanel);
 
         GridPane pane = new GridPane();
         pane.setHgap(10);
@@ -81,8 +76,7 @@ public class AddStockDialog extends AbstractDialog {
         pane.getColumnConstraints().add(stretchedColumn);
 
         int col = 0, row = 0;
-        pane.add(dealerPanel, col, row++);
-        pane.add(detailsPanel, col, row);
+        pane.add(stockDetailsPanel, col, row);
 
         return pane;
     }
@@ -103,7 +97,7 @@ public class AddStockDialog extends AbstractDialog {
         });
 
         add.setOnAction(e -> {
-            if( dealerChooserPanel.validateDealer() && stockDetailsPanel.validateFields()) {
+            if( stockDetailsPanel.validateFields()) {
                 try {
                     stockService.addStock();
                 } catch (FormValidationException formValidationException) {
@@ -141,6 +135,8 @@ public class AddStockDialog extends AbstractDialog {
 
     class StockDetailsPanel extends AbstractGridPane {
 
+        DealerChooser dealerChooser;
+        CheckBox hasMoreItem;
         CTextField barcode, name, model, company, warranty, guarantee;
         CategorySearchCombobox category;
         ProductScaleCombobox scale;
@@ -151,6 +147,15 @@ public class AddStockDialog extends AbstractDialog {
 
         @Override
         public void init() {
+
+            Arguments args = new Arguments();
+            args.setArgument("name", "Dealer");
+            dealerChooser = new DealerChooser(args);
+
+            hasMoreItem = new CheckBox("Add more items to the selected dealer");
+            hasMoreItem.setFont(new CustomFontManager().getRobotoFont(12));
+            hasMoreItem.setTooltip(new Tooltip("Check this if you have more items to add to the selected dealer"));
+
             barcode = new CTextField("Barcode",  false, 100);
             name = new CTextField("Name",  true, 100);
             model = new CTextField("Model",  true, 50);
@@ -176,7 +181,7 @@ public class AddStockDialog extends AbstractDialog {
         }
 
         public boolean validateFields() {
-            return (name.validateField() && model.validateField() && category.validateField() && company.validateField() && warranty.validateField() &&
+            return (dealerChooser.validateField() && name.validateField() && model.validateField() && category.validateField() && company.validateField() && warranty.validateField() &&
                     guarantee.validateField() && specifications.validateField() && stockQuantity.validateField() && reorderLimit.validateField() &&
                     stockPrice.validateField() && customerPrice.validateField() && gstAmount.validateField() && netAmount.validateField() && gst.validateField());
         }
@@ -195,76 +200,63 @@ public class AddStockDialog extends AbstractDialog {
 
             int col = 0, row = 0;
 
-            GridPane.setConstraints(barcode.getLabel(), col++, row);
-            GridPane.setConstraints(barcode, col--, row++);
+            this.add(dealerChooser.getLabel(), col++, row);
+            this.add(dealerChooser, col, row++);
 
-            GridPane.setConstraints(name.getLabel(), col++, row);
-            GridPane.setConstraints(name, col--, row++);
+            this.add(hasMoreItem, col--, row++);
 
-            GridPane.setConstraints(model.getLabel(), col++, row);
-            GridPane.setConstraints(model, col--, row++);
+            this.add(barcode.getLabel(), col++, row);
+            this.add(barcode, col--, row++);
 
-            GridPane.setConstraints(category.getLabel(), col++, row);
-            GridPane.setConstraints(category, col--, row++);
+            this.add(name.getLabel(), col++, row);
+            this.add(name, col--, row++);
 
-            GridPane.setConstraints(company.getLabel(), col++, row);
-            GridPane.setConstraints(company, col--, row++);
+            this.add(model.getLabel(), col++, row);
+            this.add(model, col--, row++);
 
-            GridPane.setConstraints(warranty.getLabel(), col++, row);
-            GridPane.setConstraints(warranty, col--, row++);
+            this.add(category.getLabel(), col++, row);
+            this.add(category, col--, row++);
 
-            GridPane.setConstraints(guarantee.getLabel(), col++, row);
-            GridPane.setConstraints(guarantee, col--, row++);
+            this.add(company.getLabel(), col++, row);
+            this.add(company, col--, row++);
 
-            GridPane.setConstraints(specifications.getLabel(), col++, row);
-            GridPane.setConstraints(specifications.getTextAreaWithProgressBar(), col--, row++, 1, 2);
+            this.add(warranty.getLabel(), col++, row);
+            this.add(warranty, col--, row++);
+
+            this.add(guarantee.getLabel(), col++, row);
+            this.add(guarantee, col--, row++);
+
+            this.add(specifications.getLabel(), col++, row);
+            this.add(specifications.getTextAreaWithProgressBar(), col--, row++, 1, 2);
 
             col = 2;
             row = 0;
 
-            GridPane.setConstraints(scale.getLabel(), col++, row);
+            this.add(scale.getLabel(), col++, row);
             scale.setPrefWidth(Double.MAX_VALUE);
-            GridPane.setConstraints(scale, col--, row++);
+            this.add(scale, col--, row++);
 
-            GridPane.setConstraints(stockQuantity.getField().getLabel(), col++, row);
-            GridPane.setConstraints(stockQuantity, col--, row++);
+            this.add(stockQuantity.getField().getLabel(), col++, row);
+            this.add(stockQuantity, col--, row++);
 
-            GridPane.setConstraints(reorderLimit.getField().getLabel(), col++, row);
-            GridPane.setConstraints(reorderLimit, col--, row++);
+            this.add(reorderLimit.getField().getLabel(), col++, row);
+            this.add(reorderLimit, col--, row++);
 
-            GridPane.setConstraints(stockPrice.getLabel(), col++, row);
-            GridPane.setConstraints(stockPrice, col--, row++);
+            this.add(stockPrice.getLabel(), col++, row);
+            this.add(stockPrice, col--, row++);
 
-            GridPane.setConstraints(customerPrice.getLabel(), col++, row);
-            GridPane.setConstraints(customerPrice, col--, row++);
+            this.add(customerPrice.getLabel(), col++, row);
+            this.add(customerPrice, col--, row++);
 
-            GridPane.setConstraints(gst.getLabel(), col++, row);
-            GridPane.setConstraints(gst, col--, row++);
+            this.add(gst.getLabel(), col++, row);
+            this.add(gst, col--, row++);
 
-            GridPane.setConstraints(gstAmount.getLabel(), col++, row);
-            GridPane.setConstraints(gstAmount, col--, row++);
+            this.add(gstAmount.getLabel(), col++, row);
+            this.add(gstAmount, col--, row++);
 
-            GridPane.setConstraints(netAmount.getLabel(), col++, row);
-            GridPane.setConstraints(netAmount, col--, row++);
+            this.add(netAmount.getLabel(), col++, row);
+            this.add(netAmount, col--, row++);
 
-            this.getChildren().addAll(
-                    barcode.getLabel(), barcode,
-                    name.getLabel(), name,
-                    model.getLabel(), model,
-                    category.getLabel(), category,
-                    company.getLabel(), company,
-                    warranty.getLabel(), warranty,
-                    guarantee.getLabel(), guarantee,
-                    specifications.getLabel(), specifications.getTextAreaWithProgressBar(),
-                    scale.getLabel(), scale,
-                    stockQuantity.getField().getLabel(), stockQuantity,
-                    reorderLimit.getField().getLabel(), reorderLimit,
-                    stockPrice.getLabel(), stockPrice,
-                    customerPrice.getLabel(), customerPrice,
-                    gst.getLabel(), gst,
-                    gstAmount.getLabel(), gstAmount,
-                    netAmount.getLabel(), netAmount
-            );
         }
 
         public StockInDTO populateAndGetStockIn() {
@@ -330,6 +322,11 @@ public class AddStockDialog extends AbstractDialog {
 
         public void clearForm() {
             stockIn = new StockInDTO();
+
+            if(!hasMoreItem.isSelected()){
+                dealerChooser.clearField();
+            }
+
             barcode.clearField();
             name.clearField();
             model.clearField();

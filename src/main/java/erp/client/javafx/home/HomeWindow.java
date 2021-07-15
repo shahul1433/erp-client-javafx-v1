@@ -22,119 +22,29 @@ import javafx.stage.Stage;
 
 public class HomeWindow extends AbstractBorderPane {
 
-	//Components
-	MenuBar menuBarLeft, menuBarRight;
-	Menu configuration, inventory, loggedUser, stocks, dealer;
-	MenuItem userConfiguration, account, logout, stockIn, stockReturn, stockTransactions, dealerManagement;
-	HBox topbar;
-	StringProperty loggedUserName;
-	
+	TopPanel topPanel;
+	BottomPanel bottomPanel;
+
 	public HomeWindow(String loggedUserName) {
 		super();
-		this.loggedUserName.set(loggedUserName);
+		this.topPanel.loggedUserName.set(loggedUserName);
 	}
 	
 	@Override
 	public void init() {
-		
-		this.getStylesheets().add(getClass().getResource("home.css").toExternalForm());
-		
-		this.loggedUserName = new SimpleStringProperty();
-		menuBarLeft = new MenuBar();
-		menuBarRight = new MenuBar();
-		menuBarLeft.getStyleClass().add("menubar");
-		menuBarRight.getStyleClass().add("menubar");
-		
-		configuration = new Menu("Configuration");
-		inventory = new Menu("Inventory");
-		stocks = new Menu("Stocks");
-		inventory.getItems().add(stocks);
-		loggedUser = new Menu();
-		loggedUser.textProperty().bind(loggedUserName);
-		dealer = new Menu("Dealer");
-
-		userConfiguration = new MenuItem("User Management");
-		account = new MenuItem("Account");
-		logout = new MenuItem("Logout");
-		stockIn = new MenuItem("Stock In");
-		stockReturn = new MenuItem("Stock Return");
-		stockTransactions = new MenuItem("Stock Transactions");
-		dealerManagement = new MenuItem("Dealer Management");
-		
-		SeparatorMenuItem separatorMenuItem = new SeparatorMenuItem();
-		
-		loggedUser.getItems().addAll(account, separatorMenuItem, logout);
-		
-		configuration.getItems().add(userConfiguration);
-		stocks.getItems().addAll(stockIn, stockReturn, stockTransactions);
-		dealer.getItems().add(dealerManagement);
-		
-		menuBarLeft.getMenus().addAll(configuration, inventory, dealer);
-		menuBarRight.getMenus().add(loggedUser);
-		
-		HBox.setHgrow(menuBarLeft, Priority.ALWAYS);
-		topbar = new HBox();
-		topbar.getChildren().addAll(menuBarLeft, menuBarRight);
+		this.getStylesheets().add(HomeWindow.class.getResource("home.css").toExternalForm());
+		topPanel = new TopPanel();
+		bottomPanel = new BottomPanel();
 	}
 
 	@Override
 	public void designGUI() {
-		this.setTop(topbar);
+		this.setTop(topPanel);
+		this.setBottom(bottomPanel);
 	}
 
 	@Override
 	public void registerListeners() {
-		userConfiguration.setOnAction(e -> {
-			Platform.runLater(new Runnable() {
-				@Override
-				public void run() {
-					new UserManagementDialog();
-				}
-			});
-		});
-		
-		dealerManagement.setOnAction(e -> {
-			Platform.runLater(new Runnable() {
-				@Override
-				public void run() {
-					new DealerManagementDialog();
-				}
-			});
-		});
-		
-		stockIn.setOnAction(e -> {
-			Platform.runLater(new Runnable() {
-				@Override
-				public void run() {
-					new StockInManagementDialog();
-				}
-			});
-		});
-		
-		stockReturn.setOnAction(e -> {
-			Platform.runLater(new Runnable() {
-				@Override
-				public void run() {
-					new StockReturnManagementDialog();
-				}
-			});
-		});
-		
-//		stockTransactions.setOnAction(e -> {
-//			Platform.runLater(new Runnable() {
-//				@Override
-//				public void run() {
-//					new StockTransactionManagementDialog();
-//				}
-//			});
-//		});
-		
-		logout.setOnAction(e -> {
-			AppSession.clearSession();
-			Stage primaryStage = (Stage) topbar.getScene().getWindow();
-			primaryStage.setScene(new Scene(new LoginPane(), GuiUtility.getScreenWidth(), GuiUtility.getScreenHeight()));
-			primaryStage.setMaximized(true);
-		});
 	}
 
 	@Override

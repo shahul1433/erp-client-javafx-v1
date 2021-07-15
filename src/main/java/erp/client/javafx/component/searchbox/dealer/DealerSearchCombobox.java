@@ -1,6 +1,7 @@
 package erp.client.javafx.component.searchbox.dealer;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import erp.client.javafx.component.font.CustomFontManager;
 import erp.client.javafx.config.ConfigurationManager;
 import erp.client.javafx.config.Constants;
 import erp.client.javafx.dealer.DealerDTO;
@@ -18,17 +19,21 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.text.Font;
 import javafx.util.StringConverter;
 
 public class DealerSearchCombobox extends ComboBox<DealerDTO> implements EventHandler<KeyEvent> {
 
     private GetDealersForSearchService service;
     private ProgressBar progressBar;
+    private Font roboto;
 
     public DealerSearchCombobox(ProgressBar bar) {
+        roboto = new CustomFontManager().getRobotoFont(12);
         this.progressBar = bar;
 //        setPrefWidth(Double.MAX_VALUE);
         setEditable(true);
+        getEditor().setFont(roboto);
         getEditor().setOnKeyPressed(this);
         getSelectionModel().selectedIndexProperty().addListener((obs, oldVal, newVal) -> {
             moveCaret(getEditor().getText().length());
@@ -66,10 +71,7 @@ public class DealerSearchCombobox extends ComboBox<DealerDTO> implements EventHa
             @Override
             protected void updateItem(DealerDTO item, boolean empty) {
                 super.updateItem(item, empty);
-                if(item == null || empty)
-                    setGraphic(null);
-                else
-                    setText(item.getName() +" - " + item.getShop() + " - " + item.getGstin());
+                setFont(roboto);
             }
         };
     }

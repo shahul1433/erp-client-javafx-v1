@@ -5,6 +5,8 @@ import java.util.Comparator;
 import com.fasterxml.jackson.core.type.TypeReference;
 
 import erp.client.javafx.component.filter.FilterField;
+import erp.client.javafx.component.font.CustomFontManager;
+import erp.client.javafx.component.label.CLabel;
 import erp.client.javafx.config.ConfigurationManager;
 import erp.client.javafx.config.Constants;
 import erp.client.javafx.gst.GstStateCodeList;
@@ -20,13 +22,16 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
+import javafx.scene.text.Font;
 
 public class GSTStateCodeCombobox extends ComboBox<GstStateCodeDTO> implements FilterField{
 
-	private Label label;
+	private CLabel label;
+	private Font roboto;
 	
 	public GSTStateCodeCombobox() {
-		label = new Label("GST State Code");
+		roboto = new CustomFontManager().getRobotoFont(12);
+		label = new CLabel("GST State Code");
 		
 		this.setCellFactory(cf -> createGstStateCodeCell());
 		this.setButtonCell(createGstStateCodeCell());
@@ -59,6 +64,7 @@ public class GSTStateCodeCombobox extends ComboBox<GstStateCodeDTO> implements F
 			@Override
 			protected void updateItem(GstStateCodeDTO item, boolean empty) {
 				super.updateItem(item, empty);
+				setFont(roboto);
 				if(item == null || empty)
 					setGraphic(null);
 				else

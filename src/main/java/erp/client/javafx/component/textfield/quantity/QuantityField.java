@@ -2,6 +2,7 @@ package erp.client.javafx.component.textfield.quantity;
 
 import erp.client.javafx.component.FormField;
 import erp.client.javafx.component.enums.ProductScale;
+import erp.client.javafx.component.font.CustomFontManager;
 import erp.client.javafx.component.textfield.CTextField;
 import erp.client.javafx.component.textfield.number.DoubleFilter;
 import erp.client.javafx.component.textfield.number.IntegerFilter;
@@ -29,6 +30,7 @@ public class QuantityField extends HBox implements FormField {
         this.scale.setEditable(false);
         this.scale.setStyle("-fx-background-color: #80ccff;");
         this.scale.setAlignment(Pos.CENTER);
+        this.scale.setFont(new CustomFontManager().getRobotoFont(12));
         this.doubleFilter = new DoubleFilter(field);
         this.integerFilter = new IntegerFilter(field);
         setScale(productScale);

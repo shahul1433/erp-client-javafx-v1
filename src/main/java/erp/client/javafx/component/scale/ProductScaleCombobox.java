@@ -1,16 +1,21 @@
 package erp.client.javafx.component.scale;
 
 import erp.client.javafx.component.enums.ProductScale;
+import erp.client.javafx.component.font.CustomFontManager;
+import erp.client.javafx.component.label.CLabel;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
+import javafx.scene.text.Font;
 
 public class ProductScaleCombobox extends ComboBox<ProductScale>{
 
-	private Label label;
+	private CLabel label;
+	private Font roboto;
 	
 	public ProductScaleCombobox() {
-		label = new Label("Scale");
+		roboto = new CustomFontManager().getRobotoFont(12);
+		label = new CLabel("Scale");
 		for(ProductScale scale : ProductScale.values()) {
 			if(scale != ProductScale.ALL)
 				this.getItems().add(scale);
@@ -44,6 +49,7 @@ public class ProductScaleCombobox extends ComboBox<ProductScale>{
 			@Override
 			protected void updateItem(ProductScale item, boolean empty) {
 				super.updateItem(item, empty);
+				setFont(roboto);
 				if(item == null || empty)
 					setGraphic(null);
 				else {
