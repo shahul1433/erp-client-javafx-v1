@@ -1,9 +1,9 @@
 package erp.client.javafx.component.filter.combobox;
 
-import erp.client.javafx.component.enums.StockTransactionType;
 import erp.client.javafx.component.filter.FilterField;
 import erp.client.javafx.component.font.CustomFontManager;
 import erp.client.javafx.component.label.CLabel;
+import erp.client.javafx.stock.transaction.StockTransactionType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;

@@ -1,6 +1,5 @@
 package erp.client.javafx.stock.stockin;
 
-import erp.client.javafx.component.border.BorderedTitledPane;
 import erp.client.javafx.component.enums.ProductScale;
 import erp.client.javafx.component.enums.UserRole;
 import erp.client.javafx.component.event.popup.PopupEvent;
@@ -16,7 +15,6 @@ import erp.client.javafx.component.textfield.quantity.QuantityField;
 import erp.client.javafx.container.AbstractDialog;
 import erp.client.javafx.container.Arguments;
 import erp.client.javafx.container.StageMode;
-import erp.client.javafx.dealer.DealerChooserPanel;
 import erp.client.javafx.exception.FormValidationException;
 import erp.client.javafx.layout.AbstractGridPane;
 import erp.client.javafx.session.AppSession;

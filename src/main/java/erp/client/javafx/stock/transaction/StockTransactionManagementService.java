@@ -1,4 +1,3 @@
-/*
 package erp.client.javafx.stock.transaction;
 
 import erp.client.javafx.container.status.StatusBarStatus;
@@ -23,13 +22,12 @@ public class StockTransactionManagementService {
         var service = new GetAllStockTransactionService(view, sortMap);
         view.setStatusBarStatus(StatusBarStatus.WORKING);
         service.setOnFailed(new WorkerStateEventStatusBarExceptionHandler(view,view.getBottomBar().getStatusBar()));
-        service.setOnSucceeded(new TableWithNavigationHandler<TStockTransaction, StockTransaction>(service, view) {
+        service.setOnSucceeded(new TableWithNavigationHandler<StockTransactionDTO, StockTransaction>(service, view) {
             @Override
-            public void setData(Page<TStockTransaction> page, AbstractTableWithNavigationDialog<StockTransaction> view) {
+            public void setData(Page<StockTransactionDTO> page, AbstractTableWithNavigationDialog<StockTransaction> view) {
                 page.getContent().forEach(obj -> view.getCenterPane().getTable().getItems().add(new StockTransaction(obj)));
             }
         });
         service.start();
     }
 }
-*/

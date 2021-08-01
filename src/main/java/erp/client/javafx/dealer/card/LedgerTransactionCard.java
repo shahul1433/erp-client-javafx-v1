@@ -48,6 +48,7 @@ public class LedgerTransactionCard extends AbstractBorderPane {
 
         amountPanel = new BorderPane();
         amountPanel.setId("amount-panel");
+        amountPanel.setPrefWidth(200);
 
         date = new CLabel();
         date.setId("date");

@@ -1,11 +1,15 @@
-/*
 package erp.client.javafx.stock.transaction;
 
+import erp.client.javafx.common.cellfactory.DateCellFactory;
+import erp.client.javafx.common.cellfactory.RupeesCellFactory;
+import erp.client.javafx.common.cellfactory.StockInCellFactory;
+import erp.client.javafx.common.cellfactory.StockTransactionTypeCellFactory;
 import erp.client.javafx.component.enums.UserRole;
 import erp.client.javafx.container.tablewithnavigation.AbstractTableWithNavigationDialog;
 import erp.client.javafx.container.tablewithnavigation.TableColumnDataWrapper;
 import erp.client.javafx.http.SortMap;
 import erp.client.javafx.session.AppSession;
+import erp.client.javafx.stock.stockin.StockInDTO;
 import erp.client.javafx.utility.GuiUtility;
 import javafx.beans.binding.Bindings;
 import javafx.scene.Scene;
@@ -14,6 +18,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.image.Image;
 import javafx.stage.Modality;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class StockTransactionManagementDialog extends AbstractTableWithNavigationDialog<StockTransaction> {
@@ -25,7 +30,7 @@ public class StockTransactionManagementDialog extends AbstractTableWithNavigatio
             Scene scene = new Scene(this, GuiUtility.maximumSize().getWidth(), GuiUtility.maximumSize().getHeight());
             getStage().setScene(scene);
             getStage().getIcons().add(new Image(getClass().getResourceAsStream("/image/User.png")));
-            getStage().setTitle("Dealer Management");
+            getStage().setTitle("Stock Transactions History");
             getStage().initModality(Modality.APPLICATION_MODAL);
             getStage().show();
 
@@ -41,6 +46,7 @@ public class StockTransactionManagementDialog extends AbstractTableWithNavigatio
     @Override
     protected void createTableColumns(ArrayList<TableColumnDataWrapper<StockTransaction, ?>> tableColumns) {
         TableColumn<StockTransaction, Void> index = new TableColumn<>("#");
+        index.setStyle("-fx-alignment: CENTER;");
         index.setCellFactory(col -> {
             TableCell<StockTransaction, Void> cell = new TableCell<>();
             cell.textProperty().bind(Bindings.createStringBinding(() -> {
@@ -54,10 +60,15 @@ public class StockTransactionManagementDialog extends AbstractTableWithNavigatio
         });
         getCenterPane().getTable().getColumns().add(index);
 
-        tableColumns.add(new TableColumnDataWrapper<>("Transaction Type", "stockTransactionType"));
-        tableColumns.add(new TableColumnDataWrapper<>("Product", "product"));
-        tableColumns.add(new TableColumnDataWrapper<>("Amount", "amount"));
-        tableColumns.add(new TableColumnDataWrapper<>("Added On", "addedDate"));
+        TableColumnDataWrapper<StockTransaction, StockTransactionType> transactionTypeColumn = new TableColumnDataWrapper<>("Transaction Type", "stockTransactionType", new StockTransactionTypeCellFactory());
+        TableColumnDataWrapper<StockTransaction, StockInDTO> stockInColumn = new TableColumnDataWrapper<>("Product", "product", new StockInCellFactory());
+        TableColumnDataWrapper<StockTransaction, Double> amountColumn = new TableColumnDataWrapper<>("Amount", "amount", new RupeesCellFactory());
+        TableColumnDataWrapper<StockTransaction, LocalDateTime> addedDateColumn = new TableColumnDataWrapper<>("Added On", "addedDate", new DateCellFactory());
+
+        tableColumns.add(transactionTypeColumn);
+        tableColumns.add(stockInColumn);
+        tableColumns.add(amountColumn);
+        tableColumns.add(addedDateColumn);
 
         getCenterPane().getTable().getColumns().addAll(tableColumns);
     }
@@ -77,4 +88,3 @@ public class StockTransactionManagementDialog extends AbstractTableWithNavigatio
         return AppSession.hasRole(UserRole.STOCK_TRANSACTION);
     }
 }
-*/

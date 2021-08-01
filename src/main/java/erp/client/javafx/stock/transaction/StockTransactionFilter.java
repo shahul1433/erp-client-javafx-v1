@@ -1,4 +1,3 @@
-/*
 package erp.client.javafx.stock.transaction;
 
 import erp.client.javafx.component.date.DateSearchable;
@@ -7,20 +6,20 @@ import erp.client.javafx.http.SortMap;
 
 public class StockTransactionFilter extends DatabaseTableFilter{
 
-	private TStockTransaction stockTransaction;
+	private StockTransactionDTO stockTransaction;
 	private DateSearchable addedDate;
 
-	public StockTransactionFilter(TStockTransaction stockTransaction, DateSearchable addedDate, int page, int size, SortMap sortMap) {
+	public StockTransactionFilter(StockTransactionDTO stockTransaction, DateSearchable addedDate, int page, int size, SortMap sortMap) {
 		super(page, size, sortMap);
 		this.stockTransaction = stockTransaction;
 		this.addedDate = addedDate;
 	}
 
-	public TStockTransaction getStockTransaction() {
+	public StockTransactionDTO getStockTransaction() {
 		return stockTransaction;
 	}
 
-	public void setStockTransaction(TStockTransaction stockTransaction) {
+	public void setStockTransaction(StockTransactionDTO stockTransaction) {
 		this.stockTransaction = stockTransaction;
 	}
 
@@ -33,4 +32,3 @@ public class StockTransactionFilter extends DatabaseTableFilter{
 	}
 
 }
-*/
